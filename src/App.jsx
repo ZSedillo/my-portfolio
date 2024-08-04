@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Header from './Components/Header.jsx'
 import StartingPage from './StartingPage/StartingPage.jsx'
 import About from './About/About.jsx'
+import Skills from './Skills/Skills.jsx'
 
 import './App.css'
 
@@ -15,6 +16,7 @@ function App() {
       <Header/>
       <StartingPage/>
       <About/>
+      <Skills/>
     </>
   )
 }

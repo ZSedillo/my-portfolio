@@ -38,6 +38,7 @@ const fixedNavbarStyle = {
     width: '100%',
     transition: 'top 0.3s ease',
     zIndex: 1000,
+    backgroundColor: '#F6F0ED', // Set background color here
 };
 
 const hiddenNavbarStyle = {
@@ -71,11 +72,7 @@ function Header() {
 
     return (
         <>
-            <Navbar
-                expand="lg"
-                className="bg-body-tertiary"
-                style={isScrollingUp ? fixedNavbarStyle : hiddenNavbarStyle}
-            >
+            <Navbar expand="lg" className="bg-body-tertiary" style={isScrollingUp ? fixedNavbarStyle : hiddenNavbarStyle}>
                 <Container>
                     <Navbar.Brand href="#home"></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />

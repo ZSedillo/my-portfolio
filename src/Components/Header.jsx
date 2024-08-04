@@ -1,3 +1,8 @@
+import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+
 const navStyle = {
     padding: '21px 20.5px 0',
     fontSize: '20px',
@@ -12,17 +17,36 @@ const navLinkStyle = {
     color: 'inherit',
 };
 
+const navCollapseStyle = {
+    flexGrow: 1,
+    justifyContent: 'center',
+    textAlign: 'center',
+};
+
+const navStyleMobile = {
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center',
+    alignItems: 'center',
+};
+
 function Header() {
     return (
         <>
-            <div>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', justifyContent: 'center' }}>
-                    <li id="About" style={navStyle}><a href="#" style={navLinkStyle}>About</a></li>
-                    <li id="Skill" style={navStyle}><a href="#" style={navLinkStyle}>Skill</a></li>
-                    <li id="Projects" style={navStyle}><a href="#" style={navLinkStyle}>Projects</a></li>
-                    <li id="Contacts" style={navStyle}><a href="#" style={navLinkStyle}>Contacts</a></li>
-                </ul>
-            </div>
+            <Navbar expand="lg" className="bg-body-tertiary">
+                <Container>
+                    <Navbar.Brand href="#home"></Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav" style={navCollapseStyle}>
+                        <Nav className="me-auto d-flex flex-lg-row flex-column align-items-center" style={navStyleMobile}>
+                            <Nav.Link href="#About" style={{ ...navStyle, ...navLinkStyle }}>About</Nav.Link>
+                            <Nav.Link href="#Skill" style={{ ...navStyle, ...navLinkStyle }}>Skill</Nav.Link>
+                            <Nav.Link href="#Projects" style={{ ...navStyle, ...navLinkStyle }}>Projects</Nav.Link>
+                            <Nav.Link href="#Contacts" style={{ ...navStyle, ...navLinkStyle }}>Contacts</Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
         </>
     );
 }

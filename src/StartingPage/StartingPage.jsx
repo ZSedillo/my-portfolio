@@ -18,6 +18,7 @@ const useMediaQuery = (query) => {
 
 const StartingPage = () => {
     const isSmallScreen = useMediaQuery('(max-width: 900px)');
+    const [isHovered, setIsHovered] = useState(false);
 
     const gridStyle = {
         display: 'grid',
@@ -42,7 +43,7 @@ const StartingPage = () => {
     };
 
     const buttonStyle = {
-        backgroundColor: '#EAEAEA',
+        backgroundColor: isHovered ? '#F0F0F0' : '#EAEAEA',
         border: 'none',
         borderRadius: '10px',
         color: '#0A090C',
@@ -51,52 +52,10 @@ const StartingPage = () => {
         fontWeight: 600,
         width: '139.5px',
         height: '48px',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s ease',
     };
-
-    const circle1 = {
-        width: '303.5px',
-        height: '321px',
-        backgroundColor: '#211103',
-        borderRadius: '50%',
-        position: 'absolute',
-        left: isSmallScreen ? '25%': '55%',
-        top: isSmallScreen ? '64%':'20%',
-        zIndex: -3,
-    };
-
-    const circle2 = {
-        width: '283px',
-        height: '246px',
-        backgroundColor: '#F3D34A',
-        borderRadius: '50%',
-        position: 'absolute',
-        left: isSmallScreen ? '31%':'62%',
-        top: isSmallScreen ? '63%':'17%',
-        zIndex: -1,
-    };
-
-    const circle3 = {
-        width: '254px',
-        height: '208px',
-        backgroundColor: '#57737A',
-        borderRadius: '50%',
-        position: 'absolute',
-        left: isSmallScreen ? '29%':'59%',
-        top: isSmallScreen ? '90%':'44%',
-        zIndex: -2,
-    };
-
-    const circle4 = {
-        width: '320px',
-        height: '260px',
-        backgroundColor: '#7B0D1E',
-        borderRadius: '50%',
-        position: 'absolute',
-        left: isSmallScreen ? '31%':'61%',
-        top: isSmallScreen ? '80%':'34%',
-        zIndex: -3,
-    };
-
+    
     const profileContainer = {
         display: 'flex',
         justifyContent: 'center',
@@ -107,9 +66,7 @@ const StartingPage = () => {
 
     const profileIMG = {
         borderRadius: '100%',
-        // position: 'absolute',
-        left: isSmallScreen ? '29%':'59%',
-        top: isSmallScreen ? '71%':'25%',
+        marginTop: '200px',
         width: '300px',
         height: '300px',
     };
@@ -118,18 +75,10 @@ const StartingPage = () => {
         <>
             <div style={gridStyle}>
                 <div style={{ paddingLeft: isSmallScreen? '0%' :'10%' }}>
-                    <p style={introStyle}>
-                        I'm <span style={nameStyle}>Zandro Sedillo</span> <br />
-                        Full Stack Developer & <br />
-                        Game Developer
-                    </p>
-                    <button style={buttonStyle}>Contact Me</button>
+                    <p style={introStyle}>I'm <span style={nameStyle}>Zandro Sedillo</span><br/>Full Stack Developer & <br/>Game Developer</p>
+                    <button style={buttonStyle} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>Contact Me</button>
                 </div>
                 <div style={profileContainer}>
-                    {/* <div style={circle1}></div>
-                    <div style={circle2}></div>
-                    <div style={circle3}></div>
-                    <div style={circle4}></div> */}
                     <div>
                         <img style={profileIMG} src={ProfilePicture} alt="ProfilePicture" />
                     </div>

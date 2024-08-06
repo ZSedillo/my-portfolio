@@ -1,0 +1,60 @@
+.shape-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.experience-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.experience-content {
+    margin-left: 20px;
+}
+
+.experience-content h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.experience-content h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #747274;
+}
+
+.experience-content p {
+    margin: 10px 0 0 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.triangle{
+    border-top: 20px solid transparent;
+    border-left: 30px solid #001011;
+    border-bottom: 20px solid transparent;
+    margin-right: 50px;
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    background-color: orange;
+    border-radius: 50%;
+    position: absolute;
+    left: 100px; /* Adjust this to position the circle correctly */
+    top:10px; /* Adjust this to position the circle correctly */
+    z-index: 1;
+}
+
+.vertical-line {
+    width: 5px;
+    height: 200px; /* Adjust the height as needed */
+    background-color: #001011;
+    position: absolute;
+    left: 108px; /* Adjust this to position the line correctly */
+    top: 15px; /* Adjust this to position the line correctly */
+}

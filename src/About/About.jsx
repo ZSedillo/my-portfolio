@@ -29,7 +29,7 @@ const About = () => {
 
     const gridStyle = {
         display: 'grid',
-        gridTemplateColumns: isSmallScreen ? '500px' : '450px 480px',
+        gridTemplateColumns: isSmallScreen ? '0.5fr' : '450px 480px',
         gap: '16px',
         alignItems: 'center',
         justifyContent: 'center',
@@ -59,12 +59,13 @@ const About = () => {
                         <img style={laptopStyle} src={Laptop} alt="Laptop" />
                     </div>
                     <div style={{backgroundColor: '#F4EBE8', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',}}>
-                        <p style={aboutParagraph}>Hi I am Zandro, a dedicated and skilled developer who is keen on front-end and back-end parts. 
-                            Among the special skills that I have include program debugging as well as program optimization. 
-                            In other words, self-education and embracing the new advancements in the industry, its strategies, 
-                            and tools are not passive but are practiced actively by me. I have good technical skills and I am analytical 
-                            in my work and also detail oriented, which is a very good combination for high performance.
-                        </p>
+                    <p style={aboutParagraph}>
+                        Hi I am Zandro, a dedicated and skilled developer who is keen on front-end and back-end parts. 
+                        Among the special skills that I have include program debugging as well as program optimization. 
+                        In other words, self-education and embracing the new advancements in the industry, its strategies, 
+                        and tools are not passive but are practiced actively by me. I have good technical skills and I am analytical 
+                        in my work and also detail oriented, which is a very good combination for high performance.
+                    </p>
                     </div>
                 </div>
             </div>

@@ -1,24 +1,37 @@
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import React, { useState, useEffect } from 'react';
 import FrontEndLogo from '../assets/images/web-development.png'
 import BackEndLogo from '../assets/images/servers.png'
 import GameLogo from '../assets/images/console.png'
-
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
+
+const useMediaQuery = (query) => {
+    const [matches, setMatches] = useState(window.matchMedia(query).matches);
+
+    useEffect(() => {
+        const mediaQueryList = window.matchMedia(query);
+        const handleChange = () => setMatches(mediaQueryList.matches);
+
+        mediaQueryList.addListener(handleChange);
+        return () => mediaQueryList.removeListener(handleChange);
+    }, [query]);
+
+    return matches;
+};
+
 function Skills() {
+    const isSmallScreen = useMediaQuery('(max-width: 600px)');
+
     const title = {
         fontFamily: 'Inter, sans-serif',
         fontWeight: 600,
         fontSize: '62.5px',
         marginTop: '200px',
-        marginBottom: '100px',
+        marginBottom: '25px',
         textAlign: 'center',
     };
 
@@ -87,8 +100,8 @@ function Skills() {
             <div>
                 <h1 style={title}>My Skills</h1>
             </div>
-            <div style={{backgroundColor:'#F4EBE8'}}>
-            <Box sx={{ flexGrow: 1 }} style={{margin:'0 100px'}}>
+            <div style={{backgroundColor:'#F4EBE8', padding:'100px 0'}}>
+            <Box sx={{ flexGrow: 1 }} style={{margin:isSmallScreen ?'0 10px':'0 100px'}}>
             <Grid container spacing={4}>
                 <Grid item lg={4} md={6} sm={12}>
                 <Item style={colStyle}>

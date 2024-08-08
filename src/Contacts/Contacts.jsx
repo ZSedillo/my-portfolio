@@ -74,6 +74,7 @@ function Contacts() {
 
 
     const contactContainer = {
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         backgroundColor: '#F4EBE8',
         padding: '100px 0',
     }
@@ -145,7 +146,7 @@ function Contacts() {
                             <Grid container spacing={4}>
 
                                 <Grid item lg={6} md={6} xs={12}>
-                                <a href="" className="unstyled-link">
+                                {/* <a href="" className="unstyled-link"> */}
                                     <Item style={colStyle}>
                                         <div style={imageWrapper}>
                                             <img style={Logo} src={Mail} alt="Mail Logo" />
@@ -155,11 +156,11 @@ function Contacts() {
                                             <p style={contactInfo}>sedillozandro720@gmail.com</p>
                                         </div>
                                     </Item>
-                                    </a>
+                                    {/* </a> */}
                                 </Grid>
 
                                 <Grid item lg={6} md={6} xs={12}>
-                                    <a href="" className="unstyled-link">
+                                    {/* <a href="" className="unstyled-link"> */}
                                     <Item style={colStyle}>
                                         <div style={imageWrapper}>
                                             <img style={Logo} src={Phone} alt="Phone Logo" />
@@ -169,7 +170,7 @@ function Contacts() {
                                             <p style={contactInfo}>(63+) 09770311641</p>
                                         </div>
                                     </Item>
-                                    </a>
+                                    {/* </a> */}
                                 </Grid>
                                 <Grid item lg={6} md={6} xs={12}>
                                     <a href="https://www.linkedin.com/in/zandro-sedillo-1bbb52279/" className="unstyled-link">
@@ -204,17 +205,25 @@ function Contacts() {
                             <h1 style={{ textAlign: 'center',backgroundColor:'#FFFFF', color:'black', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',}}>Email Me</h1>
                         </div>
                         <br />
-                        <form action="#" style={formStyle}>
+                        <form action="https://api.web3forms.com/submit" method="POST" style={formStyle}>
+                        <input type="hidden" name="access_key" value="a0376732-b681-486f-9884-5cee5fddcf28"></input>
                             <div className="form-row">
                                 <div className="input-data">
-                                    <input type="text" required />
+                                    <input type="text" name="subject" placeholder='...' required />
                                     <div className="underline"></div>
                                     <label>Subject</label>
                                 </div>
                             </div>
                             <div className="form-row">
+                                <div className="input-data">
+                                    <input type="email" name="user-email" placeholder='...' required />
+                                    <div className="underline"></div>
+                                    <label>Your Email</label>
+                                </div>
+                            </div>
+                            <div className="form-row">
                                 <div className="input-data textarea">
-                                    <textarea rows="8" cols="80" required></textarea>
+                                    <textarea rows="8" cols="80"  required name="user-message" placeholder='...'></textarea>
                                     <div className="underline"></div>
                                     <label>Write your message</label>
                                 </div>

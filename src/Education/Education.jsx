@@ -34,7 +34,7 @@ function Education(){
             <div>
                 <h1 style={title}>Education</h1>
             </div>
-            <div style={{ backgroundColor: '#F4EBE8', padding: '100px 0' }}>
+            <div style={{ backgroundColor: '#F4EBE8', padding: '100px 0' ,boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
                 <div className="experience-item">
                     <div className='shape-container'>
                         <div style={box}><h5 style={year}>Present</h5></div>

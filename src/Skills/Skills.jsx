@@ -100,7 +100,7 @@ function Skills() {
             <div id="Skill">
                 <h1 style={title}>My Skills</h1>
             </div>
-            <div style={{backgroundColor:'#F4EBE8 ', padding:'100px 0'}}>
+            <div style={{backgroundColor:'#F4EBE8 ', padding:'100px 0', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
             <Box sx={{ flexGrow: 1 }} style={{margin:isSmallScreen ?'0 10px':'0 100px'}}>
             <Grid container spacing={4}>
                 <Grid item lg={4} md={6} sm={12}>

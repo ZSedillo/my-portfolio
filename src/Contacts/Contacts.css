@@ -35,9 +35,27 @@ form .form-row .textarea{
   font-size: 17px;
   border-bottom: 2px solid rgba(0,0,0, 0.12);
 }
-.input-data input:focus ~ label, .textarea textarea:focus ~ label,
-.input-data input:valid ~ label, .textarea textarea:valid ~ label{
+
+.input-data input,
+.textarea textarea {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Placeholder is not visible */
+.input-data input::placeholder, 
+.textarea textarea::placeholder {
+  color: transparent;
+}
+
+
+.input-data input:focus ~ label, 
+.textarea textarea:focus ~ label,
+.input-data input:valid ~ label, 
+.textarea textarea:valid ~ label,
+.input-data input:not(:placeholder-shown) ~ label, /* Add this line */
+.textarea textarea:not(:placeholder-shown) ~ label { /* Add this line */
   transform: translateY(-20px);
+  margin-left: -5px;
   font-size: 14px;
   color: #3498db;
 }
@@ -51,11 +69,13 @@ form .form-row .textarea{
   bottom: 10px;
   font-size: 16px;
   transition: all 0.3s ease;
+  padding-left: 5px;
 }
 
 .textarea label{
   width: 100%;
   bottom: 270px;
+  padding-left: 5px;
 }
 .input-data .underline{
   position: absolute;
@@ -73,6 +93,7 @@ form .form-row .textarea{
   transform-origin: center;
   transition: transform 0.3s ease;
 }
+
 .input-data input:focus ~ .underline:before,
 .input-data input:valid ~ .underline:before,
 .textarea textarea:focus ~ .underline:before,

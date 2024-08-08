@@ -38,7 +38,7 @@ const About = () => {
     };
     
     const laptopStyle = {
-        width: '120%',
+        width: '100%',
         height: 'auto',
         maxWidth: '700px',
         zIndex:'1',

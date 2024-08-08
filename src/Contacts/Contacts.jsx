@@ -133,7 +133,7 @@ function Contacts() {
             </div>
             <div style={contactContainer}>
                 <div style={breakPoint}>
-                    <h1 style={subTitle}>Got a Vision? Let’s Bring it to Life!</h1>
+                    <h1 id="Contacts-Section" style={subTitle}>Got a Vision? Let’s Bring it to Life!</h1>
                     <p style={{ color: '#0A090C' }}>Get in touch in the way that suits you best, and we'll explore your project in depth.</p>                 
                     </div>
                     <hr style={breakPoint} />

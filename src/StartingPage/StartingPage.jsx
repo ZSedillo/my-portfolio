@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProfilePicture from '../assets/images/sideface.png';
+import Nav from 'react-bootstrap/Nav';
 
 // Function to determine if the screen width is below 768px
 const useMediaQuery = (query) => {
@@ -80,7 +81,7 @@ const StartingPage = () => {
             <div style={gridStyle}>
                 <div style={{ paddingLeft: isSmallScreen? '0%' :'10%' }}>
                     <p style={introStyle}>I'm <span style={nameStyle}>Zandro Sedillo</span><br/>Full Stack Developer & <br/>Game Developer</p>
-                    <button style={buttonStyle} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>Contact Me</button>
+                    <Nav.Link href="#Contacts-Section"><button style={buttonStyle} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>Contact Me</button></Nav.Link>
                 </div>
                 <div style={profileContainer}>
                     <div>

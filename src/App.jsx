@@ -7,13 +7,9 @@ import Experience from './Experience/Experience.jsx'
 import Education from './Education/Education.jsx'
 import Contact from './Contacts/Contacts.jsx'
 import Footer from './Components/Footer.jsx'
-
 import './App.css'
 
-
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"></link>

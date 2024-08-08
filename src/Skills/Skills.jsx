@@ -89,7 +89,7 @@ function Skills() {
     const Item = styled(Paper)(({ theme }) => ({
         padding: theme.spacing(2),
         textAlign: 'center',
-        height: '470px',
+        height: '550px',
         display: 'flex',
         flexDirection: 'column',
     }));

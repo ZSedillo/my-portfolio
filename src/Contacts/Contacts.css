@@ -6,17 +6,6 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
-input textarea{
-  opacity:0.5;
-}
-
-/* .container{
-  max-width: 800px;
-  background: #fff;
-  width: 800px;
-  padding: 25px 40px 10px 40px;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-} */
 
 .container form{
   padding: 30px 0 0 0;
@@ -34,7 +23,7 @@ form .form-row .input-data{
 
 /* Extend Height of Textarea */
 form .form-row .textarea{
-  height: 200px;
+  height: 300px;
 }
 .input-data input,
 .textarea textarea{
@@ -42,6 +31,7 @@ form .form-row .textarea{
   width: 100%;
   height: 100%;
   border: none;
+  border-radius: 5px;
   font-size: 17px;
   border-bottom: 2px solid rgba(0,0,0, 0.12);
 }
@@ -62,9 +52,10 @@ form .form-row .textarea{
   font-size: 16px;
   transition: all 0.3s ease;
 }
+
 .textarea label{
   width: 100%;
-  bottom: 170px;
+  bottom: 270px;
 }
 .input-data .underline{
   position: absolute;
@@ -87,4 +78,11 @@ form .form-row .textarea{
 .textarea textarea:focus ~ .underline:before,
 .textarea textarea:valid ~ .underline:before{
   transform: scale(1);
+}
+
+
+.unstyled-link:hover {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }

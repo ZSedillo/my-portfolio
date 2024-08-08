@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Laptop from '../assets/images/laptop.jpg'
+import Laptop from '../assets/images/laptop.png'
 
 const useMediaQuery = (query) => {
     const [matches, setMatches] = useState(window.matchMedia(query).matches);
@@ -29,7 +29,7 @@ const About = () => {
 
     const gridStyle = {
         display: 'grid',
-        gridTemplateColumns: isSmallScreen ? '0.5fr' : '450px 480px',
+        gridTemplateColumns: isSmallScreen ? '0.8fr' : '450px 480px',
         gap: '16px',
         alignItems: 'center',
         justifyContent: 'center',
@@ -38,21 +38,23 @@ const About = () => {
     };
     
     const laptopStyle = {
-        borderRadius:'50%',
-        width:'300px',
-        height:'300px',
-    }
+        width: '120%',
+        height: 'auto',
+        maxWidth: '700px',
+        zIndex:'1',
+    };
 
     const aboutParagraph = {
         fontFamily: 'Inter, sans-serif',
         fontWeight: 600,
         fontSize: '13px',
         textAlign: 'center',
+        zIndex:'-1',
     };
 
     return(
         <>
-            <div style={{marginBottom:'100px'}}>
+            <div id="About" style={{marginBottom:'100px'}}>
                 <h1 style={title}>About Me</h1>
                 <div style={gridStyle}>
                     <div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ProfilePicture from '../assets/images/sideface.jpg';
+import ProfilePicture from '../assets/images/sideface.png';
 
 // Function to determine if the screen width is below 768px
 const useMediaQuery = (query) => {
@@ -31,7 +31,7 @@ const StartingPage = () => {
 
     const introStyle = {
         color: '#0A090C',
-        fontSize: '20px',
+        fontSize: '30px',
         fontFamily: 'Inter, sans-serif',
         fontWeight: 600,
         padding: '195.5px 0 0'
@@ -39,11 +39,14 @@ const StartingPage = () => {
 
     const nameStyle = {
         color: '#2A2B2A',
-        fontSize: '25px',
+        fontSize: '40px',
+        fontFamily: 'Anton", sans-serif',
+        fontWeight: '900',
+        fontStyle: 'normal',
     };
 
     const buttonStyle = {
-        backgroundColor: isHovered ? '#F0F0F0' : '#EAEAEA',
+        backgroundColor: isHovered ? '#EFDECD' : '#F4EBE8',
         border: 'none',
         borderRadius: '10px',
         color: '#0A090C',
@@ -65,11 +68,12 @@ const StartingPage = () => {
     };
 
     const profileIMG = {
-        borderRadius: '100%',
+        width: '100%', 
+        height: 'auto', 
+        maxWidth: '700px', 
         marginTop: '200px',
-        width: '300px',
-        height: '300px',
     };
+    
 
     return (
         <>

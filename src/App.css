@@ -1,3 +1,52 @@
 body{
     background-color:#F6F0ED;
 }
+
+.section-load-up{
+    transform:translateY(100px);
+    opacity:0;
+    transition: 1.5s ease;
+}
+
+.section-load-up--visible{
+    transform: translate(0px);
+    opacity:1;
+}
+
+.section-load-down{
+    display: none;
+    transform:translateY(-100px);
+    opacity:0;
+    transition: 1s ease;
+}
+
+.section-load-down--visible{
+    transform: translateY(0px);
+    opacity:1;
+}
+
+.section-load-left{
+    position:relative;
+    transform:translateX(-100px);
+    opacity:0;
+    transition: 1s ease;
+}
+
+.section-load-left--visible{
+    transform: translateX(0px);
+    opacity:1;
+}
+
+/* This is causing a extended 100px problem on right for which affects responsiveness */
+.section-load-right{
+    position:static;
+    transform:translateX(100px);
+    opacity:0;
+    transition: 1s ease;
+}
+
+.section-load-right--visible{
+    transform: translateX(0px);
+    opacity:1;
+}
+

@@ -124,20 +124,50 @@ function Contacts() {
         display: 'flex',
         flexDirection: 'column',
     }));
-      
+    
+    useEffect(() => {
+        const handleScroll = () => {
+            document.querySelectorAll(".section-load-up").forEach(dataLoad => {
+                if (isInView(dataLoad)) {
+                    dataLoad.classList.add("section-load-up--visible");
+                } else {
+                    dataLoad.classList.remove("section-load-up--visible");
+                }
+            });
+        };
+
+        const isInView = (element) => {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.bottom > 0 &&
+                rect.top < (window.innerHeight - 120 || document.documentElement.clientHeight - 120)
+            );
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        handleScroll(); // Initial check in case the elements are already in view
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);      
 
     return (
         <>
-            <div id="Contacts">
+        <div className='section-load-up'>
+        <div id="Contacts">
                 <h6 style={title}>Contacts</h6>
             </div>
             <div style={contactContainer}>
+
+                <div>
+                    
+                </div>
                 <div style={breakPoint}>
                     <h1 id="Contacts-Section" style={subTitle}>Got a Vision? Let’s Bring it to Life!</h1>
                     <p style={{ color: '#0A090C' }}>Get in touch in the way that suits you best, and we'll explore your project in depth.</p>                 
-                    </div>
+                </div>
                     <hr style={breakPoint} />
-                    <div>
 
                     <br />
                     <Box sx={{ flexGrow: 1 }} style={{ margin: isSmallScreen ? '0 10px' : '0 100px' }}>
@@ -237,9 +267,8 @@ function Contacts() {
                     </Grid>
                     </Box>
 
-
-                </div>
             </div>
+        </div>
         </>
     )
 }

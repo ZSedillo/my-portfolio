@@ -74,11 +74,37 @@ const StartingPage = () => {
         maxWidth: '700px', 
         marginTop: '200px',
     };
-    
+
+    useEffect(() => {
+        const handleScroll = () => {
+            document.querySelectorAll(".section-load-down").forEach(dataLoad => {
+                if (isInView(dataLoad)) {
+                    dataLoad.classList.add("section-load-down--visible");
+                } else {
+                    dataLoad.classList.remove("section-load-down--visible");
+                }
+            });
+        };
+
+        const isInView = (element) => {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.bottom > 0 &&
+                rect.top < (window.innerHeight - 150 || document.documentElement.clientHeight - 150)
+            );
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        handleScroll(); // Initial check in case the elements are already in view
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     return (
         <>
-            <div style={gridStyle}>
+            <div className="section-load-down" style={gridStyle}>
                 <div style={{ paddingLeft: isSmallScreen? '0%' :'10%' }}>
                     <p style={introStyle}>I'm <span style={nameStyle}>Zandro Sedillo</span><br/>Full Stack Developer & <br/>Game Developer</p>
                     <Nav.Link href="#Contacts-Section"><button style={buttonStyle} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>Contact Me</button></Nav.Link>

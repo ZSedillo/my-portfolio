@@ -5,6 +5,7 @@ import About from './About/About.jsx'
 import Skills from './Skills/Skills.jsx'
 import Experience from './Experience/Experience.jsx'
 import Education from './Education/Education.jsx'
+import Contact from './Contacts/Contacts.jsx'
 
 import './App.css'
 
@@ -21,6 +22,7 @@ function App() {
       <Skills/>
       <Experience/>
       <Education/>
+      <Contact/>
     </>
   )
 }

@@ -87,7 +87,7 @@ const About = () => {
                     <div>
                         <img style={laptopStyle} src={Laptop} alt="Laptop" />
                     </div>
-                    <div style={{backgroundColor: '#F4EBE8', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',}}>
+                    <div style={{backgroundColor: '#FFFF', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',}}>
                     <p style={aboutParagraph}>
                         Hi I am Zandro, a dedicated and skilled developer who is keen on front-end and back-end parts. 
                         Among the special skills that I have include program debugging as well as program optimization. 

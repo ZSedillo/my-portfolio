@@ -64,7 +64,7 @@ function Experience() {
             <div>
                 <h1 style={title} className='section-load-left'>Experience</h1>
             </div>
-            <div style={{ backgroundColor: '#F4EBE8', padding: '100px 0', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
+            <div style={{ backgroundColor: '#FFFF', padding: '100px 0', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
                 <div className="experience-item section-load-left">
                     <div className='shape-container'>
                         <div style={box}><h5 style={year}>2024</h5></div>

@@ -59,7 +59,7 @@ function Contacts() {
     };
 
     const colStyle = {
-        backgroundColor: '#F4EDEA',
+        backgroundColor: '#FFFFF',
         borderRadius: '20px',
         padding: '20px',
         textAlign: 'center',
@@ -71,11 +71,9 @@ function Contacts() {
         height: '50px',
     };
 
-
-
     const contactContainer = {
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        backgroundColor: '#F4EBE8',
+        backgroundColor: '#FFFF',
         padding: '100px 0',
     }
 
@@ -104,7 +102,7 @@ function Contacts() {
     };
 
     const buttonStyle = {
-        backgroundColor: isHovered ? '#F0F0F0' : '#EFDECD',
+        backgroundColor: isHovered ? '#EFDECD' : '#F0F0F0',
         border: 'none',
         borderRadius: '10px',
         color: '#0A090C',
@@ -232,7 +230,7 @@ function Contacts() {
                         </Grid>
                         <Grid item lg={6} sm={12}>
                         <div>
-                            <h1 style={{ textAlign: 'center',backgroundColor:'#FFFFF', color:'black', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',}}>Email Me</h1>
+                            <h1 style={{ textAlign: 'center',backgroundColor:'#FFFFF', color:'black',fontFamily: 'Inter, sans-serif', fontWeight:'600', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',}}>Contact Me</h1>
                         </div>
                         <br />
                         <form action="https://api.web3forms.com/submit" method="POST" style={formStyle}>
@@ -259,7 +257,7 @@ function Contacts() {
                                 </div>
                             </div>
                             <div style={buttonContainer}>
-                                <button style={buttonStyle} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>Contact Me</button>
+                                <button style={buttonStyle} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>Send</button>
                             </div>
                         </form>
                         </Grid>

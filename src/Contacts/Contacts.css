@@ -38,7 +38,8 @@ form .form-row .textarea{
 
 .input-data input,
 .textarea textarea {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  /* border:2px solid #F0F0F0; */
 }
 
 /* Placeholder is not visible */

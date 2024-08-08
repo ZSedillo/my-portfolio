@@ -47,7 +47,7 @@ const StartingPage = () => {
     };
 
     const buttonStyle = {
-        backgroundColor: isHovered ? '#EFDECD' : '#F4EBE8',
+        backgroundColor: isHovered ? '#EFDECD' : '#F0F0F0',
         border: 'none',
         borderRadius: '10px',
         color: '#0A090C',

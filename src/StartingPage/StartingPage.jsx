@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProfilePicture from '../assets/images/sideface.png';
 import Nav from 'react-bootstrap/Nav';
 
-// Function to determine if the screen width is below 768px
+// Function to determine if the screen width is below 900px
 const useMediaQuery = (query) => {
     const [matches, setMatches] = useState(window.matchMedia(query).matches);
 
@@ -21,9 +21,13 @@ const StartingPage = () => {
     const isSmallScreen = useMediaQuery('(max-width: 900px)');
     const [isHovered, setIsHovered] = useState(false);
 
+    // Define grid areas based on screen size
     const gridStyle = {
         display: 'grid',
         gridTemplateColumns: isSmallScreen ? '1fr' : 'repeat(2, 1fr)',
+        gridTemplateAreas: isSmallScreen ? 
+            `"profile" "text"` : 
+            `"text profile"`,
         gap: '16px',
         alignItems: 'center',
         justifyContent: 'center',
@@ -59,13 +63,14 @@ const StartingPage = () => {
         cursor: 'pointer',
         transition: 'background-color 0.3s ease',
     };
-    
+
     const profileContainer = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         position: 'relative',
         minHeight: '300px', // Ensure there's enough space for the image
+        gridArea: 'profile', // Assign to the grid area
     };
 
     const profileIMG = {
@@ -73,6 +78,11 @@ const StartingPage = () => {
         height: 'auto', 
         maxWidth: '700px', 
         marginTop: '200px',
+    };
+
+    const textContainer = {
+        paddingLeft: isSmallScreen ? '0%' : '10%',
+        gridArea: 'text', // Assign to the grid area
     };
 
     useEffect(() => {
@@ -105,9 +115,20 @@ const StartingPage = () => {
     return (
         <>
             <div className="section-load-down" style={gridStyle}>
-                <div style={{ paddingLeft: isSmallScreen? '0%' :'10%' }}>
-                    <p style={introStyle}>I'm <span style={nameStyle}>Zandro Sedillo</span><br/>Full Stack Developer & <br/>Game Developer</p>
-                    <Nav.Link href="#Contacts-Section"><button style={buttonStyle} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>Contact Me</button></Nav.Link>
+                <div style={textContainer}>
+                    <p style={introStyle}>
+                        I'm <span style={nameStyle}>Zandro Sedillo</span><br/>
+                        Full Stack Developer &<br/>Game Developer
+                    </p>
+                    <Nav.Link href="#Contacts-Section">
+                        <button 
+                            style={buttonStyle} 
+                            onMouseEnter={() => setIsHovered(true)} 
+                            onMouseLeave={() => setIsHovered(false)}
+                        >
+                            Contact Me
+                        </button>
+                    </Nav.Link>
                 </div>
                 <div style={profileContainer}>
                     <div>

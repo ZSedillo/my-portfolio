@@ -230,7 +230,7 @@ function Contacts() {
                         </Grid>
                         <Grid item lg={6} sm={12}>
                         <div>
-                            <h1 style={{ textAlign: 'center',backgroundColor:'#FFFFF', color:'black',fontFamily: 'Inter, sans-serif', fontWeight:'600', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',}}>Contact Me</h1>
+                            <h1 style={{ textAlign: 'center',backgroundColor:'#FFFFF', color:'black',fontFamily: 'Inter, sans-serif', fontWeight:'600', boxShadow: '0 4px 80px rgba(0, 0, 0, 0.1)',}}>Contact Me</h1>
                         </div>
                         <br />
                         <form action="https://api.web3forms.com/submit" method="POST" style={formStyle}>

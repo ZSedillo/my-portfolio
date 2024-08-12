@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Laptop from '../assets/images/laptop.png'
+import Laptop from '../assets/images/laptop.png';
 import { colors } from '@mui/material';
-import DownloadLogo from '../assets/images/download.png'
+import DownloadLogo from '../assets/images/download.png';
+import Resume from '../assets/resume/Sedillo_CV.pdf';
 
 const useMediaQuery = (query) => {
     const [matches, setMatches] = useState(window.matchMedia(query).matches);
@@ -112,7 +113,11 @@ const About = () => {
                         in my work and also detail oriented, which is a very good combination for high performance.
                     </p>
                     <div style={{display:'absolute'}}>
-                        <button style={buttonStyle}>Download CV <img style={downloadLogo} src={DownloadLogo} alt="Download Logo"/></button>
+                        <button style={buttonStyle}> 
+                            <a href={Resume} download="Sedillo_CV" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
+                                Download CV <img src={DownloadLogo} alt="Download Logo" style={{ width: '20px', height: '20px', marginLeft: '8px' }} />
+                            </a>
+                        </button>
                     </div>
                     </div>
                 </div>

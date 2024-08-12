@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Laptop from '../assets/images/laptop.png'
+import { colors } from '@mui/material';
+import DownloadLogo from '../assets/images/download.png'
 
 const useMediaQuery = (query) => {
     const [matches, setMatches] = useState(window.matchMedia(query).matches);
@@ -52,6 +54,20 @@ const About = () => {
         zIndex:'-1',
     };
 
+    const buttonStyle = {
+        backgroundColor:'#971A8B',
+        border:'none',
+        borderRadius:'10px',
+        color:'#FFFF',
+        padding:'10px 20px',
+    }
+
+    const downloadLogo = {
+        marginLeft:'10px',
+        width:'20px',
+        height:'20px',
+    }
+
     useEffect(() => {
         const handleScroll = () => {
             document.querySelectorAll(".section-load-up").forEach(dataLoad => {
@@ -95,6 +111,9 @@ const About = () => {
                         and tools are not passive but are practiced actively by me. I have good technical skills and I am analytical 
                         in my work and also detail oriented, which is a very good combination for high performance.
                     </p>
+                    <div style={{display:'absolute'}}>
+                        <button style={buttonStyle}>Download CV <img style={downloadLogo} src={DownloadLogo} alt="Download Logo"/></button>
+                    </div>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,9 @@
 .shape-container {
+    background-color: black;
     display: flex;
     align-items: center;
     position: relative;
+    height:100%;
 }
 
 .experience-item {
@@ -32,6 +34,7 @@
     line-height: 1.5;
 }
 
+/*
 .triangle{
     border-top: 20px solid transparent;
     border-left: 30px solid #001011;
@@ -45,16 +48,17 @@
     background-color: orange;
     border-radius: 50%;
     position: absolute;
-    left: 100px; /* Adjust this to position the circle correctly */
-    top:10px; /* Adjust this to position the circle correctly */
+    left: 100px;
+    top:10px; 
     z-index: 1;
 }
 
 .vertical-line {
     width: 5px;
-    height: 200px; /* Adjust the height as needed */
+    height: 200px;
     background-color: #001011;
     position: absolute;
-    left: 108px; /* Adjust this to position the line correctly */
-    top: 15px; /* Adjust this to position the line correctly */
+    left: 108px;
+    top: 15px;
 }
+    */

@@ -17,11 +17,10 @@ function Experience() {
         backgroundColor: '#001011',
         color: '#ffff',
         display: 'flex',
-        width: '35px',
-        height:'40px',
+        width: '60px',
         justifyContent: 'center',
-        paddingLeft:'15px',
         marginLeft:'20px',
+        marginRight:'20px',
     };
 
     const year = {
@@ -68,9 +67,9 @@ function Experience() {
                 <div className="experience-item section-load-left">
                     <div className='shape-container'>
                         <div style={box}><h5 style={year}>2024</h5></div>
-                        <div className='triangle'></div>
+                        {/* <div className='triangle'></div>
                         <div className='circle'></div>
-                        <div className='vertical-line'></div>
+                        <div className='vertical-line'></div> */}
                     </div>
                     <div className="experience-content">
                         <h2>Full Stack Developer Intern</h2>

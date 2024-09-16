@@ -208,7 +208,7 @@ function Contacts() {
                                         </div>
                                         <div>
                                             <h4 style={contactTitle}>LinkedIn</h4>
-                                            <p style={contactInfo}>https://www.linkedin.com/in/zandro-sedillo-1bbb52279/</p>
+                                            <p style={contactInfo}>https://www.linkedin.com/in/zandro-miguel-sedillo-1bbb52279/</p>
                                         </div>
                                     </Item>
                                     </a>

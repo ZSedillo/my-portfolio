@@ -1,104 +1,170 @@
 import React, { useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 
-const navStyle = {
-    padding: '21px 20.5px 0',
-    fontSize: '20px',
-    fontFamily: 'Inter, sans-serif',
-    display: 'inline-block',
-    fontWeight: 600, // Semi-bold weight
-};
-
-const navLinkStyle = {
-    padding: '0 10px',
-    textDecoration: 'none',
-    color: 'black',
-};
-
-const navCollapseStyle = {
-    flexGrow: 1,
-    justifyContent: 'center',
-    textAlign: 'center',
-};
-
-const navStyleMobile = {
-    display: 'flex',
-    flexDirection: 'column',
-    textAlign: 'center',
-    alignItems: 'center',
-};
-
-// Define styles for the navbar when scrolling up or down
-const fixedNavbarStyle = {
-    position: 'fixed',
-    top: '0',
-    left: '0',
-    width: '100%',
-    transition: 'top 0.3s ease',
-    zIndex: 1000,
-    backgroundColor: '#fff', // Set background color here
-};
-
-const hiddenNavbarStyle = {
-    ...fixedNavbarStyle,
-    top: '-60px', // Adjust based on your navbar height
-};
-
-function Header() {
+const Header = () => {
+    const [isNavbarOpen, setIsNavbarOpen] = useState(false);
     const [isScrollingUp, setIsScrollingUp] = useState(true);
     const [lastScrollTop, setLastScrollTop] = useState(0);
-    const [isNavbarOpen, setIsNavbarOpen] = useState(false); // Track navbar toggle state
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
     useEffect(() => {
+        const checkScreenSize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', checkScreenSize);
+        
         const handleScroll = () => {
             const scrollTop = window.scrollY;
-
-            if (scrollTop > lastScrollTop) {
-                // Scrolling down
-                setIsScrollingUp(false);
-                if (isNavbarOpen) {
-                    setIsScrollingUp(true); // Keep navbar visible if it's open
-                }
-            } else {
-                // Scrolling up
-                setIsScrollingUp(true);
-            }
-
-            setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop); // For Mobile or negative scrolling
+            setIsScrollingUp(scrollTop < lastScrollTop || isNavbarOpen);
+            setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
         };
-
+        
         window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('resize', checkScreenSize);
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [lastScrollTop, isNavbarOpen]);
 
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [lastScrollTop, isNavbarOpen]); // Dependency array includes isNavbarOpen
+    const toggleNavbar = () => setIsNavbarOpen(prev => !prev);
+    const closeNavbar = () => setIsNavbarOpen(false);
 
-    const handleToggle = () => {
-        setIsNavbarOpen(!isNavbarOpen); // Toggle the navbar open/close state
-    };
+    const navLinks = [
+        { name: 'About', href: '#About' },
+        { name: 'Skills', href: '#Skill' },
+        { name: 'Projects', href: '#Projects' },
+        { name: 'Contacts', href: '#Contacts' }
+    ];
 
     return (
         <>
-            <Navbar expand="lg" bg="light" data-bs-theme="light" className="bg-body-tertiary" style={isScrollingUp ? fixedNavbarStyle : hiddenNavbarStyle}>
-                <Container>
-                    <Navbar.Brand href="#home"></Navbar.Brand>
-                    <Navbar.Toggle 
-                        aria-controls="basic-navbar-nav"
-                        onClick={handleToggle} // Handle toggle button click
-                    />
-                    <Navbar.Collapse id="basic-navbar-nav" style={navCollapseStyle} className={isNavbarOpen ? 'show' : ''}>
-                        <Nav className="me-auto d-flex flex-lg-row flex-column align-items-center" style={navStyleMobile}>
-                            <Nav.Link href="#About" style={{ ...navStyle, ...navLinkStyle }}>About</Nav.Link>
-                            <Nav.Link href="#Skill" style={{ ...navStyle, ...navLinkStyle }}>Skill</Nav.Link>
-                            <Nav.Link href="#Projects" style={{ ...navStyle, ...navLinkStyle }}>Projects</Nav.Link>
-                            <Nav.Link href="#Contacts" style={{ ...navStyle, ...navLinkStyle }}>Contacts</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+            <div 
+                style={{
+                    display: isNavbarOpen ? 'block' : 'none',
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    zIndex: 1050
+                }}
+                onClick={closeNavbar}
+            />
+
+            <nav style={{
+                position: 'fixed',
+                top: isScrollingUp ? '0' : '-80px',
+                left: '0',
+                width: '100%',
+                backgroundColor: 'white',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                zIndex: 1000,
+                transition: 'top 0.3s ease'
+            }}>
+                <div style={{
+                    maxWidth: '1200px',
+                    margin: '0 auto',
+                    padding: '15px 20px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}>
+                    <div style={{ fontWeight: 700, fontSize: '1.5rem' }}>Zandro</div>
+
+                    {isMobile ? (
+                        <button 
+                            style={{
+                                background: 'none',
+                                border: 'none',
+                                fontSize: '24px',
+                                cursor: 'pointer',
+                                transition: 'transform 0.3s ease',
+                                transform: isNavbarOpen ? 'rotate(90deg)' : 'rotate(0deg)'
+                            }}
+                            onClick={toggleNavbar}
+                        >
+                            {isNavbarOpen ? '✖' : '☰'}
+                        </button>
+                    ) : (
+                        <div style={{ display: 'flex' }}>
+                            {navLinks.map(link => (
+                                <a 
+                                    key={link.name}
+                                    href={link.href}
+                                    style={{
+                                        textDecoration: 'none',
+                                        color: '#333',
+                                        margin: '0 10px',
+                                        fontWeight: 500,
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '1px',
+                                        transition: 'color 0.3s ease'
+                                    }}
+                                    onMouseOver={e => e.target.style.color = '#007bff'}
+                                    onMouseOut={e => e.target.style.color = '#333'}
+                                >
+                                    {link.name}
+                                </a>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </nav>
+
+            {isMobile && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    right: isNavbarOpen ? '0' : '-300px',
+                    width: '300px',
+                    height: '100%',
+                    backgroundColor: 'white',
+                    zIndex: 1100,
+                    transition: 'right 0.3s ease',
+                    boxShadow: '-2px 0 5px rgba(0,0,0,0.1)',
+                    padding: '60px 20px'
+                }}>
+                    <button 
+                        style={{
+                            position: 'absolute',
+                            top: '15px',
+                            right: '15px',
+                            background: 'none',
+                            border: 'none',
+                            fontSize: '24px',
+                            cursor: 'pointer',
+                            transition: 'transform 0.3s ease',
+                            transform: isNavbarOpen ? 'rotate(90deg)' : 'rotate(0deg)'
+                        }}
+                        onClick={closeNavbar}
+                    >
+                        ✖
+                    </button>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        marginTop: '40px'
+                    }}>
+                        {navLinks.map(link => (
+                            <a 
+                                key={link.name}
+                                href={link.href}
+                                style={{
+                                    textDecoration: 'none',
+                                    color: '#333',
+                                    margin: '10px 0',
+                                    width: '100%',
+                                    textAlign: 'center'
+                                }}
+                                onClick={closeNavbar}
+                            >
+                                {link.name}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            )}
         </>
     );
-}
+};
 
 export default Header;

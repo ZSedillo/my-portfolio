@@ -1,19 +1,20 @@
 import React from 'react';
 
 const footerStyle = {
-    backgroundColor:'#F0F0F0',
-    color: 'grey',
-    textAlign:'center',
-    padding:'30px 0',
-    margin:'0',
-}
+    backgroundColor: '#222',
+    color: '#fff',
+    textAlign: 'center',
+    padding: '20px 0',
+    fontSize: '14px',
+    marginTop: '50px',
+};
 
-function Footer(){
-    return(
-        <>
-        <p style={footerStyle}>© 2024 Zandro Miguel Sedillo</p>
-        </>
-    )
+function Footer() {
+    return (
+        <footer style={footerStyle}>
+            <p>© 2024 Zandro Miguel Sedillo. All Rights Reserved.</p>
+        </footer>
+    );
 }
 
 export default Footer;

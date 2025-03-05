@@ -1,274 +1,270 @@
-import React, { useState, useEffect } from 'react';
-import './Contacts.css';
-import Mail from '../assets/images/mail.png';
-import Phone from '../assets/images/iphone.png';
-import LinkedIn from '../assets/images/linkedIn.png';
-import Github from '../assets/images/github.png'
+import React, { useState } from 'react';
+import MailIcon from '../assets/images/mail.png';
+import PhoneIcon from '../assets/images/iphone.png';
+import LinkedInIcon from '../assets/images/linkedIn.png';
+import GithubIcon from '../assets/images/github.png';
 
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-
-const useMediaQuery = (query) => {
-    const [matches, setMatches] = useState(window.matchMedia(query).matches);
-
-    useEffect(() => {
-        const mediaQueryList = window.matchMedia(query);
-        const handleChange = () => setMatches(mediaQueryList.matches);
-
-        mediaQueryList.addListener(handleChange);
-        return () => mediaQueryList.removeListener(handleChange);
-    }, [query]);
-
-    return matches;
+const contactCardStyle = {
+  borderRadius: '15px',
+  boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
+  textAlign: 'center',
+  padding: '20px',
+  transition: 'transform 0.3s ease',
 };
 
+const contactIconStyle = {
+  width: '50px',
+  height: '50px',
+  marginBottom: '10px',
+};
 
-function Contacts() {
-    const isSmallScreen = useMediaQuery('(max-width: 600px)');
-    const [isHovered, setIsHovered] = useState(false);
-    const title = {
-        fontFamily: 'Inter, sans-serif',
-        fontWeight: 600,
-        fontSize: '62.5px',
-        marginTop: '100px',
-        marginBottom: '25px',
-        textAlign: 'center',
-    };
+const ContactCard = ({ icon, title, info, link }) => {
+  const [isHovered, setIsHovered] = useState(false);
 
-    const contactTitle = {
-        fontFamily: 'Inter, sans-serif',
-        fontWeight: 600,
-        fontSize: '25px',
-        textAlign: 'center',
-    };
+  const hoverStyle = isHovered ? { 
+    transform: 'scale(1.05)',
+    boxShadow: '0 6px 15px rgba(0, 0, 0, 0.3)' 
+  } : {};
 
-    const contactInfo = {
-        fontFamily: 'Inter, sans-serif',
-        fontWeight: 600,
-        fontSize: '13px',
-        textAlign: 'center',
-    };
+  return (
+    <div 
+      style={{
+        ...contactCardStyle,
+        ...hoverStyle
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+    <img 
+    src={icon} 
+    alt={`${title} Icon`} 
+    style={contactIconStyle}
+    />
 
-    const imageWrapper = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: '20px', // Optional
-    };
+      <h3 style={{ 
+        fontSize: '1.25rem', 
+        fontWeight: 600, 
+        marginBottom: '0.5rem' 
+      }}>
+        {title}
+      </h3>
+      {link ? (
+        <a 
+          href={link} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          style={{ 
+            color: '#2563eb', 
+            textDecoration: 'none',
+            ':hover': { textDecoration: 'underline' }
+          }}
+        >
+          {info}
+        </a>
+      ) : (
+        <p style={{ color: '#6b7280' }}>{info}</p>
+      )}
+    </div>
+  );
+};
 
-    const colStyle = {
-        backgroundColor: '#FFFFF',
-        borderRadius: '20px',
-        padding: '20px',
-        textAlign: 'center',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Add shadow here
-    };
+const ContactSection = () => {
+  const [formData, setFormData] = useState({
+    subject: '',
+    email: '',
+    message: ''
+  });
 
-    const Logo = {
-        width: '50px',
-        height: '50px',
-    };
-
-    const contactContainer = {
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        backgroundColor: '#FFFF',
-        padding: '100px 0',
-    }
-
-    const breakPoint = {
-        width: '90%',
-        margin: '0 auto',
-    }
-
-    const subTitle = {
-        fontSize: '32.5px',
-        color: '#747274'
-    }
-
-    const formStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-        width: '100%',
-        margin: '0 auto'
-    };
-
-    const buttonContainer = {
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '20px',
-    };
-
-    const buttonStyle = {
-        backgroundColor: isHovered ? '#EFDECD' : '#F0F0F0',
-        border: 'none',
-        borderRadius: '10px',
-        color: '#0A090C',
-        fontSize: '20px',
-        fontFamily: 'Inter, sans-serif',
-        fontWeight: 600,
-        width: '139.5px',
-        height: '48px',
-        cursor: 'pointer',
-        transition: 'background-color 0.3s ease',
-    };
-
-    const Item = styled(Paper)(({ theme }) => ({
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        height: '250px',
-        display: 'flex',
-        flexDirection: 'column',
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
     }));
-    
-    useEffect(() => {
-        const handleScroll = () => {
-            document.querySelectorAll(".section-load-up").forEach(dataLoad => {
-                if (isInView(dataLoad)) {
-                    dataLoad.classList.add("section-load-up--visible");
-                } else {
-                    dataLoad.classList.remove("section-load-up--visible");
-                }
-            });
-        };
+  };
 
-        const isInView = (element) => {
-            const rect = element.getBoundingClientRect();
-            return (
-                rect.bottom > 0 &&
-                rect.top < (window.innerHeight - 120 || document.documentElement.clientHeight - 120)
-            );
-        };
+  const contactOptions = [
+    { 
+      icon: MailIcon, 
+      title: 'Email Address', 
+      info: 'sedillozandro720@gmail.com' 
+    },
+    { 
+      icon: PhoneIcon, 
+      title: 'Phone Number', 
+      info: '(63+) 09770311641' 
+    },
+    { 
+      icon: LinkedInIcon, 
+      title: 'LinkedIn', 
+      info: 'linkedin.com/in/zandro-sedillo',
+      link: 'https://www.linkedin.com/in/zandro-sedillo-1bbb52279/' 
+    },
+    { 
+      icon: GithubIcon, 
+      title: 'GitHub', 
+      info: 'github.com/ZSedillo',
+      link: 'https://github.com/ZSedillo' 
+    }
+  ];
 
-        window.addEventListener("scroll", handleScroll);
-        handleScroll(); // Initial check in case the elements are already in view
+  const containerStyle = {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '4rem 1rem',
+  };
 
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);      
+  const headerStyle = {
+    textAlign: 'center',
+    marginBottom: '3.5rem',
+  };
 
-    return (
-        <>
-        <div className='section-load-up'>
-        <div id="Contacts">
-                <h6 style={title}>Contacts</h6>
-            </div>
-            <div style={contactContainer}>
+  const gridContainerStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+    gap: '2rem',
+  };
 
-                <div>
-                    
-                </div>
-                <div style={breakPoint}>
-                    <h1 id="Contacts-Section" style={subTitle}>Got a Vision? Let’s Bring it to Life!</h1>
-                    <p style={{ color: '#0A090C' }}>Get in touch in the way that suits you best, and we'll explore your project in depth.</p>                 
-                </div>
-                    <hr style={breakPoint} />
+  const formContainerStyle = {
+    backgroundColor: 'white',
+    borderRadius: '15px',
+    boxShadow: '0 6px 15px rgba(0, 0, 0, 0.1)',  // Softer shadow
+    padding: '2.5rem',  // More padding for better spacing
+    maxWidth: '500px',
+    margin: '0 auto',
+    overflow: 'hidden',  // Prevents content overflow
+  };
+  
 
-                    <br />
-                    <Box sx={{ flexGrow: 1 }} style={{ margin: isSmallScreen ? '0 10px' : '0 100px' }}>
-                    <Grid container spacing={4}>        
-                        <Grid item lg={6} sm={12}>
-                            <Grid container spacing={4}>
+  const inputStyle = {
+    width: '100%',
+    padding: '0.75rem',
+    marginBottom: '1rem',
+    border: '1px solid #d1d5db',
+    borderRadius: '8px',
+    fontSize: '1rem',
+  };
 
-                                <Grid item lg={6} md={6} xs={12}>
-                                {/* <a href="" className="unstyled-link"> */}
-                                    <Item style={colStyle}>
-                                        <div style={imageWrapper}>
-                                            <img style={Logo} src={Mail} alt="Mail Logo" />
-                                        </div>
-                                        <div>
-                                            <h4 style={contactTitle}>Email Address</h4>
-                                            <p style={contactInfo}>sedillozandro720@gmail.com</p>
-                                        </div>
-                                    </Item>
-                                    {/* </a> */}
-                                </Grid>
+  const buttonStyle = {
+    width: '100%',
+    padding: '0.75rem',
+    backgroundColor: '#2563eb',
+    color: 'white',
+    border: 'none',
+    borderRadius: '8px',
+    fontSize: '1rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+  };
 
-                                <Grid item lg={6} md={6} xs={12}>
-                                    {/* <a href="" className="unstyled-link"> */}
-                                    <Item style={colStyle}>
-                                        <div style={imageWrapper}>
-                                            <img style={Logo} src={Phone} alt="Phone Logo" />
-                                        </div>
-                                        <div>
-                                            <h4 style={contactTitle}>Phone Number</h4>
-                                            <p style={contactInfo}>(63+) 09770311641</p>
-                                        </div>
-                                    </Item>
-                                    {/* </a> */}
-                                </Grid>
-                                <Grid item lg={6} md={6} xs={12}>
-                                    <a href="https://www.linkedin.com/in/zandro-sedillo-1bbb52279/" className="unstyled-link">
-                                    <Item style={colStyle}>
-                                        <div style={imageWrapper}>
-                                            <img style={Logo} src={LinkedIn} alt="LinkedIn Logo" />
-                                        </div>
-                                        <div>
-                                            <h4 style={contactTitle}>LinkedIn</h4>
-                                            <p style={contactInfo}>https://www.linkedin.com/in/zandro-miguel-sedillo-1bbb52279/</p>
-                                        </div>
-                                    </Item>
-                                    </a>
-                                </Grid>
-                                <Grid item lg={6} md={6} xs={12}>
-                                    <a href="https://github.com/ZSedillo" className="unstyled-link">
-                                    <Item style={colStyle}>
-                                        <div style={imageWrapper}>
-                                            <img style={Logo} src={Github} alt="Github Logo" />
-                                        </div>
-                                        <div>
-                                            <h4 style={contactTitle}>Github</h4>
-                                            <p style={contactInfo}>https://github.com/ZSedillo</p>
-                                        </div>
-                                    </Item>
-                                    </a>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Grid item lg={6} sm={12}>
-                        <div>
-                            <h1 style={{ textAlign: 'center',backgroundColor:'#FFFFF', color:'black',fontFamily: 'Inter, sans-serif', fontWeight:'600', boxShadow: '0 4px 80px rgba(0, 0, 0, 0.1)',}}>Contact Me</h1>
-                        </div>
-                        <br />
-                        <form action="https://api.web3forms.com/submit" method="POST" style={formStyle}>
-                        <input type="hidden" name="access_key" value="a0376732-b681-486f-9884-5cee5fddcf28"></input>
-                            <div className="form-row">
-                                <div className="input-data">
-                                    <input type="text" name="subject" placeholder='...' required />
-                                    <div className="underline"></div>
-                                    <label>Subject</label>
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="input-data">
-                                    <input type="email" name="user-email" placeholder='...' required />
-                                    <div className="underline"></div>
-                                    <label>Your Email</label>
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="input-data textarea">
-                                    <textarea rows="8" cols="80"  required name="user-message" placeholder='...'></textarea>
-                                    <div className="underline"></div>
-                                    <label>Write your message</label>
-                                </div>
-                            </div>
-                            <div style={buttonContainer}>
-                                <button style={buttonStyle} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>Send</button>
-                            </div>
-                        </form>
-                        </Grid>
+  return (
+    <div style={containerStyle}>
+      <div style={headerStyle}>
+        <h2 style={{ 
+          fontSize: '2.5rem', 
+          fontWeight: 'bold', 
+          marginBottom: '1rem',
+          color: '#1f2937'
+        }}>
+          Contact
+        </h2>
+        <p style={{ 
+        fontSize: '1.25rem', 
+        color: '#6b7280',
+        maxWidth: '600px',
+        margin: '0 auto',
+        fontWeight: 'bold'
+        }}>
+        <strong>Got a Vision? Let's Bring it to Life!</strong>
+        </p>
 
-                    </Grid>
-                    </Box>
+        <p style={{ 
+          fontSize: '1.10rem', 
+          color: '#6b7280',
+          maxWidth: '700px',
+          margin: '0 auto'
+        }}>
+          Get in touch in the way that suits you best, and we'll explore your project in depth.
+        </p>
+      </div>
 
-            </div>
+      <div style={gridContainerStyle}>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
+          gap: '1.5rem' 
+        }}>
+          {contactOptions.map((contact, index) => (
+            <ContactCard 
+              key={index}
+              icon={contact.icon}
+              title={contact.title}
+              info={contact.info}
+              link={contact.link}
+            />
+          ))}
         </div>
-        </>
-    )
-}
 
-export default Contacts;
+        <div style={formContainerStyle}>
+          <h3 style={{ 
+            textAlign: 'center', 
+            fontSize: '1.5rem', 
+            marginBottom: '1.5rem',
+            color: '#1f2937'
+          }}>
+            Contact Me
+          </h3>
+          <form 
+            action="https://api.web3forms.com/submit" 
+            method="POST"
+          >
+            <input 
+              type="hidden" 
+              name="access_key" 
+              value="a0376732-b681-486f-9884-5cee5fddcf28" 
+            />
+            
+            <input
+              type="text"
+              name="subject"
+              placeholder="Subject"
+              required
+              style={inputStyle}
+            />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              required
+              style={inputStyle}
+            />
+
+            <textarea
+              name="message"
+              placeholder="Your Message"
+              required
+              rows="4"
+              style={{
+                ...inputStyle,
+                resize: 'vertical'
+              }}
+            ></textarea>
+
+            <button
+              type="submit"
+              style={buttonStyle}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#1d4ed8'}
+              onMouseOut={(e) => e.target.style.backgroundColor = '#2563eb'}
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ContactSection;

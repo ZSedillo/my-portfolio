@@ -159,7 +159,7 @@ const ContactSection = () => {
   };
 
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} id = "Contacts">
       <div style={headerStyle}>
         <h2 style={{ 
           fontSize: '2.5rem', 

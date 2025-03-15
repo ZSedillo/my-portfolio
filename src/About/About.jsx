@@ -43,10 +43,10 @@ const About = () => {
     }, []);
 
     return (
-        <section id="About" className="section-load-up" style={{ marginBottom: '100px', textAlign: 'center' }}>
-            <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '60px', marginTop: '250px', color: '#333' }}>
+        <section id="About" className="section-load-up" style={{ marginBottom: '120px', textAlign: 'center' }}>
+            <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '60px', marginTop: '150px', color: '#333' }}>
                 About Me
-            </h1>
+            </h1>   
             <div
                 style={{
                     display: 'grid',

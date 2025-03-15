@@ -44,6 +44,12 @@ const StartingPage = () => {
     }, []);
 
     return (
+        <>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <div className="section-load-down"
             style={{
                 display: 'grid',
@@ -118,6 +124,7 @@ const StartingPage = () => {
                 />
             </div>
         </div>
+        </>
     );
 };
 

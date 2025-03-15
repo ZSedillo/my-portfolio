@@ -29,7 +29,7 @@ function Experience() {
     }, []);
 
     return (
-        <div style={{ padding: '100px 0', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <div style={{ padding: '100px 0', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0, 0, 0, 1)' }}>
             <h1 className="section-load-left" style={{
                 fontFamily: 'Arial, sans-serif',
                 fontWeight: 700,

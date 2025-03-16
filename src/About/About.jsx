@@ -43,7 +43,7 @@ const About = () => {
     }, []);
 
     return (
-        <section id="About" className="section-load-up" style={{ marginBottom: '120px', textAlign: 'center' }}>
+        <section id="" className="section-load-up" style={{ marginBottom: '120px', textAlign: 'center' }}>
             <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '60px', marginTop: '150px', color: '#333' }}>
                 About Me
             </h1>   
@@ -111,6 +111,7 @@ const About = () => {
                     </button>
                 </div>
             </div>
+            <hr style={{ margin: '50px auto', width: '80%', border: '1px solid rgba(0, 0, 0, 0.1)' }} />
         </section>
     );
 };

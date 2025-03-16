@@ -34,7 +34,6 @@ function Education() {
                 fontFamily: 'Arial, sans-serif',
                 fontWeight: 700,
                 fontSize: '50px',
-                marginTop: '100px',
                 marginBottom: '25px',
                 textAlign: 'center',
                 color: '#001011'

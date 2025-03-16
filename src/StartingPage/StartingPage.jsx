@@ -80,7 +80,7 @@ const StartingPage = () => {
                     }}>Zandro Sedillo</span><br />
                     Full Stack Developer &<br />Game Developer
                 </p>
-                <Nav.Link href="#Contacts-Section">
+                <Nav.Link href="#Contacts">
                     <button
                         style={{
                             backgroundColor: isHovered ? '#2A2B2A' : '#0A090C',
@@ -124,6 +124,7 @@ const StartingPage = () => {
                 />
             </div>
         </div>
+        <hr style={{ margin: '50px auto', width: '80%', border: '1px solid rgba(0, 0, 0, 0.1)' }} />
         </>
     );
 };

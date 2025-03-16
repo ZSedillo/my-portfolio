@@ -29,9 +29,6 @@ const title = {
     marginTop: '150px',
     marginBottom: '25px',
     textAlign: 'center',
-    opacity: 0,
-    transform: 'translateY(-20px)',
-    animation: 'fadeIn 1s ease-out forwards',
 };
 
 const skillTitle = {
@@ -96,16 +93,6 @@ const Skills = () => {
 
     return (
         <>
-            <style>
-                {`
-                    @keyframes fadeIn {
-                        to {
-                            opacity: 1;
-                            transform: translateY(0);
-                        }
-                    }
-                `}
-            </style>
             <div id="Skill">
                 <h1 className="section-load-left" style={title}>My Skills</h1>
             </div>

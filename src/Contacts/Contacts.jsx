@@ -55,7 +55,7 @@ const FloatingInput = ({ label, type, name, value, onChange }) => {
 };
 
 
-const ContactSection = () => {
+const Contacts = () => {
   const [formData, setFormData] = useState({
     subject: "",
     email: "",
@@ -80,7 +80,7 @@ const [isMessageFocused, setIsMessageFocused] = useState(false);
       icon: LinkedInIcon,
       title: "LinkedIn",
       info: "linkedin.com/in/zandro-sedillo",
-      link: "https://www.linkedin.com/in/zandro-sedillo-1bbb52279/",
+      link: "https://www.linkedin.com/in/zandro-miguel-sedillo-1bbb52279/",
     },
     { icon: GithubIcon, title: "GitHub", info: "github.com/ZSedillo", link: "https://github.com/ZSedillo" },
   ];
@@ -116,28 +116,38 @@ const [isMessageFocused, setIsMessageFocused] = useState(false);
               gap: "1.5rem",
             }}
           >
-            {contactOptions.map((contact, index) => (
-              <div
-                key={index}
-                style={{
-                  borderRadius: "15px",
-                  boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)",
-                  textAlign: "center",
-                  padding: "20px",
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                }}
-              >
-                <img src={contact.icon} alt={`${contact.title} Icon`} style={{ width: "50px", height: "50px", marginBottom: "10px" }} />
-                <h3 style={{ fontSize: "1.25rem", fontWeight: 600, marginBottom: "0.5rem" }}>{contact.title}</h3>
-                {contact.link ? (
-                  <a href={contact.link} target="_blank" rel="noopener noreferrer" style={{ color: "#2563eb", textDecoration: "none" }}>
-                    {contact.info}
-                  </a>
-                ) : (
-                  <p style={{ color: "#6b7280" }}>{contact.info}</p>
-                )}
-              </div>
-            ))}
+        {contactOptions.map((contact, index) => (
+          <div 
+            key={index}
+            style={{
+              borderRadius: "15px",
+              boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)",
+              textAlign: "center",
+              padding: "20px",
+              transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              cursor: "pointer",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "scale(1.05)";
+              e.currentTarget.style.boxShadow = "0 10px 20px rgba(0, 0, 0, 0.4)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.boxShadow = "0 6px 15px rgba(0, 0, 0, 0.3)";
+            }}
+          >
+            <img src={contact.icon} alt={`${contact.title} Icon`} style={{ width: "50px", height: "50px", marginBottom: "10px" }} />
+            <h3 style={{ fontSize: "1.25rem", fontWeight: 600, marginBottom: "0.5rem" }}>{contact.title}</h3>
+            {contact.link ? (
+              <a href={contact.link} target="_blank" rel="noopener noreferrer" style={{ color: "#2563eb", textDecoration: "none" }}>
+                {contact.info}
+              </a>
+            ) : (
+              <p style={{ color: "#6b7280" }}>{contact.info}</p>
+            )}
+          </div>
+        ))}
+
           </div>
         </div>
 
@@ -163,42 +173,42 @@ const [isMessageFocused, setIsMessageFocused] = useState(false);
 
             {/* Textarea */}
             <div style={{ position: "relative", marginBottom: "1.5rem" }}>
-  <textarea
-    name="message"
-    required
-    value={formData.message}
-    onChange={handleInputChange}
-    onFocus={() => setIsMessageFocused(true)}
-    onBlur={() => setIsMessageFocused(false)}
-    style={{
-      width: "100%",
-      padding: "1rem 0.75rem 0.5rem",
-      border: "2px solid #d1d5db",
-      borderRadius: "8px",
-      fontSize: "1rem",
-      minHeight: "120px",
-      outline: "none",
-      transition: "border-color 0.3s ease",
-      backgroundColor: "white",
-      borderColor: isMessageFocused ? "#2563eb" : "#d1d5db",
-    }}
-  ></textarea>
-  <label
-    style={{
-      position: "absolute",
-      left: "12px",
-      top: isMessageFocused || formData.message ? "-8px" : "10px",
-      fontSize: isMessageFocused || formData.message ? "0.75rem" : "1rem",
-      color: isMessageFocused || formData.message ? "#2563eb" : "#6b7280",
-      pointerEvents: "none",
-      transition: "all 0.3s ease",
-      backgroundColor: "white",
-      padding: "0 5px",
-    }}
-  >
-    Your Message
-  </label>
-</div>
+          <textarea
+            name="message"
+            required
+            value={formData.message}
+            onChange={handleInputChange}
+            onFocus={() => setIsMessageFocused(true)}
+            onBlur={() => setIsMessageFocused(false)}
+            style={{
+              width: "100%",
+              padding: "1rem 0.75rem 0.5rem",
+              border: "2px solid #d1d5db",
+              borderRadius: "8px",
+              fontSize: "1rem",
+              minHeight: "120px",
+              outline: "none",
+              transition: "border-color 0.3s ease",
+              backgroundColor: "white",
+              borderColor: isMessageFocused ? "#2563eb" : "#d1d5db",
+            }}
+          ></textarea>
+          <label
+            style={{
+              position: "absolute",
+              left: "12px",
+              top: isMessageFocused || formData.message ? "-8px" : "10px",
+              fontSize: isMessageFocused || formData.message ? "0.75rem" : "1rem",
+              color: isMessageFocused || formData.message ? "#2563eb" : "#6b7280",
+              pointerEvents: "none",
+              transition: "all 0.3s ease",
+              backgroundColor: "white",
+              padding: "0 5px",
+            }}
+          >
+            Your Message
+          </label>
+        </div>
 
             <button
               type="submit"
@@ -223,4 +233,4 @@ const [isMessageFocused, setIsMessageFocused] = useState(false);
   );
 };
 
-export default ContactSection;
+export default Contacts;

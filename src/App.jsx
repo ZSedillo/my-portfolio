@@ -3,6 +3,7 @@ import Header from './Components/Header.jsx'
 import StartingPage from './StartingPage/StartingPage.jsx'
 import About from './About/About.jsx'
 import Skills from './Skills/Skills.jsx'
+import Projects from './Projects/Projects.jsx'
 import Experience from './Experience/Experience.jsx'
 import Education from './Education/Education.jsx'
 import Contact from './Contacts/Contacts.jsx'
@@ -19,6 +20,8 @@ function App() {
       <div id="About"></div>
       <About/>
       <Skills/>
+      <Projects/>
+      <hr style={{ margin: '50px auto', width: '80%', border: '1px solid rgba(0, 0, 0, 0.1)' }} />
       <Experience/>
       <hr style={{ margin: '50px auto', width: '80%', border: '1px solid rgba(0, 0, 0, 0.1)' }} />
       <Education/>

@@ -39,7 +39,7 @@ const Footer = () => {
           <span>Built with</span>
           <img src=".../../public/vite.svg " alt="Vite Logo" style={{ height: '20px' }} /> Vite
           &
-          <img src="../../public/react.svg" alt="React Logo" style={{ height: '20px' }} /> React
+          <img src=".../../public/react.svg" alt="React Logo" style={{ height: '20px' }} /> React
         </div>
       </div>
     </footer>

@@ -7,6 +7,15 @@ const Header = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const [activeSection, setActiveSection] = useState('Home');
 
+    const navLinks = [
+        { name: 'Home', href: '#StartingPage' },
+        { name: 'About', href: '#About' },
+        { name: 'Experience', href: '#Experience' },
+        { name: 'Skills', href: '#Skills' },
+        { name: 'Projects', href: '#Projects' },
+        { name: 'Contact', href: '#Contacts' }
+    ];
+
     useEffect(() => {
         const checkScreenSize = () => setIsMobile(window.innerWidth <= 768);
         window.addEventListener('resize', checkScreenSize);
@@ -18,23 +27,55 @@ const Header = () => {
         };
         
         window.addEventListener('scroll', handleScroll);
+        
+        // Intersection Observer for active section detection
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px', // Trigger when section is 20% from top
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.id;
+                    // Map section IDs to navigation names
+                    const sectionMap = {
+                        'StartingPage': 'Home',
+                        'About': 'About',
+                        'Experience': 'Experience',
+                        'Skills': 'Skills',
+                        'Projects': 'Projects',
+                        'Contacts': 'Contact'
+                    };
+                    
+                    const sectionName = sectionMap[sectionId];
+                    if (sectionName && sectionName !== activeSection) {
+                        setActiveSection(sectionName);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        const sectionIds = ['StartingPage', 'About', 'Experience', 'Skills', 'Projects', 'Contacts'];
+        const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+        
+        sections.forEach(section => {
+            if (section) observer.observe(section);
+        });
+
         return () => {
             window.removeEventListener('resize', checkScreenSize);
             window.removeEventListener('scroll', handleScroll);
+            sections.forEach(section => {
+                if (section) observer.unobserve(section);
+            });
         };
-    }, [lastScrollTop, isNavbarOpen]);
+    }, [lastScrollTop, isNavbarOpen, activeSection]);
 
     const toggleNavbar = () => setIsNavbarOpen(prev => !prev);
     const closeNavbar = () => setIsNavbarOpen(false);
-
-    const navLinks = [
-        { name: 'Home', href: '#StartingPage' },
-        { name: 'About', href: '#About' },
-        { name: 'Experience', href: '#Experience' },
-        { name: 'Skills', href: '#Skills' },
-        { name: 'Projects', href: '#Projects' },
-        { name: 'Contact', href: '#Contacts' }
-    ];
 
     const handleNavClick = (sectionName) => {
         setActiveSection(sectionName);

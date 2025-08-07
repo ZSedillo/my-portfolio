@@ -51,7 +51,7 @@ const About = () => {
       background: 'linear-gradient(135deg, #F8FAFC 0%, #EBF8FF 50%, #E0E7FF 100%)',
       fontFamily: 'Poppins, sans-serif',
       overflowX: 'hidden'
-    }}>
+    }} id="About">
       {/* Hero Section */}
       <section style={{
         position: 'relative',

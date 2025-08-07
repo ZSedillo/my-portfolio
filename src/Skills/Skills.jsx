@@ -93,7 +93,7 @@ const Skills = () => {
 
     return (
         <>
-            <div id="Skill">
+            <div id="Skills">
                 <h1 className="section-load-left" style={title}>My Skills</h1>
             </div>
             <div style={{ backgroundColor: 'white', padding: '100px 0', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>

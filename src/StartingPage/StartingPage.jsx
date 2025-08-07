@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ProfilePicture from '../assets/images/sideface.png';
-import Nav from 'react-bootstrap/Nav';
 
 // Custom hook for media query
 const useMediaQuery = (query) => {
@@ -18,10 +17,16 @@ const useMediaQuery = (query) => {
 };
 
 const StartingPage = () => {
-    const isSmallScreen = useMediaQuery('(max-width: 900px)');
+    const isSmallScreen = useMediaQuery('(max-width: 768px)');
+    const isMediumScreen = useMediaQuery('(max-width: 1024px)');
     const [isHovered, setIsHovered] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsVisible(true);
+        }, 300);
+
         const handleScroll = () => {
             document.querySelectorAll(".section-load-down").forEach(element => {
                 if (isInView(element)) {
@@ -38,93 +43,260 @@ const StartingPage = () => {
         };
 
         window.addEventListener("scroll", handleScroll);
-        handleScroll(); // Initial check for elements in view
+        handleScroll();
 
-        return () => window.removeEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            clearTimeout(timer);
+        };
     }, []);
+
+    // Profile image component
+    const ProfileImage = () => (
+        <img
+            src={ProfilePicture}
+            alt="Zandro Sedillo - Profile Picture"
+            style={{
+                width: '100%',
+                height: 'auto',
+                maxWidth: isSmallScreen ? '280px' : isMediumScreen ? '400px' : '500px',
+                borderRadius: isSmallScreen ? '20px' : '24px',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.8)',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                filter: 'saturate(1.1) contrast(1.05)',
+                objectFit: 'cover'
+            }}
+        />
+    );
 
     return (
         <>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <div className="section-load-down"
-            style={{
-                display: 'grid',
-                gridTemplateColumns: isSmallScreen ? '1fr' : 'repeat(2, 1fr)',
-                gridTemplateAreas: isSmallScreen ? '"profile" "text"' : '"text profile"',
-                gap: '40px',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: isSmallScreen ? '50px 20px' : '100px 80px',
-                textAlign: isSmallScreen ? 'center' : 'left',
-                backgroundColor: '#F9F9F9'
-            }}
-        >
-            <div style={{ gridArea: 'text', paddingLeft: isSmallScreen ? '0%' : '10%' }}>
-                <p style={{
-                    color: '#0A090C',
-                    fontSize: isSmallScreen ? '26px' : '34px',
-                    fontFamily: 'Inter, sans-serif',
-                    fontWeight: 600,
-                    lineHeight: '1.4',
-                    marginBottom: '20px'
+            {/* Spacer for fixed header */}
+            <div style={{ height: isSmallScreen ? '80px' : '100px' }} />
+            
+            <div className="section-load-down" id="StartingPage"
+                style={{
+                    display: 'grid',
+                    gridTemplateColumns: isSmallScreen ? '1fr' : 'repeat(2, 1fr)',
+                    gridTemplateAreas: isSmallScreen ? '"profile" "text"' : '"text profile"',
+                    gap: isSmallScreen ? '40px' : isMediumScreen ? '60px' : '80px',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: isSmallScreen ? '40px 16px' : isMediumScreen ? '60px 40px' : '80px 60px',
+                    textAlign: 'center',
+                    background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+                    minHeight: isSmallScreen ? 'auto' : '90vh',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    maxWidth: '1400px',
+                    margin: '0 auto'
+                }}
+            >
+                {/* Background decorative elements */}
+                <div style={{
+                    position: 'absolute',
+                    top: '15%',
+                    right: isSmallScreen ? '5%' : '10%',
+                    width: isSmallScreen ? '120px' : '200px',
+                    height: isSmallScreen ? '120px' : '200px',
+                    background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
+                    borderRadius: '50%',
+                    filter: 'blur(60px)',
+                    zIndex: 0
+                }} />
+                
+                <div style={{
+                    position: 'absolute',
+                    bottom: '20%',
+                    left: isSmallScreen ? '5%' : '10%',
+                    width: isSmallScreen ? '100px' : '150px',
+                    height: isSmallScreen ? '100px' : '150px',
+                    background: 'linear-gradient(135deg, rgba(118, 75, 162, 0.1) 0%, rgba(102, 126, 234, 0.1) 100%)',
+                    borderRadius: '50%',
+                    filter: 'blur(40px)',
+                    zIndex: 0
+                }} />
+
+                {/* Text Content */}
+                <div style={{ 
+                    gridArea: 'text', 
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    position: 'relative',
+                    zIndex: 1,
+                    transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+                    opacity: isVisible ? 1 : 0,
+                    transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                    maxWidth: '100%'
                 }}>
-                    I'm <span style={{
-                        color: '#2A2B2A',
-                        fontSize: isSmallScreen ? '36px' : '48px',
-                        fontFamily: 'Anton, sans-serif',
-                        fontWeight: 900
-                    }}>Zandro Sedillo</span><br />
-                    Full Stack Developer &<br />Game Developer
-                </p>
-                <Nav.Link href="#Contacts">
-                    <button
-                        style={{
-                            backgroundColor: isHovered ? '#2A2B2A' : '#0A090C',
-                            border: 'none',
-                            borderRadius: '12px',
-                            color: '#FFFFFF',
-                            fontSize: '18px',
-                            fontFamily: 'Inter, sans-serif',
-                            fontWeight: 600,
-                            width: '160px',
-                            height: '50px',
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease',
-                            boxShadow: isHovered ? '0px 8px 20px rgba(0, 0, 0, 0.3)' : '0px 4px 10px rgba(0, 0, 0, 0.1)',
-                            transform: isHovered ? 'translateY(-3px)' : 'translateY(0)',
-                        }}
-                        onMouseEnter={() => setIsHovered(true)}
-                        onMouseLeave={() => setIsHovered(false)}
-                    >
-                        Contact Me
-                    </button>
-                </Nav.Link>
+                    {/* Greeting badge */}
+                    <div style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        backgroundColor: '#f1f5f9',
+                        padding: isSmallScreen ? '6px 12px' : '8px 16px',
+                        borderRadius: '50px',
+                        fontSize: isSmallScreen ? '12px' : '14px',
+                        fontWeight: 500,
+                        color: '#475569',
+                        marginBottom: isSmallScreen ? '20px' : '32px',
+                        border: '1px solid #e2e8f0'
+                    }}>
+                        <span style={{ fontSize: isSmallScreen ? '14px' : '16px' }}>👋</span>
+                        Hello, I'm
+                    </div>
+
+                    {/* Main heading */}
+                    <h1 style={{
+                        color: '#0f172a',
+                        fontSize: isSmallScreen ? '24px' : isMediumScreen ? '36px' : '42px',
+                        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+                        fontWeight: 700,
+                        lineHeight: 1.2,
+                        marginBottom: isSmallScreen ? '8px' : '16px',
+                        letterSpacing: '-0.02em'
+                    }}>
+                        <span style={{
+                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                            fontSize: isSmallScreen ? '36px' : isMediumScreen ? '48px' : '64px',
+                            fontWeight: 800,
+                            display: 'block',
+                            marginBottom: isSmallScreen ? '4px' : '8px'
+                        }}>
+                            Zandro Sedillo
+                        </span>
+                    </h1>
+
+                    {/* Subtitle */}
+                    <p style={{
+                        color: '#64748b',
+                        fontSize: isSmallScreen ? '16px' : isMediumScreen ? '18px' : '22px',
+                        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+                        fontWeight: 400,
+                        lineHeight: 1.6,
+                        marginBottom: isSmallScreen ? '32px' : '48px',
+                        maxWidth: isSmallScreen ? '100%' : '600px',
+                        margin: `0 auto ${isSmallScreen ? '32px' : '48px'} auto`
+                    }}>
+                        Full Stack Developer &<br />
+                        Game Developer
+                    </p>
+
+                    {/* CTA Buttons */}
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: isSmallScreen ? 'column' : 'row',
+                        gap: isSmallScreen ? '12px' : '16px',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%'
+                    }}>
+                        <a href="#Contacts" style={{ textDecoration: 'none', width: isSmallScreen ? '100%' : 'auto' }}>
+                            <button
+                                style={{
+                                    background: isHovered ? 'linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                    border: 'none',
+                                    borderRadius: '50px',
+                                    color: '#ffffff',
+                                    fontSize: isSmallScreen ? '14px' : '16px',
+                                    fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+                                    fontWeight: 600,
+                                    padding: isSmallScreen ? '14px 28px' : '16px 32px',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                    boxShadow: isHovered ? '0 20px 25px -5px rgba(102, 126, 234, 0.4)' : '0 10px 15px -3px rgba(102, 126, 234, 0.3)',
+                                    transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
+                                    minWidth: isSmallScreen ? '100%' : '160px',
+                                    letterSpacing: '0.3px',
+                                    width: isSmallScreen ? '100%' : 'auto'
+                                }}
+                                onMouseEnter={() => setIsHovered(true)}
+                                onMouseLeave={() => setIsHovered(false)}
+                            >
+                                Contact Me
+                            </button>
+                        </a>
+                        
+                        <a href="#Projects" style={{ textDecoration: 'none', width: isSmallScreen ? '100%' : 'auto' }}>
+                            <button
+                                style={{
+                                    background: 'transparent',
+                                    border: '2px solid #e2e8f0',
+                                    borderRadius: '50px',
+                                    color: '#334155',
+                                    fontSize: isSmallScreen ? '14px' : '16px',
+                                    fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+                                    fontWeight: 600,
+                                    padding: isSmallScreen ? '12px 28px' : '14px 32px',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                    minWidth: isSmallScreen ? '100%' : '160px',
+                                    letterSpacing: '0.3px',
+                                    width: isSmallScreen ? '100%' : 'auto'
+                                }}
+                                onMouseOver={e => {
+                                    e.target.style.borderColor = '#667eea';
+                                    e.target.style.color = '#667eea';
+                                    e.target.style.backgroundColor = '#f8fafc';
+                                }}
+                                onMouseOut={e => {
+                                    e.target.style.borderColor = '#e2e8f0';
+                                    e.target.style.color = '#334155';
+                                    e.target.style.backgroundColor = 'transparent';
+                                }}
+                            >
+                                View Projects
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+                {/* Profile Image */}
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'relative',
+                    gridArea: 'profile',
+                    zIndex: 1,
+                    transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+                    opacity: isVisible ? 1 : 0,
+                    transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s'
+                }}>
+                    <ProfileImage />
+                </div>
             </div>
+
+            {/* Modern divider */}
             <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                position: 'relative',
-                gridArea: 'profile'
+                margin: '0 auto',
+                width: '100%',
+                height: '1px',
+                background: 'linear-gradient(90deg, transparent 0%, #e2e8f0 50%, transparent 100%)',
+                position: 'relative'
             }}>
-                <img
-                    src={ProfilePicture}
-                    alt="Profile Picture"
-                    style={{
-                        width: '100%',
-                        height: 'auto',
-                        maxWidth: isSmallScreen ? '80%' : '600px',
-                        borderRadius: '10px',
-                        filter: 'drop-shadow(0px 8px 20px rgba(0, 0, 0, 0.2))'
-                    }}
-                />
+                <div style={{
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '40px',
+                    height: '40px',
+                    backgroundColor: '#ffffff',
+                    borderRadius: '50%',
+                    border: '1px solid #e2e8f0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '16px'
+                }}>
+                    ✦
+                </div>
             </div>
-        </div>
-        <hr style={{ margin: '50px auto', width: '80%', border: '1px solid rgba(0, 0, 0, 0.1)' }} />
         </>
     );
 };

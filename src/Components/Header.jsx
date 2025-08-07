@@ -5,6 +5,7 @@ const Header = () => {
     const [isScrollingUp, setIsScrollingUp] = useState(true);
     const [lastScrollTop, setLastScrollTop] = useState(0);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const [activeSection, setActiveSection] = useState('Home');
 
     useEffect(() => {
         const checkScreenSize = () => setIsMobile(window.innerWidth <= 768);
@@ -27,14 +28,22 @@ const Header = () => {
     const closeNavbar = () => setIsNavbarOpen(false);
 
     const navLinks = [
+        { name: 'Home', href: '#StartingPage' },
         { name: 'About', href: '#About' },
-        { name: 'Skills', href: '#Skill' },
+        { name: 'Experience', href: '#Experience' },
+        { name: 'Skills', href: '#Skills' },
         { name: 'Projects', href: '#Projects' },
-        { name: 'Contacts', href: '#Contacts' }
+        { name: 'Contact', href: '#Contacts' }
     ];
+
+    const handleNavClick = (sectionName) => {
+        setActiveSection(sectionName);
+        closeNavbar();
+    };
 
     return (
         <>
+            {/* Mobile overlay */}
             <div 
                 style={{
                     display: isNavbarOpen ? 'block' : 'none',
@@ -54,110 +63,212 @@ const Header = () => {
                 top: isScrollingUp ? '0' : '-80px',
                 left: '0',
                 width: '100%',
-                backgroundColor: 'white',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                backgroundColor: '#ffffff',
+                boxShadow: '0 2px 20px rgba(0,0,0,0.08)',
                 zIndex: 1000,
-                transition: 'top 0.3s ease'
+                transition: 'top 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                borderBottom: '1px solid rgba(0,0,0,0.05)'
             }}>
                 <div style={{
                     maxWidth: '1200px',
                     margin: '0 auto',
-                    padding: '15px 20px',
+                    padding: '12px 24px',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                    <div style={{ fontWeight: 700, fontSize: '1.5rem' }}>Zandro</div>
+                    {/* Logo */}
+                    <div style={{ 
+                        fontWeight: 700, 
+                        fontSize: '1.75rem',
+                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                        letterSpacing: '-0.5px'
+                    }}>
+                        Zandro
+                    </div>
 
-                    {isMobile ? (
+                    {/* Desktop Navigation */}
+                    {!isMobile ? (
+                        <div style={{ 
+                            display: 'flex',
+                            backgroundColor: '#f8fafc',
+                            borderRadius: '50px',
+                            padding: '8px',
+                            gap: '4px',
+                            border: '1px solid #e2e8f0'
+                        }}>
+                            {navLinks.map(link => (
+                                <a 
+                                    key={link.name}
+                                    href={link.href}
+                                    onClick={() => handleNavClick(link.name)}
+                                    style={{
+                                        textDecoration: 'none',
+                                        color: activeSection === link.name ? '#ffffff' : '#64748b',
+                                        padding: '12px 20px',
+                                        borderRadius: '25px',
+                                        fontWeight: 500,
+                                        fontSize: '14px',
+                                        letterSpacing: '0.3px',
+                                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        backgroundColor: activeSection === link.name ? '#334155' : 'transparent',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        position: 'relative',
+                                        overflow: 'hidden'
+                                    }}
+                                    onMouseOver={e => {
+                                        if (activeSection !== link.name) {
+                                            e.target.style.backgroundColor = '#e2e8f0';
+                                            e.target.style.color = '#334155';
+                                        }
+                                    }}
+                                    onMouseOut={e => {
+                                        if (activeSection !== link.name) {
+                                            e.target.style.backgroundColor = 'transparent';
+                                            e.target.style.color = '#64748b';
+                                        }
+                                    }}
+                                >
+                                    {link.name}
+                                </a>
+                            ))}
+                        </div>
+                    ) : (
+                        /* Mobile menu button */
+                        <button 
+                            style={{
+                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                border: 'none',
+                                borderRadius: '10px',
+                                width: '44px',
+                                height: '44px',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                transform: isNavbarOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
+                            }}
+                            onClick={toggleNavbar}
+                        >
+                            <span style={{ 
+                                color: 'white', 
+                                fontSize: '20px',
+                                fontWeight: 'bold'
+                            }}>
+                                {isNavbarOpen ? '✕' : '☰'}
+                            </span>
+                        </button>
+                    )}
+                </div>
+            </nav>
+
+            {/* Mobile sidebar */}
+            {isMobile && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    right: isNavbarOpen ? '0' : '-320px',
+                    width: '320px',
+                    height: '100vh',
+                    backgroundColor: '#ffffff',
+                    zIndex: 1100,
+                    transition: 'right 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                    boxShadow: '-10px 0 50px rgba(0,0,0,0.15)',
+                    padding: '0',
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    {/* Mobile header */}
+                    <div style={{
+                        padding: '24px',
+                        borderBottom: '1px solid #e2e8f0',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}>
+                        <div style={{ 
+                            fontWeight: 700, 
+                            fontSize: '1.5rem',
+                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text'
+                        }}>
+                            Zandro
+                        </div>
                         <button 
                             style={{
                                 background: 'none',
                                 border: 'none',
                                 fontSize: '24px',
                                 cursor: 'pointer',
-                                transition: 'transform 0.3s ease',
-                                transform: isNavbarOpen ? 'rotate(90deg)' : 'rotate(0deg)'
+                                color: '#64748b',
+                                width: '40px',
+                                height: '40px',
+                                borderRadius: '10px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                transition: 'all 0.2s ease'
                             }}
-                            onClick={toggleNavbar}
+                            onClick={closeNavbar}
+                            onMouseOver={e => {
+                                e.target.style.backgroundColor = '#f1f5f9';
+                                e.target.style.color = '#334155';
+                            }}
+                            onMouseOut={e => {
+                                e.target.style.backgroundColor = 'transparent';
+                                e.target.style.color = '#64748b';
+                            }}
                         >
-                            {isNavbarOpen ? '✖' : '☰'}
+                            ✕
                         </button>
-                    ) : (
-                        <div style={{ display: 'flex' }}>
-                            {navLinks.map(link => (
-                                <a 
-                                    key={link.name}
-                                    href={link.href}
-                                    style={{
-                                        textDecoration: 'none',
-                                        color: '#333',
-                                        margin: '0 10px',
-                                        fontWeight: 500,
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '1px',
-                                        transition: 'color 0.3s ease'
-                                    }}
-                                    onMouseOver={e => e.target.style.color = '#007bff'}
-                                    onMouseOut={e => e.target.style.color = '#333'}
-                                >
-                                    {link.name}
-                                </a>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </nav>
+                    </div>
 
-            {isMobile && (
-                <div style={{
-                    position: 'fixed',
-                    top: 0,
-                    right: isNavbarOpen ? '0' : '-300px',
-                    width: '300px',
-                    height: '100%',
-                    backgroundColor: 'white',
-                    zIndex: 1100,
-                    transition: 'right 0.3s ease',
-                    boxShadow: '-2px 0 5px rgba(0,0,0,0.1)',
-                    padding: '60px 20px'
-                }}>
-                    <button 
-                        style={{
-                            position: 'absolute',
-                            top: '15px',
-                            right: '15px',
-                            background: 'none',
-                            border: 'none',
-                            fontSize: '24px',
-                            cursor: 'pointer',
-                            transition: 'transform 0.3s ease',
-                            transform: isNavbarOpen ? 'rotate(90deg)' : 'rotate(0deg)'
-                        }}
-                        onClick={closeNavbar}
-                    >
-                        ✖
-                    </button>
+                    {/* Mobile navigation links */}
                     <div style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        marginTop: '40px'
+                        padding: '24px 0',
+                        flex: 1
                     }}>
-                        {navLinks.map(link => (
+                        {navLinks.map((link, index) => (
                             <a 
                                 key={link.name}
                                 href={link.href}
+                                onClick={() => handleNavClick(link.name)}
                                 style={{
                                     textDecoration: 'none',
-                                    color: '#333',
-                                    margin: '10px 0',
-                                    width: '100%',
-                                    textAlign: 'center'
+                                    color: activeSection === link.name ? '#667eea' : '#334155',
+                                    padding: '16px 24px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    fontWeight: activeSection === link.name ? 600 : 500,
+                                    fontSize: '16px',
+                                    borderLeft: activeSection === link.name ? '3px solid #667eea' : '3px solid transparent',
+                                    backgroundColor: activeSection === link.name ? '#f8fafc' : 'transparent',
+                                    transition: 'all 0.2s ease',
+                                    borderBottom: index < navLinks.length - 1 ? '1px solid #f1f5f9' : 'none'
                                 }}
-                                onClick={closeNavbar}
-                            >
-                                {link.name}
+                                onMouseOver={e => {
+                                    if (activeSection !== link.name) {
+                                        e.target.style.backgroundColor = '#f8fafc';
+                                        e.target.style.borderLeft = '3px solid #e2e8f0';
+                                    }
+                                }}
+                                onMouseOut={e => {
+                                    if (activeSection !== link.name) {
+                                        e.target.style.backgroundColor = 'transparent';
+                                        e.target.style.borderLeft = '3px solid transparent';
+                                    }
+                                }}
+                                >
+                                <span>{link.name}</span>
                             </a>
                         ))}
                     </div>

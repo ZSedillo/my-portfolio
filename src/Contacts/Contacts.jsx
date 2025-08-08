@@ -4,7 +4,7 @@ const FloatingInput = ({ label, type, name, value, onChange }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <div style={{ position: "relative", marginBottom: "1.5rem" }} id="Contacts">
+    <div style={{ position: "relative", marginBottom: "1.5rem" }}>
       <input
         type={type}
         name={name}
@@ -57,12 +57,13 @@ const FloatingInput = ({ label, type, name, value, onChange }) => {
 
 // Custom hook for media query
 const useMediaQuery = (query) => {
-  const [matches, setMatches] = useState(window.matchMedia(query).matches);
+  const [matches, setMatches] = useState(false);
 
   useEffect(() => {
     const mediaQueryList = window.matchMedia(query);
     const handleChange = () => setMatches(mediaQueryList.matches);
-
+    
+    setMatches(mediaQueryList.matches);
     mediaQueryList.addEventListener('change', handleChange);
     return () => mediaQueryList.removeEventListener('change', handleChange);
   }, [query]);
@@ -79,11 +80,13 @@ const Contacts = () => {
 
   const [isMessageFocused, setIsMessageFocused] = useState(false);
   const [isSubmitHovered, setIsSubmitHovered] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState('');
   
   // Enhanced responsive breakpoints
   const isSmallScreen = useMediaQuery('(max-width: 768px)');
   const isMediumScreen = useMediaQuery('(max-width: 1024px)');
-  const isProblemSize = useMediaQuery('(max-width: 1000px)'); // The problematic range
+  const isProblemSize = useMediaQuery('(max-width: 1000px)');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -91,6 +94,40 @@ const Contacts = () => {
       ...prev,
       [name]: value,
     }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('');
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('access_key', 'a0376732-b681-486f-9884-5cee5fddcf28');
+      formDataToSend.append('subject', formData.subject);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('message', formData.message);
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitStatus('success');
+        setFormData({ subject: '', email: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Icon placeholders since we can't access your image assets
@@ -139,7 +176,7 @@ const Contacts = () => {
       padding: isSmallScreen ? "3rem 1rem" : "5rem 2rem",
       position: 'relative',
       overflow: 'hidden'
-    }} id="Contact">
+    }} id="Contacts">
       
       {/* Background decorative elements */}
       <div style={{
@@ -254,9 +291,8 @@ const Contacts = () => {
           <div
             style={{
               display: "grid",
-              // Enhanced responsive grid for contact cards
               gridTemplateColumns: isSmallScreen ? "1fr" : 
-                                 isProblemSize ? "1fr 1fr" : // Stack in 2 columns for problem size
+                                 isProblemSize ? "1fr 1fr" :
                                  "repeat(2, 1fr)",
               gap: "1.5rem",
             }}
@@ -279,7 +315,7 @@ const Contacts = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  minHeight: isProblemSize ? '120px' : '140px' // Adjust height for problem size
+                  minHeight: isProblemSize ? '120px' : '140px'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-4px)";
@@ -312,13 +348,13 @@ const Contacts = () => {
                       color: "#667eea",
                       textDecoration: "none",
                       fontWeight: 500,
-                      fontSize: isProblemSize ? '0.75rem' : '0.85rem', // Smaller text for problem size
+                      fontSize: isProblemSize ? '0.75rem' : '0.85rem',
                       fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
                       transition: 'color 0.2s ease',
                       textAlign: 'center',
                       lineHeight: 1.3,
                       display: 'block',
-                      wordBreak: 'break-all', // Break long URLs
+                      wordBreak: 'break-all',
                       hyphens: 'auto'
                     }}
                     onMouseOver={e => e.target.style.color = "#5a67d8"}
@@ -329,13 +365,13 @@ const Contacts = () => {
                 ) : (
                   <p style={{ 
                     color: "#64748b",
-                    fontSize: isProblemSize ? '0.75rem' : '0.85rem', // Smaller text for problem size
+                    fontSize: isProblemSize ? '0.75rem' : '0.85rem',
                     fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
                     fontWeight: 500,
                     margin: 0,
                     lineHeight: 1.3,
                     textAlign: 'center',
-                    wordBreak: contact.type === 'mail' ? 'break-all' : 'normal', // Break long email
+                    wordBreak: contact.type === 'mail' ? 'break-all' : 'normal',
                     hyphens: 'auto'
                   }}>
                     {contact.info}
@@ -346,7 +382,7 @@ const Contacts = () => {
           </div>
         </div>
 
-        {/* Contact Form */}
+        {/* Contact Form - WORKING VERSION */}
         <div
           style={{
             backgroundColor: "#ffffff",
@@ -355,7 +391,7 @@ const Contacts = () => {
             border: '1px solid #f1f5f9',
             padding: isSmallScreen ? "2rem" : "3rem",
             width: "100%",
-            maxWidth: isProblemSize ? "none" : "600px", // Remove max-width constraint for problem size
+            maxWidth: isProblemSize ? "none" : "600px",
             margin: "0 auto",
             position: 'relative'
           }}
@@ -371,12 +407,53 @@ const Contacts = () => {
             Send me a Message
           </h3>
           
-          <div>
-            <input type="hidden" name="access_key" value="a0376732-b681-486f-9884-5cee5fddcf28" />
+          {/* Status Messages */}
+          {submitStatus === 'success' && (
+            <div style={{
+              backgroundColor: '#d4edda',
+              color: '#155724',
+              padding: '12px 16px',
+              borderRadius: '8px',
+              marginBottom: '1.5rem',
+              border: '1px solid #c3e6cb',
+              textAlign: 'center',
+              fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+            }}>
+              ✅ Message sent successfully! I'll get back to you soon.
+            </div>
+          )}
+          
+          {submitStatus === 'error' && (
+            <div style={{
+              backgroundColor: '#f8d7da',
+              color: '#721c24',
+              padding: '12px 16px',
+              borderRadius: '8px',
+              marginBottom: '1.5rem',
+              border: '1px solid #f5c6cb',
+              textAlign: 'center',
+              fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+            }}>
+              ❌ Something went wrong. Please try again.
+            </div>
+          )}
 
+          <div>
             {/* Floating Labels */}
-            <FloatingInput label="Subject" type="text" name="subject" value={formData.subject} onChange={handleInputChange} />
-            <FloatingInput label="Your Email" type="email" name="email" value={formData.email} onChange={handleInputChange} />
+            <FloatingInput 
+              label="Subject" 
+              type="text" 
+              name="subject" 
+              value={formData.subject} 
+              onChange={handleInputChange} 
+            />
+            <FloatingInput 
+              label="Your Email" 
+              type="email" 
+              name="email" 
+              value={formData.email} 
+              onChange={handleInputChange} 
+            />
 
             {/* Textarea */}
             <div style={{ position: "relative", marginBottom: "2rem" }}>
@@ -422,32 +499,33 @@ const Contacts = () => {
               </label>
             </div>
 
+            {/* Submit Button */}
             <button
-              type="submit"
-              onClick={() => {
-                // You'll need to implement your form submission logic here
-                alert('Form submission logic goes here!');
-              }}
+              type="button"
+              onClick={handleSubmit}
+              disabled={isSubmitting || !formData.subject || !formData.email || !formData.message}
               style={{
                 width: "100%",
                 padding: "1rem",
-                background: isSubmitHovered ? 'linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                background: isSubmitting || (!formData.subject || !formData.email || !formData.message) ? 
+                          '#9ca3af' : 
+                          isSubmitHovered ? 'linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                 color: "#ffffff",
                 border: "none",
                 borderRadius: "12px",
                 fontSize: "1rem",
                 fontWeight: 600,
-                cursor: "pointer",
+                cursor: isSubmitting || (!formData.subject || !formData.email || !formData.message) ? 'not-allowed' : 'pointer',
                 transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                boxShadow: isSubmitHovered ? '0 20px 25px -5px rgba(102, 126, 234, 0.4)' : '0 10px 15px -3px rgba(102, 126, 234, 0.3)',
-                transform: isSubmitHovered ? 'translateY(-2px)' : 'translateY(0)',
+                boxShadow: isSubmitHovered && !isSubmitting ? '0 20px 25px -5px rgba(102, 126, 234, 0.4)' : '0 10px 15px -3px rgba(102, 126, 234, 0.3)',
+                transform: isSubmitHovered && !isSubmitting ? 'translateY(-2px)' : 'translateY(0)',
                 fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
                 letterSpacing: '0.3px'
               }}
               onMouseEnter={() => setIsSubmitHovered(true)}
               onMouseLeave={() => setIsSubmitHovered(false)}
             >
-              Send Message
+              {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
           </div>
         </div>

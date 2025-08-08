@@ -8,7 +8,7 @@ const Header = () => {
     const [activeSection, setActiveSection] = useState('Home');
 
     const navLinks = [
-        { name: 'Home', href: '#StartingPage' },
+        { name: 'Home', href: '#Home' },
         { name: 'About', href: '#About' },
         { name: 'Skills', href: '#Skills' },
         { name: 'Projects', href: '#Projects' },
@@ -42,7 +42,7 @@ const Header = () => {
                     const sectionId = entry.target.id;
                     // Map section IDs to navigation names
                     const sectionMap = {
-                        'StartingPage': 'Home',
+                        'Home': 'Home',
                         'About': 'About',
                         'Experience': 'Experience',
                         'Skills': 'Skills',
@@ -60,7 +60,7 @@ const Header = () => {
         }, observerOptions);
 
         // Observe all sections
-        const sectionIds = ['StartingPage', 'About', 'Experience', 'Skills', 'Projects', 'Education', 'Contacts'];
+        const sectionIds = ['Home', 'About', 'Experience', 'Skills', 'Projects', 'Education', 'Contacts'];
         const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
         
         sections.forEach(section => {

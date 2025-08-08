@@ -16,7 +16,7 @@ const useMediaQuery = (query) => {
     return matches;
 };
 
-const StartingPage = () => {
+const Home = () => {
     const isSmallScreen = useMediaQuery('(max-width: 768px)');
     const isMediumScreen = useMediaQuery('(max-width: 1024px)');
     const [isHovered, setIsHovered] = useState(false);
@@ -115,7 +115,7 @@ const StartingPage = () => {
             {/* Spacer for fixed header */}
             <div style={{ height: isSmallScreen ? '80px' : '100px' }} />
             
-            <div className="section-load-down" id="StartingPage"
+            <div className="section-load-down" id="Home"
                 style={{
                     display: 'grid',
                     gridTemplateColumns: isSmallScreen ? '1fr' : 'repeat(2, 1fr)',
@@ -383,4 +383,4 @@ const StartingPage = () => {
     );
 };
 
-export default StartingPage;
+export default Home;

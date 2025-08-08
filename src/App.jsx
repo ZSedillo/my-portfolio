@@ -9,6 +9,11 @@ import Education from './Education/Education.jsx'
 import Contact from './Contacts/Contacts.jsx'
 import Footer from './Components/Footer.jsx'
 
+// Divider Component
+import StyleDivider from './Components/StyleDivider.jsx'
+import Style1Divider from './Components/Style1Divider.jsx'
+import Style2Divider from './Components/Style2Divider.jsx'
+
 import './App.css'
 
 function App() {
@@ -17,13 +22,16 @@ function App() {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"></link>
       <Header/>
       <StartingPage/>
+      <StyleDivider/> {/* Divider */}
       <About/>
+      <Style1Divider/> {/* Divider */}
       <Skills/>
       <Projects/>
-      <hr style={{ margin: '50px auto', width: '80%', border: '1px solid rgba(0, 0, 0, 0.1)' }} />
+      <Style2Divider/> {/* Divider */}
       <Experience/>
-      <hr style={{ margin: '50px auto', width: '80%', border: '1px solid rgba(0, 0, 0, 0.1)' }} />
+      <Style2Divider/> {/* Divider */}
       <Education/>
+      <Style1Divider/> {/* Divider */}      
       <Contact/>
       <Footer/>
     </>

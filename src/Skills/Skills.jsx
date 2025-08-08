@@ -1,3 +1,4 @@
+import zIndex from '@mui/material/styles/zIndex';
 import React, { useState, useEffect } from 'react';
 
 const useMediaQuery = (query) => {
@@ -25,7 +26,7 @@ const Skills = () => {
             description: 'I like to code things from scratch, and enjoy bringing ideas to life in the browser.',
             skills: ['HTML & CSS', 'JavaScript', 'Vite + React', 'Bootstrap'],
             tools: ['VSCode', 'NetBeans'],
-            gradient: 'linear-gradient(135deg, #9333ea, #3b82f6)'
+            gradient: 'linear-gradient(135deg, #334155, #455973)'
         },
         {
             icon: '⚙️',
@@ -33,7 +34,7 @@ const Skills = () => {
             description: 'I enjoy building robust and scalable backend systems to support dynamic web applications.',
             skills: ['Java', 'Node.JS', 'Express.JS', 'AWS S3', 'Python', 'MongoDB'],
             tools: ['MongoDB Compass','Amazon Web Services', 'Glassfish', 'Postman', 'Putty'],
-            gradient: 'linear-gradient(135deg, #3b82f6, #7c3aed)'
+            gradient: 'linear-gradient(135deg, #455973, #6681a4)'
         },
         {
             icon: '🎮',
@@ -41,25 +42,27 @@ const Skills = () => {
             description: 'I have experience in creating interactive games and simulations, bringing virtual worlds to life.',
             skills: ['C#', 'Lua','GDScript'],
             tools: ['Unity', 'Roblox Studio','Godot Engine'],
-            gradient: 'linear-gradient(135deg, #7c3aed, #ec4899)'
+            gradient: 'linear-gradient(135deg, #3f5169, #6681a4)'
         }
     ];
 
     const containerStyle = {
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f8fafc, #e0e7ff)',
-        padding: '80px 0'
+        background: 'linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 50%, #CBD5E1 100%)',
+        padding: '80px 0',
+        fontFamily: 'Poppins, sans-serif'
     };
 
     const headerStyle = {
         textAlign: 'center',
-        marginBottom: '80px'
+        marginBottom: '80px',
+        position: 'relative'
     };
 
     const titleStyle = {
         fontSize: isSmallScreen ? '48px' : '64px',
         fontWeight: 'bold',
-        background: 'linear-gradient(135deg, #7c3aed, #3b82f6)',
+        background: 'linear-gradient(135deg, #334155, #455973, #6681a4)',
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
         backgroundClip: 'text',
@@ -67,10 +70,17 @@ const Skills = () => {
         fontFamily: 'Poppins, sans-serif'
     };
 
+    const subtitleStyle = {
+        fontSize: isSmallScreen ? '16px' : '18px',
+        color: '#455973',
+        marginBottom: '24px',
+        fontWeight: '500'
+    };
+
     const underlineStyle = {
         width: '96px',
         height: '4px',
-        background: 'linear-gradient(135deg, #7c3aed, #3b82f6)',
+        background: 'linear-gradient(135deg, #334155, #6681a4)',
         margin: '0 auto',
         borderRadius: '2px'
     };
@@ -78,7 +88,8 @@ const Skills = () => {
     const gridContainerStyle = {
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: isSmallScreen ? '0 24px' : '0 32px'
+        padding: isSmallScreen ? '0 24px' : '0 32px',
+        position: 'relative'
     };
 
     const gridStyle = {
@@ -89,14 +100,16 @@ const Skills = () => {
 
     const cardStyle = (gradient, isHovered) => ({
         position: 'relative',
-        background: 'white',
+        background: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(10px)',
         borderRadius: '24px',
         padding: '32px',
-        boxShadow: isHovered ? '0 25px 50px -12px rgba(0, 0, 0, 0.25)' : '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+        boxShadow: isHovered ? '0 25px 50px -12px rgba(51, 65, 85, 0.25)' : '0 10px 25px rgba(51, 65, 85, 0.1)',
         transition: 'all 0.3s ease',
         transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
-        border: '1px solid #f1f5f9',
-        cursor: 'pointer'
+        border: '1px solid rgba(51, 65, 85, 0.1)',
+        cursor: 'pointer',
+        overflow: 'hidden'
     });
 
     const iconContainerStyle = (gradient, isHovered) => ({
@@ -109,14 +122,15 @@ const Skills = () => {
         justifyContent: 'center',
         margin: '0 auto 24px',
         fontSize: '32px',
-        transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-        transition: 'transform 0.3s ease'
+        transform: isHovered ? 'scale(1.1) rotate(5deg)' : 'scale(1)',
+        transition: 'transform 0.3s ease',
+        boxShadow: '0 8px 25px rgba(51, 65, 85, 0.15)'
     });
 
     const cardTitleStyle = (isHovered) => ({
         fontSize: '24px',
         fontWeight: 'bold',
-        color: isHovered ? '#7c3aed' : '#1f2937',
+        color: isHovered ? '#334155' : '#455973',
         textAlign: 'center',
         marginBottom: '16px',
         transition: 'color 0.3s ease',
@@ -124,7 +138,7 @@ const Skills = () => {
     });
 
     const descriptionStyle = {
-        color: '#6b7280',
+        color: '#6681a4',
         textAlign: 'center',
         marginBottom: '24px',
         lineHeight: '1.6',
@@ -133,9 +147,9 @@ const Skills = () => {
     };
 
     const sectionTitleStyle = {
-        fontSize: '18px',
+        fontSize: '16px',
         fontWeight: '600',
-        color: '#7c3aed',
+        color: '#334155',
         textAlign: 'center',
         marginBottom: '12px',
         fontFamily: 'Poppins, sans-serif'
@@ -150,25 +164,27 @@ const Skills = () => {
     };
 
     const skillTagStyle = {
-        padding: '6px 12px',
-        background: '#ede9fe',
-        color: '#7c3aed',
+        padding: '8px 16px',
+        background: 'rgba(51, 65, 85, 0.1)',
+        color: '#334155',
         borderRadius: '20px',
         fontSize: '13px',
         fontWeight: '500',
-        transition: 'background-color 0.2s ease',
-        fontFamily: 'Poppins, sans-serif'
+        transition: 'all 0.3s ease',
+        fontFamily: 'Poppins, sans-serif',
+        border: '1px solid rgba(51, 65, 85, 0.2)'
     };
 
     const toolTagStyle = {
-        padding: '6px 12px',
-        background: '#dbeafe',
-        color: '#3b82f6',
+        padding: '8px 16px',
+        background: 'rgba(102, 129, 164, 0.1)',
+        color: '#3f5169',
         borderRadius: '20px',
         fontSize: '13px',
         fontWeight: '500',
-        transition: 'background-color 0.2s ease',
-        fontFamily: 'Poppins, sans-serif'
+        transition: 'all 0.3s ease',
+        fontFamily: 'Poppins, sans-serif',
+        border: '1px solid rgba(102, 129, 164, 0.2)'
     };
 
     const decorativeElementStyle = (size, color, position, animationDelay) => ({
@@ -178,8 +194,8 @@ const Skills = () => {
         height: size,
         background: color,
         borderRadius: '50%',
-        opacity: '0.3',
-        animation: `pulse 2s infinite ${animationDelay}`
+        opacity: '0.2',
+        animation: `pulse 3s infinite ${animationDelay}`
     });
 
     const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -189,15 +205,56 @@ const Skills = () => {
             <style>
                 {`
                 @keyframes pulse {
-                    0%, 100% { opacity: 0.3; transform: scale(1); }
-                    50% { opacity: 0.6; transform: scale(1.1); }
+                    0%, 100% { opacity: 0.2; transform: scale(1); }
+                    50% { opacity: 0.4; transform: scale(1.05); }
+                }
+
+                @keyframes float {
+                    0%, 100% { transform: translateY(0px); }
+                    50% { transform: translateY(-10px); }
+                }
+
+                @keyframes bounce {
+                    0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+                    40%, 43% { transform: translate3d(0, -8px, 0); }
+                    70% { transform: translate3d(0, -4px, 0); }
+                    90% { transform: translate3d(0, -2px, 0); }
                 }
                 `}
             </style>
             
             {/* Skills Header */}
             <div style={headerStyle}>
+                {/* Status Badge */}
+                <div style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    padding: '8px 16px',
+                    background: 'rgba(255, 255, 255, 0.9)',
+                    backdropFilter: 'blur(10px)',
+                    borderRadius: '25px',
+                    border: '1px solid rgba(51, 65, 85, 0.2)',
+                    marginBottom: '32px'
+                }}>
+                    <div style={{
+                        width: '8px',
+                        height: '8px',
+                        background: '#10B981',
+                        borderRadius: '50%',
+                        marginRight: '12px',
+                        animation: 'pulse 2s infinite'
+                    }}></div>
+                    <span style={{ 
+                        color: '#334155', 
+                        fontWeight: 600, 
+                        fontSize: '14px' 
+                    }}>
+                        Continuously Learning & Growing
+                    </span>
+                </div>
+
                 <h1 style={titleStyle}>My Skills</h1>
+                <p style={subtitleStyle}>Technologies and tools I work with</p>
                 <div style={underlineStyle}></div>
             </div>
 
@@ -211,6 +268,19 @@ const Skills = () => {
                             onMouseEnter={() => setHoveredIndex(index)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
+                            {/* Card Background Pattern */}
+                            <div style={{
+                                position: 'absolute',
+                                top: 0,
+                                right: 0,
+                                width: '100px',
+                                height: '100px',
+                                background: `linear-gradient(45deg, ${skill.gradient.match(/#[0-9a-f]{6}/gi)?.[0] || '#334155'}15, transparent)`,
+                                borderRadius: '0 24px 0 100px',
+                                opacity: hoveredIndex === index ? 0.3 : 0.1,
+                                transition: 'opacity 0.3s ease'
+                            }}></div>
+
                             {/* Icon Container */}
                             <div style={iconContainerStyle(skill.gradient, hoveredIndex === index)}>
                                 <span>{skill.icon}</span>
@@ -229,15 +299,23 @@ const Skills = () => {
                             {/* Skills Section */}
                             <div style={{marginBottom: '24px'}}>
                                 <h4 style={sectionTitleStyle}>
-                                    Programming Languages:
+                                    Programming Languages
                                 </h4>
                                 <div style={tagContainerStyle}>
                                     {skill.skills.map((s, i) => (
                                         <span
                                             key={i}
                                             style={skillTagStyle}
-                                            onMouseEnter={(e) => e.target.style.backgroundColor = '#c4b5fd'}
-                                            onMouseLeave={(e) => e.target.style.backgroundColor = '#ede9fe'}
+                                            onMouseEnter={(e) => {
+                                                e.target.style.background = 'rgba(51, 65, 85, 0.2)';
+                                                e.target.style.transform = 'translateY(-2px)';
+                                                e.target.style.boxShadow = '0 4px 12px rgba(51, 65, 85, 0.15)';
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.background = 'rgba(51, 65, 85, 0.1)';
+                                                e.target.style.transform = 'translateY(0)';
+                                                e.target.style.boxShadow = 'none';
+                                            }}
                                         >
                                             {s}
                                         </span>
@@ -248,15 +326,23 @@ const Skills = () => {
                             {/* Tools Section */}
                             <div>
                                 <h5 style={sectionTitleStyle}>
-                                    Tools:
+                                    Tools & Technologies
                                 </h5>
                                 <div style={tagContainerStyle}>
                                     {skill.tools.map((tool, i) => (
                                         <span
                                             key={i}
                                             style={toolTagStyle}
-                                            onMouseEnter={(e) => e.target.style.backgroundColor = '#bfdbfe'}
-                                            onMouseLeave={(e) => e.target.style.backgroundColor = '#dbeafe'}
+                                            onMouseEnter={(e) => {
+                                                e.target.style.background = 'rgba(102, 129, 164, 0.2)';
+                                                e.target.style.transform = 'translateY(-2px)';
+                                                e.target.style.boxShadow = '0 4px 12px rgba(102, 129, 164, 0.15)';
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.background = 'rgba(102, 129, 164, 0.1)';
+                                                e.target.style.transform = 'translateY(0)';
+                                                e.target.style.boxShadow = 'none';
+                                            }}
                                         >
                                             {tool}
                                         </span>
@@ -265,18 +351,22 @@ const Skills = () => {
                             </div>
 
                             {/* Decorative dots */}
-                            <div style={{...decorativeElementStyle('8px', '#c084fc', {top: '16px', right: '16px'}, '0s')}}></div>
-                            <div style={{...decorativeElementStyle('12px', '#60a5fa', {bottom: '16px', left: '16px'}, '0.5s')}}></div>
+                            <div style={{
+                                ...decorativeElementStyle('8px', '#334155', {top: '16px', right: '16px'}, '0s')
+                            }}></div>
+                            <div style={{
+                                ...decorativeElementStyle('12px', '#6681a4', {bottom: '16px', left: '16px'}, '0.5s')
+                            }}></div>
                         </div>
                     ))}
                 </div>
-            </div>
 
-            {/* Bottom Decorative Elements */}
-            <div style={{position: 'relative', marginTop: '80px'}}>
-                <div style={{...decorativeElementStyle('80px', '#c084fc', {left: '40px', top: '40px'}, '0s')}}></div>
-                <div style={{...decorativeElementStyle('64px', '#60a5fa', {right: '80px', top: '20px'}, '1s')}}></div>
-                <div style={{...decorativeElementStyle('48px', '#f472b6', {left: '50%', top: '48px', transform: 'translateX(-50%)'}, '2s')}}></div>
+                {/* Bottom Decorative Elements */}
+                <div style={{position: 'relative', marginTop: '80px'}}>
+                    <div style={{...decorativeElementStyle('80px', '#334155', {left: '40px', top: '40px', zIndex:1}, '0s')}}></div>
+                    <div style={{...decorativeElementStyle('64px', '#455973', {right: '80px', top: '20px', zIndex:1}, '1s')}}></div>
+                    <div style={{...decorativeElementStyle('48px', '#3f5169', {left: '50%', top: '48px', transform: 'translateX(-50%)',zIndex:1}, '2s')}}></div>
+                </div>
             </div>
         </div>
     );

@@ -16,7 +16,14 @@ const useMediaQuery = (query) => {
 
 function Education() {
     const isSmallScreen = useMediaQuery('(max-width: 768px)');
+    const isMobile = useMediaQuery('(max-width: 480px)');
     const [hoveredEducation, setHoveredEducation] = useState(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsVisible(true), 100);
+        return () => clearTimeout(timer);
+    }, []);
 
     const educationData = [
         {
@@ -35,66 +42,86 @@ function Education() {
             technologies: ['HTML', 'CSS', 'Java', 'PHP', 'MySQL', 'Derby', 'SQL', 'XAMPP'],
             status: 'Ongoing',
             icon: '🎓',
-            cardGradient: 'linear-gradient(135deg, #faf5ff, #f3e8ff)',
-            statusColor: 'linear-gradient(135deg, #7c3aed, #5b21b6)',
-            institutionColor: '#7c3aed'
+            cardGradient: 'rgba(255, 255, 255, 0.9)',
+            statusColor: 'linear-gradient(135deg, #334155, #455973)',
+            institutionColor: '#334155'
         }
     ];
 
     const containerStyle = {
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f8fafc, #e0e7ff)',
+        background: 'linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 50%, #CBD5E1 100%)',
         padding: '80px 0',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        fontFamily: 'Poppins, sans-serif'
     };
 
     const headerStyle = {
         textAlign: 'center',
         marginBottom: '80px',
-        position: 'relative'
+        position: 'relative',
+        zIndex: 1
     };
 
     const titleStyle = {
-        fontSize: isSmallScreen ? '48px' : '64px',
+        fontSize: isMobile ? '36px' : isSmallScreen ? '48px' : '72px',
         fontWeight: 'bold',
-        background: 'linear-gradient(135deg, #7c3aed, #3b82f6)',
+        background: 'linear-gradient(135deg, #334155, #455973, #6681a4)',
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
         backgroundClip: 'text',
         marginBottom: '20px',
-        fontFamily: 'Poppins, sans-serif'
+        fontFamily: 'Poppins, sans-serif',
+        transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.9)',
+        opacity: isVisible ? 1 : 0,
+        transition: 'all 1s ease-out'
+    };
+
+    const subtitleStyle = {
+        fontSize: isMobile ? '16px' : '18px',
+        color: '#455973',
+        marginBottom: '24px',
+        fontWeight: '500',
+        transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+        opacity: isVisible ? 1 : 0,
+        transition: 'all 1s ease-out 0.2s'
     };
 
     const underlineStyle = {
         width: '120px',
         height: '4px',
-        background: 'linear-gradient(135deg, #7c3aed, #3b82f6)',
+        background: 'linear-gradient(135deg, #334155, #6681a4)',
         margin: '0 auto',
-        borderRadius: '2px'
+        borderRadius: '2px',
+        transform: isVisible ? 'scaleX(1)' : 'scaleX(0)',
+        transition: 'transform 1s ease-out 0.4s'
     };
 
     const educationContainerStyle = {
         maxWidth: '900px',
         margin: '0 auto',
-        padding: isSmallScreen ? '0 20px' : '0 40px',
+        padding: isMobile ? '0 12px' : isSmallScreen ? '0 20px' : '0 40px',
         position: 'relative'
     };
 
     const educationCardStyle = (education, isHovered) => ({
         position: 'relative',
         background: education.cardGradient,
+        backdropFilter: 'blur(10px)',
         borderRadius: '24px',
-        padding: isSmallScreen ? '32px 24px' : '40px 32px',
+        padding: isMobile ? '24px 20px' : isSmallScreen ? '32px 24px' : '40px 32px',
         marginBottom: '32px',
         boxShadow: isHovered 
-            ? '0 25px 50px -12px rgba(124, 58, 237, 0.25), 0 0 0 1px rgba(124, 58, 237, 0.1)' 
-            : '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05)',
-        border: '1px solid rgba(255, 255, 255, 0.2)',
+            ? '0 25px 50px -12px rgba(51, 65, 85, 0.25), 0 0 0 1px rgba(51, 65, 85, 0.1)' 
+            : '0 10px 25px rgba(51, 65, 85, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+        border: '1px solid rgba(51, 65, 85, 0.1)',
         transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
         transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
         cursor: 'pointer',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        opacity: isVisible ? 1 : 0,
+        animation: isVisible ? 'fadeInUp 0.6s ease-out forwards' : 'none'
     });
 
     const educationHeaderStyle = {
@@ -108,9 +135,9 @@ function Education() {
     const periodBadgeStyle = (statusColor, isHovered) => ({
         background: statusColor,
         color: 'white',
-        padding: '10px 20px',
+        padding: isMobile ? '8px 16px' : '10px 20px',
         borderRadius: '25px',
-        fontSize: '16px',
+        fontSize: isMobile ? '14px' : '16px',
         fontWeight: '600',
         display: 'flex',
         alignItems: 'center',
@@ -118,7 +145,7 @@ function Education() {
         transform: isHovered ? 'scale(1.1)' : 'scale(1)',
         transition: 'transform 0.3s ease',
         fontFamily: 'Poppins, sans-serif',
-        boxShadow: isHovered ? '0 8px 25px -8px rgba(124, 58, 237, 0.6)' : '0 4px 15px -4px rgba(124, 58, 237, 0.3)'
+        boxShadow: isHovered ? '0 8px 25px -8px rgba(51, 65, 85, 0.6)' : '0 4px 15px -4px rgba(51, 65, 85, 0.3)'
     });
 
     const titleSectionStyle = {
@@ -126,24 +153,24 @@ function Education() {
     };
 
     const institutionStyle = {
-        fontSize: isSmallScreen ? '24px' : '32px',
+        fontSize: isMobile ? '20px' : isSmallScreen ? '24px' : '32px',
         fontWeight: 'bold',
-        color: '#1f2937',
+        color: '#334155',
         margin: '0 0 8px 0',
         fontFamily: 'Poppins, sans-serif'
     };
 
     const degreeStyle = {
-        fontSize: isSmallScreen ? '16px' : '20px',
-        color: '#7c3aed',
+        fontSize: isMobile ? '14px' : isSmallScreen ? '16px' : '20px',
+        color: '#455973',
         fontWeight: '600',
         margin: 0,
         fontFamily: 'Poppins, sans-serif'
     };
 
     const descriptionStyle = {
-        fontSize: '16px',
-        color: '#6b7280',
+        fontSize: isMobile ? '14px' : '16px',
+        color: '#6681a4',
         marginBottom: '28px',
         lineHeight: '1.7',
         fontStyle: 'italic',
@@ -160,8 +187,8 @@ function Education() {
         display: 'flex',
         alignItems: 'flex-start',
         marginBottom: '14px',
-        fontSize: '15px',
-        color: '#374151',
+        fontSize: isMobile ? '13px' : '15px',
+        color: '#455973',
         lineHeight: '1.6',
         fontFamily: 'Poppins, sans-serif'
     };
@@ -170,11 +197,11 @@ function Education() {
         width: '8px',
         height: '8px',
         borderRadius: '50%',
-        background: 'linear-gradient(135deg, #7c3aed, #3b82f6)',
+        background: 'linear-gradient(135deg, #334155, #6681a4)',
         marginRight: '16px',
         marginTop: '8px',
         flexShrink: 0,
-        boxShadow: '0 0 8px rgba(124, 58, 237, 0.3)'
+        boxShadow: '0 0 8px rgba(51, 65, 85, 0.3)'
     };
 
     const technologiesStyle = {
@@ -185,13 +212,13 @@ function Education() {
     };
 
     const techTagStyle = {
-        background: 'rgba(124, 58, 237, 0.1)',
-        color: '#7c3aed',
-        padding: '8px 16px',
+        background: 'rgba(51, 65, 85, 0.1)',
+        color: '#334155',
+        padding: isMobile ? '6px 12px' : '8px 16px',
         borderRadius: '20px',
-        fontSize: '13px',
+        fontSize: isMobile ? '11px' : '13px',
         fontWeight: '600',
-        border: '1px solid rgba(124, 58, 237, 0.2)',
+        border: '1px solid rgba(51, 65, 85, 0.2)',
         fontFamily: 'Poppins, sans-serif',
         transition: 'all 0.3s ease'
     };
@@ -204,17 +231,17 @@ function Education() {
         height: '14px',
         borderRadius: '50%',
         background: statusColor,
-        boxShadow: '0 0 0 4px rgba(124, 58, 237, 0.2)',
-        animation: 'pulse 2s infinite'
+        boxShadow: '0 0 0 4px rgba(51, 65, 85, 0.2)'
     });
 
-    const decorativeCircleStyle = (size, color, position) => ({
+    const decorativeCircleStyle = (size, color, position, animationDelay) => ({
         position: 'absolute',
         width: size,
         height: size,
         borderRadius: '50%',
         background: color,
-        opacity: '0.08',
+        opacity: '0.15',
+        animation: `pulse 3s infinite ${animationDelay}`,
         ...position
     });
 
@@ -225,9 +252,10 @@ function Education() {
         width: '180px',
         height: '180px',
         borderRadius: '50%',
-        background: 'linear-gradient(135deg, #7c3aed, #3b82f6)',
-        opacity: '0.05',
-        zIndex: 0
+        background: 'linear-gradient(135deg, #334155, #455973)',
+        opacity: '0.1',
+        zIndex: 0,
+        animation: 'pulse 4s infinite'
     };
 
     const backgroundDecoration2Style = {
@@ -237,44 +265,89 @@ function Education() {
         width: '120px',
         height: '120px',
         borderRadius: '50%',
-        background: 'linear-gradient(135deg, #3b82f6, #7c3aed)',
-        opacity: '0.05',
-        zIndex: 0
+        background: 'linear-gradient(135deg, #6681a4, #3f5169)',
+        opacity: '0.1',
+        zIndex: 0,
+        animation: 'pulse 4s infinite 1s'
     };
 
     return (
-        <div style={containerStyle}>
+        <div style={containerStyle} id="Education">
+            <style>
+                {`
+                @keyframes pulse {
+                    0%, 100% { 
+                        opacity: 0.1; 
+                        transform: scale(1); 
+                    }
+                    50% { 
+                        opacity: 0.2; 
+                        transform: scale(1.05); 
+                    }
+                }
+
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                @keyframes bounce {
+                    0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+                    40%, 43% { transform: translate3d(0, -8px, 0); }
+                    70% { transform: translate3d(0, -4px, 0); }
+                    90% { transform: translate3d(0, -2px, 0); }
+                }
+                `}
+            </style>
+
             {/* Background Decorations */}
             <div style={backgroundDecorationStyle}></div>
             <div style={backgroundDecoration2Style}></div>
             
+            {/* Additional floating elements */}
+            <div style={decorativeCircleStyle('100px', '#334155', { top: '10%', left: '5%' }, '0s')}></div>
+            <div style={decorativeCircleStyle('60px', '#6681a4', { bottom: '15%', right: '15%' }, '2s')}></div>
+            
             {/* Header */}
             <div style={headerStyle}>
+                {/* Status Badge */}
                 <div style={{
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '12px',
-                    background: 'rgba(124, 58, 237, 0.1)',
-                    padding: '8px 20px',
+                    background: 'rgba(255, 255, 255, 0.9)',
+                    backdropFilter: 'blur(10px)',
+                    padding: isMobile ? '6px 12px' : '8px 20px',
                     borderRadius: '25px',
                     marginBottom: '30px',
-                    border: '1px solid rgba(124, 58, 237, 0.2)'
+                    border: '1px solid rgba(51, 65, 85, 0.2)',
+                    transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                    opacity: isVisible ? 1 : 0,
+                    transition: 'all 1s ease-out 0.1s'
                 }}>
                     <div style={{
                         width: '8px',
                         height: '8px',
                         borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #7c3aed, #3b82f6)',
+                        background: '#10B981',
                         animation: 'pulse 2s infinite'
                     }}></div>
                     <span style={{
-                        fontSize: '14px',
-                        color: '#7c3aed',
+                        fontSize: isMobile ? '12px' : '14px',
+                        color: '#334155',
                         fontWeight: '600',
                         fontFamily: 'Poppins, sans-serif'
                     }}>Academic Background</span>
                 </div>
+
                 <h1 style={titleStyle}>Education</h1>
+                <p style={subtitleStyle}>My academic development journey</p>
                 <div style={underlineStyle}></div>
             </div>
 
@@ -287,14 +360,27 @@ function Education() {
                         onMouseEnter={() => setHoveredEducation(index)}
                         onMouseLeave={() => setHoveredEducation(null)}
                     >
+                        {/* Card Background Pattern */}
+                        <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            right: 0,
+                            width: '150px',
+                            height: '150px',
+                            background: `linear-gradient(45deg, ${education.institutionColor}10, transparent)`,
+                            borderRadius: '0 24px 0 150px',
+                            opacity: hoveredEducation === index ? 0.3 : 0.1,
+                            transition: 'opacity 0.3s ease'
+                        }}></div>
+
                         {/* Decorative background elements */}
-                        <div style={decorativeCircleStyle('140px', education.statusColor, { top: '-70px', right: '-70px' })}></div>
-                        <div style={decorativeCircleStyle('100px', 'linear-gradient(135deg, #3b82f6, #7c3aed)', { bottom: '-50px', left: '-50px' })}></div>
+                        <div style={decorativeCircleStyle('80px', education.statusColor, { top: '-40px', right: '-40px' }, '0s')}></div>
+                        <div style={decorativeCircleStyle('60px', 'linear-gradient(135deg, #6681a4, #3f5169)', { bottom: '-30px', left: '-30px' }, '1s')}></div>
                         
                         {/* Education Header */}
                         <div style={educationHeaderStyle}>
                             <div style={periodBadgeStyle(education.statusColor, hoveredEducation === index)}>
-                                <span style={{ fontSize: '20px' }}>{education.icon}</span>
+                                <span style={{ fontSize: isMobile ? '16px' : '20px' }}>{education.icon}</span>
                                 {education.period}
                             </div>
                             <div style={titleSectionStyle}>
@@ -319,7 +405,20 @@ function Education() {
                         {/* Technologies */}
                         <div style={technologiesStyle}>
                             {education.technologies.map((tech, i) => (
-                                <span key={i} style={techTagStyle}>
+                                <span 
+                                    key={i} 
+                                    style={techTagStyle}
+                                    onMouseEnter={(e) => {
+                                        e.target.style.background = 'rgba(51, 65, 85, 0.2)';
+                                        e.target.style.transform = 'translateY(-2px)';
+                                        e.target.style.boxShadow = '0 4px 12px rgba(51, 65, 85, 0.15)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.target.style.background = 'rgba(51, 65, 85, 0.1)';
+                                        e.target.style.transform = 'translateY(0)';
+                                        e.target.style.boxShadow = 'none';
+                                    }}
+                                >
                                     {tech}
                                 </span>
                             ))}
@@ -329,24 +428,19 @@ function Education() {
                         <div style={statusIndicatorStyle(education.statusColor)}></div>
                     </div>
                 ))}
-            </div>
 
-            <style>
-                {`
-                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-                
-                @keyframes pulse {
-                    0%, 100% { 
-                        transform: scale(1);
-                        opacity: 1;
-                    }
-                    50% { 
-                        transform: scale(1.1);
-                        opacity: 0.8;
-                    }
-                }
-                `}
-            </style>
+                {/* Timeline Connector */}
+                <div style={{
+                    position: 'absolute',
+                    left: isMobile ? '20px' : '40px',
+                    top: '0',
+                    bottom: '0',
+                    width: '2px',
+                    background: 'linear-gradient(to bottom, #334155, #6681a4)',
+                    opacity: '0.2',
+                    zIndex: -1
+                }}></div>
+            </div>
         </div>
     );
 }

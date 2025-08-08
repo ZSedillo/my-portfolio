@@ -158,10 +158,7 @@ const StartingPage = () => {
                         letterSpacing: '-0.02em'
                     }}>
                         <span style={{
-                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            backgroundClip: 'text',
+                            color: '#334155',
                             fontSize: isSmallScreen ? '36px' : isMediumScreen ? '48px' : '64px',
                             fontWeight: 800,
                             display: 'block',
@@ -198,7 +195,7 @@ const StartingPage = () => {
                         <a href="#Contacts" style={{ textDecoration: 'none', width: isSmallScreen ? '100%' : 'auto' }}>
                             <button
                                 style={{
-                                    background: isHovered ? 'linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                    background: isHovered ? 'linear-gradient(135deg, #6681a4ff 0%, #3f5169ff 100%)' : 'linear-gradient(135deg, #455973ff 0%, #334155 100%)',
                                     border: 'none',
                                     borderRadius: '50px',
                                     color: '#ffffff',
@@ -239,8 +236,8 @@ const StartingPage = () => {
                                     width: isSmallScreen ? '100%' : 'auto'
                                 }}
                                 onMouseOver={e => {
-                                    e.target.style.borderColor = '#667eea';
-                                    e.target.style.color = '#667eea';
+                                    e.target.style.borderColor = '#6681a4ff';
+                                    e.target.style.color = '#6681a4ff';
                                     e.target.style.backgroundColor = '#f8fafc';
                                 }}
                                 onMouseOut={e => {
@@ -268,33 +265,6 @@ const StartingPage = () => {
                     transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s'
                 }}>
                     <ProfileImage />
-                </div>
-            </div>
-
-            {/* Modern divider */}
-            <div style={{
-                margin: '0 auto',
-                width: '100%',
-                height: '1px',
-                background: 'linear-gradient(90deg, transparent 0%, #e2e8f0 50%, transparent 100%)',
-                position: 'relative'
-            }}>
-                <div style={{
-                    position: 'absolute',
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '40px',
-                    height: '40px',
-                    backgroundColor: '#ffffff',
-                    borderRadius: '50%',
-                    border: '1px solid #e2e8f0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '16px'
-                }}>
-                    ✦
                 </div>
             </div>
         </>

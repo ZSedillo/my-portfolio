@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Resume from '../assets/resume/Sedillo_CV.pdf';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -30,12 +29,12 @@ const About = () => {
   }, []);
 
   const skills = [
-    { icon: "💻", label: "Full Stack Development", color: "linear-gradient(135deg, #3B82F6, #8B5CF6)" },
-    { icon: "⚡", label: "Performance Optimization", color: "linear-gradient(135deg, #EAB308, #EA580C)" },
-    { icon: "🎯", label: "Problem Solving", color: "linear-gradient(135deg, #10B981, #0D9488)" },
-    { icon: "❤️", label: "User Experience", color: "linear-gradient(135deg, #EC4899, #EF4444)" },
-    { icon: "☕", label: "Continuous Learning", color: "linear-gradient(135deg, #F59E0B, #EAB308)" },
-    { icon: "🎮", label: "Game Development", color: "linear-gradient(135deg, #6366F1, #8B5CF6)" }
+    { icon: "💻", label: "Full Stack Development", color: "linear-gradient(135deg, #334155, #455973)" },
+    { icon: "⚡", label: "Performance Optimization", color: "linear-gradient(135deg, #455973, #6681a4)" },
+    { icon: "🎯", label: "Problem Solving", color: "linear-gradient(135deg, #3f5169, #6681a4)" },
+    { icon: "❤️", label: "User Experience", color: "linear-gradient(135deg, #334155, #3f5169)" },
+    { icon: "☕", label: "Continuous Learning", color: "linear-gradient(135deg, #455973, #334155)" },
+    { icon: "🎮", label: "Game Development", color: "linear-gradient(135deg, #6681a4, #3f5169)" }
   ];
 
   const stats = [
@@ -63,9 +62,8 @@ const About = () => {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #F8FAFC 0%, #EBF8FF 50%, #E0E7FF 100%)',
+      background: 'linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 50%, #CBD5E1 100%)',
       fontFamily: 'Poppins, sans-serif',
-      // overflowX: 'hidden'
     }} id="About">
       {/* Hero Section */}
       <section style={{
@@ -83,7 +81,7 @@ const About = () => {
             left: isSmall ? '10px' : '40px',
             width: isSmall ? '60px' : '80px',
             height: isSmall ? '60px' : '80px',
-            background: 'linear-gradient(135deg, #A855F7, #EC4899)',
+            background: 'linear-gradient(135deg, #455973, #6681a4)',
             borderRadius: '50%',
             opacity: 0.2,
             animation: 'pulse 2s infinite'
@@ -95,7 +93,7 @@ const About = () => {
             right: isSmall ? '10px' : '80px',
             width: isSmall ? '48px' : '64px',
             height: isSmall ? '48px' : '64px',
-            background: 'linear-gradient(135deg, #3B82F6, #06B6D4)',
+            background: 'linear-gradient(135deg, #334155, #3f5169)',
             borderRadius: '50%',
             opacity: 0.2,
             animation: 'bounce 2s infinite'
@@ -113,10 +111,10 @@ const About = () => {
               display: 'inline-flex',
               alignItems: 'center',
               padding: isSmall ? '6px 12px' : '8px 16px',
-              background: 'rgba(255, 255, 255, 0.6)',
+              background: 'rgba(255, 255, 255, 0.9)',
               backdropFilter: 'blur(10px)',
               borderRadius: '25px',
-              border: '1px solid rgba(147, 51, 234, 0.2)',
+              border: '1px solid rgba(51, 65, 85, 0.2)',
               marginBottom: '32px'
             }}>
               <div style={{
@@ -128,8 +126,8 @@ const About = () => {
                 animation: 'pulse 2s infinite'
               }}></div>
               <span style={{ 
-                color: '#7C3AED', 
-                fontWeight: 500, 
+                color: '#334155', 
+                fontWeight: 600, 
                 fontSize: isSmall ? '12px' : '14px' 
               }}>
                 Available for new opportunities
@@ -137,12 +135,9 @@ const About = () => {
             </div>
             
             <h1 style={{
+              color: '#334155',
               fontSize: isSmall ? '36px' : isMobile ? '48px' : isTablet ? '56px' : '72px',
               fontWeight: 'bold',
-              background: 'linear-gradient(135deg, #7C3AED, #3B82F6, #06B6D4)',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
               marginBottom: '24px',
               lineHeight: '1.2'
             }}>
@@ -151,7 +146,7 @@ const About = () => {
             
             <p style={{
               fontSize: isSmall ? '16px' : isMobile ? '18px' : '24px',
-              color: '#6B7280',
+              color: '#455973',
               maxWidth: '600px',
               margin: '0 auto',
               lineHeight: '1.6',
@@ -189,7 +184,7 @@ const About = () => {
                   width: '100%',
                   height: '100%',
                   borderRadius: '24px',
-                  background: 'linear-gradient(135deg, #8B5CF6, #3B82F6)',
+                  background: 'linear-gradient(135deg, #455973, #6681a4)',
                   padding: '4px',
                   transform: 'rotate(3deg)',
                   transition: 'transform 0.5s ease',
@@ -211,7 +206,7 @@ const About = () => {
                       width: '80%',
                       height: '80%',
                       borderRadius: '16px',
-                      background: 'linear-gradient(135deg, #EDE9FE, #DBEAFE)',
+                      background: 'linear-gradient(135deg, #E2E8F0, #F1F5F9)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -244,7 +239,7 @@ const About = () => {
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                            boxShadow: '0 4px 12px rgba(51, 65, 85, 0.15)',
                             fontSize: isSmall ? '20px' : '24px',
                             transition: 'transform 0.3s ease',
                             cursor: 'pointer',
@@ -273,12 +268,12 @@ const About = () => {
                               background: '#FFFFFF',
                               padding: '8px 12px',
                               borderRadius: '8px',
-                              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                              border: '1px solid #E5E7EB',
+                              boxShadow: '0 4px 12px rgba(51, 65, 85, 0.15)',
+                              border: '1px solid #E2E8F0',
                               whiteSpace: 'nowrap',
                               fontSize: isSmall ? '10px' : '12px',
                               fontWeight: 500,
-                              color: '#374151'
+                              color: '#334155'
                             }}>
                               {skill.label}
                             </div>
@@ -314,7 +309,7 @@ const About = () => {
                   }}>
                     {skills.map((skill, index) => {
                       const angle = (index * 60) - 90;
-                      const radius = 150; // Reduced radius to prevent overflow
+                      const radius = 150;
                       const x = Math.cos(angle * Math.PI / 180) * radius;
                       const y = Math.sin(angle * Math.PI / 180) * radius;
                       
@@ -339,7 +334,7 @@ const About = () => {
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                            boxShadow: '0 4px 12px rgba(51, 65, 85, 0.15)',
                             fontSize: '32px'
                           }}>
                             {skill.icon}
@@ -356,10 +351,10 @@ const About = () => {
                                 background: '#FFFFFF',
                                 padding: '4px 12px',
                                 borderRadius: '8px',
-                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                                border: '1px solid #E5E7EB'
+                                boxShadow: '0 4px 12px rgba(51, 65, 85, 0.15)',
+                                border: '1px solid #E2E8F0'
                               }}>
-                                <span style={{ fontSize: '14px', fontWeight: 500, color: '#374151' }}>
+                                <span style={{ fontSize: '14px', fontWeight: 500, color: '#334155' }}>
                                   {skill.label}
                                 </span>
                               </div>
@@ -382,17 +377,17 @@ const About = () => {
               padding: isSmall ? '0 8px' : '0'
             }}>
               <div style={{
-                background: 'rgba(255, 255, 255, 0.7)',
+                background: 'rgba(255, 255, 255, 0.9)',
                 backdropFilter: 'blur(10px)',
                 borderRadius: '24px',
                 padding: isSmall ? '20px' : isMobile ? '24px' : '32px',
-                border: '1px solid rgba(147, 51, 234, 0.1)',
-                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)'
+                border: '1px solid rgba(51, 65, 85, 0.1)',
+                boxShadow: '0 10px 25px rgba(51, 65, 85, 0.1)'
               }}>
                 <h2 style={{
                   fontSize: isSmall ? '20px' : isMobile ? '24px' : '30px',
                   fontWeight: 'bold',
-                  color: '#1F2937',
+                  color: '#334155',
                   marginBottom: '24px'
                 }}>
                   Hi, I'm Zandro! 👋
@@ -401,18 +396,18 @@ const About = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <p style={{
                     fontSize: isSmall ? '14px' : isMobile ? '16px' : '18px',
-                    color: '#6B7280',
+                    color: '#455973',
                     lineHeight: '1.6'
                   }}>
-                    A passionate <span style={{ fontWeight: 600, color: '#7C3AED' }}>Full Stack Developer</span>, 
-                    <span style={{ fontWeight: 600, color: '#3B82F6' }}> Game Developer</span>, and 
-                    <span style={{ fontWeight: 600, color: '#10B981' }}> IT Support & Systems</span> who thrives on turning 
+                    A passionate <span style={{ fontWeight: 600, color: '#334155' }}>Full Stack Developer</span>, 
+                    <span style={{ fontWeight: 600, color: '#3f5169' }}> Game Developer</span>, and 
+                    <span style={{ fontWeight: 600, color: '#6681a4' }}> IT Support & Systems</span> who thrives on turning 
                     complex problems into elegant solutions.
                   </p>
                   
                   <p style={{
                     fontSize: isSmall ? '12px' : isMobile ? '14px' : '16px',
-                    color: '#6B7280',
+                    color: '#455973',
                     lineHeight: '1.6'
                   }}>
                     My expertise spans across front-end and back-end development, networking infrastructure, 
@@ -423,7 +418,7 @@ const About = () => {
                   
                   <p style={{
                     fontSize: isSmall ? '12px' : isMobile ? '14px' : '16px',
-                    color: '#6B7280',
+                    color: '#455973',
                     lineHeight: '1.6'
                   }}>
                     With strong analytical skills and meticulous attention to detail, I'm committed to 
@@ -433,14 +428,9 @@ const About = () => {
                 </div>
 
                 {/* Download CV Button */}
-                <a
-                  href={Resume}
-                  download="Sedillo_CV"
-                  style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}
-                >
                 <button style={{
                   marginTop: '32px',
-                  background: 'linear-gradient(135deg, #7C3AED, #3B82F6)',
+                  background: 'linear-gradient(135deg, #334155, #455973)',
                   border: 'none',
                   borderRadius: '16px',
                   color: '#FFFFFF',
@@ -452,26 +442,25 @@ const About = () => {
                   fontWeight: 600,
                   fontSize: isSmall ? '12px' : isMobile ? '14px' : '16px',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                  boxShadow: '0 4px 12px rgba(51, 65, 85, 0.2)',
                   transition: 'all 0.3s ease',
                   transform: 'translateY(0)',
-                  width: '0 auto'
+                  width:'100%',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #6D28D9, #2563EB)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #3f5169, #6681a4)';
                   e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(51, 65, 85, 0.25)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #7C3AED, #3B82F6)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #334155, #455973)';
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(51, 65, 85, 0.2)';
                 }}
                 >
                   <span style={{ fontSize: isSmall ? '14px' : '18px' }}>⬇️</span>
                   <span>Download CV</span>
                 </button>
-              </a>
               </div>
 
               {/* Stats */}
@@ -482,32 +471,29 @@ const About = () => {
               }}>
                 {stats.map((stat, index) => (
                   <div key={index} style={{
-                    background: 'rgba(255, 255, 255, 0.6)',
+                    background: 'rgba(255, 255, 255, 0.8)',
                     backdropFilter: 'blur(10px)',
                     borderRadius: '16px',
                     padding: isSmall ? '12px 8px' : isMobile ? '16px' : '24px',
                     textAlign: 'center',
-                    border: '1px solid rgba(147, 51, 234, 0.1)',
+                    border: '1px solid rgba(51, 65, 85, 0.1)',
                     transition: 'background 0.3s ease',
                     cursor: 'pointer'
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)'}
-                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.6)'}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)'}
                   >
                     <div style={{
+                      color: '#334155',
                       fontSize: isSmall ? '16px' : isMobile ? '20px' : '32px',
                       fontWeight: 'bold',
-                      background: 'linear-gradient(135deg, #7C3AED, #3B82F6)',
-                      WebkitBackgroundClip: 'text',
-                      backgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
                       marginBottom: '4px'
                     }}>
                       {stat.number}
                     </div>
                     <div style={{
                       fontSize: isSmall ? '10px' : isMobile ? '12px' : '16px',
-                      color: '#6B7280',
+                      color: '#455973',
                       fontWeight: 500,
                       lineHeight: '1.2'
                     }}>

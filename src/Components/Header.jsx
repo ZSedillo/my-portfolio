@@ -120,11 +120,9 @@ const Header = () => {
                 }}>
                     {/* Logo */}
                     <div style={{ 
+                        color: '#334155',
                         fontWeight: 700, 
                         fontSize: '1.75rem',
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
                         backgroundClip: 'text',
                         letterSpacing: '-0.5px'
                     }}>
@@ -183,7 +181,7 @@ const Header = () => {
                         /* Mobile menu button */
                         <button 
                             style={{
-                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                background: 'linear-gradient(135deg, #455973ff 0%, #334155 100%)',
                                 border: 'none',
                                 borderRadius: '10px',
                                 width: '44px',
@@ -237,7 +235,6 @@ const Header = () => {
                         <div style={{ 
                             fontWeight: 700, 
                             fontSize: '1.5rem',
-                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                             backgroundClip: 'text'
@@ -285,13 +282,13 @@ const Header = () => {
                                 onClick={() => handleNavClick(link.name)}
                                 style={{
                                     textDecoration: 'none',
-                                    color: activeSection === link.name ? '#667eea' : '#334155',
+                                    color: activeSection === link.name ? '#455973ff' : '#334155',
                                     padding: '16px 24px',
                                     display: 'flex',
                                     alignItems: 'center',
                                     fontWeight: activeSection === link.name ? 600 : 500,
                                     fontSize: '16px',
-                                    borderLeft: activeSection === link.name ? '3px solid #667eea' : '3px solid transparent',
+                                    borderLeft: activeSection === link.name ? '3px solid #334155' : '3px solid transparent',
                                     backgroundColor: activeSection === link.name ? '#f8fafc' : 'transparent',
                                     transition: 'all 0.2s ease',
                                     borderBottom: index < navLinks.length - 1 ? '1px solid #f1f5f9' : 'none'

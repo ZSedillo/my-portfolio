@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Resume from '../assets/resume/Sedillo_CV.pdf';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);

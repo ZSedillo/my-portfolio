@@ -26,7 +26,7 @@ const Footer = () => {
         }}>
           © 2024 Zandro Miguel Sedillo. All Rights Reserved.
         </p>
-        
+
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -36,9 +36,38 @@ const Footer = () => {
           fontWeight: 500
         }}>
           <span>Built with</span>
-          <img src="./vite.svg " alt="Vite Logo" style={{ height: '20px' }} /> Vite
-          &
-          <img src="./react.svg" alt="React Logo" style={{ height: '20px' }} /> React
+
+          {/* Vite Logo */}
+          <span
+            onContextMenu={(e) => e.preventDefault()}
+            style={{
+              display: 'inline-block',
+              width: '20px',
+              height: '20px',
+              backgroundImage: 'url(./vite.svg)',
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              userSelect: 'none'
+            }}
+          ></span>
+          Vite &
+
+          {/* React Logo */}
+          <span
+            onContextMenu={(e) => e.preventDefault()}
+            style={{
+              display: 'inline-block',
+              width: '20px',
+              height: '20px',
+              backgroundImage: 'url(./react.svg)',
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              userSelect: 'none'
+            }}
+          ></span>
+          React
         </div>
       </div>
     </footer>

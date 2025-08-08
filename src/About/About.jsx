@@ -433,6 +433,11 @@ const About = () => {
                 </div>
 
                 {/* Download CV Button */}
+                <a
+                  href={Resume}
+                  download="Sedillo_CV"
+                  style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}
+                >
                 <button style={{
                   marginTop: '32px',
                   background: 'linear-gradient(135deg, #7C3AED, #3B82F6)',
@@ -450,7 +455,7 @@ const About = () => {
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                   transition: 'all 0.3s ease',
                   transform: 'translateY(0)',
-                  width: isSmall ? '100%' : 'auto'
+                  width: '0 auto'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'linear-gradient(135deg, #6D28D9, #2563EB)';
@@ -466,6 +471,7 @@ const About = () => {
                   <span style={{ fontSize: isSmall ? '14px' : '18px' }}>⬇️</span>
                   <span>Download CV</span>
                 </button>
+              </a>
               </div>
 
               {/* Stats */}

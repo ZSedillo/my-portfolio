@@ -53,20 +53,23 @@ const Home = () => {
 
     // Profile image component
     const ProfileImage = () => (
-        <img
-            src={ProfilePicture}
-            alt="Zandro Sedillo - Profile Picture"
+        <div
+            onContextMenu={(e) => e.preventDefault()} // Disable right-click
             style={{
                 width: '100%',
                 height: 'auto',
                 maxWidth: isSmallScreen ? '280px' : isMediumScreen ? '400px' : '500px',
+                aspectRatio: '1/1', // Keep square shape or adjust as needed
                 borderRadius: isSmallScreen ? '20px' : '24px',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.8)',
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 filter: 'saturate(1.1) contrast(1.05)',
-                objectFit: 'cover'
+                backgroundImage: `url(${ProfilePicture})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                userSelect: 'none',
             }}
-        />
+        ></div>
     );
 
     // Social Media Icons Component

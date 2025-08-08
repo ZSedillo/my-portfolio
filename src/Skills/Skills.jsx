@@ -31,16 +31,16 @@ const Skills = () => {
             icon: '⚙️',
             title: 'Backend Development', 
             description: 'I enjoy building robust and scalable backend systems to support dynamic web applications.',
-            skills: ['Java', 'Node.JS', 'Python', 'MongoDB'],
-            tools: ['MongoDB Compass', 'Glassfish', 'Postman', 'Putty'],
+            skills: ['Java', 'Node.JS', 'Express.JS', 'AWS S3', 'Python', 'MongoDB'],
+            tools: ['MongoDB Compass','Amazon Web Services', 'Glassfish', 'Postman', 'Putty'],
             gradient: 'linear-gradient(135deg, #3b82f6, #7c3aed)'
         },
         {
             icon: '🎮',
             title: 'Game Development',
             description: 'I have experience in creating interactive games and simulations, bringing virtual worlds to life.',
-            skills: ['C#', 'Lua'],
-            tools: ['Unity', 'Roblox Studio'],
+            skills: ['C#', 'Lua','GDScript'],
+            tools: ['Unity', 'Roblox Studio','Godot Engine'],
             gradient: 'linear-gradient(135deg, #7c3aed, #ec4899)'
         }
     ];

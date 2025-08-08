@@ -4,6 +4,8 @@ const About = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeSkill, setActiveSkill] = useState(0);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const [hoveredSkill, setHoveredSkill] = useState(null);
+  const [touchedSkill, setTouchedSkill] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
@@ -41,16 +43,28 @@ const About = () => {
     { number: "24/7", label: "Dedication" }
   ];
 
-  const isMobile = windowWidth < 768;
-  const isTablet = windowWidth >= 768 && windowWidth < 1024;
+  const isMobile = windowWidth < 864;
+  const isTablet = windowWidth >= 864 && windowWidth < 1024;
   const isSmall = windowWidth < 480;
+
+  const handleSkillInteraction = (index, isTouch = false) => {
+    if (isTouch) {
+      setTouchedSkill(touchedSkill === index ? null : index);
+    } else {
+      setHoveredSkill(index);
+    }
+  };
+
+  const handleSkillLeave = () => {
+    setHoveredSkill(null);
+  };
 
   return (
     <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #F8FAFC 0%, #EBF8FF 50%, #E0E7FF 100%)',
       fontFamily: 'Poppins, sans-serif',
-      overflowX: 'hidden'
+      // overflowX: 'hidden'
     }} id="About">
       {/* Hero Section */}
       <section style={{
@@ -215,26 +229,72 @@ const About = () => {
                     gap: isSmall ? '8px' : '12px',
                     marginTop: '32px',
                     maxWidth: isSmall ? '200px' : '240px',
-                    margin: '32px auto 0'
+                    margin: '32px auto 0',
+                    position: 'relative'
                   }}>
                     {skills.map((skill, index) => (
-                      <div key={index} style={{
-                        width: isSmall ? '50px' : '60px',
-                        height: isSmall ? '50px' : '60px',
-                        borderRadius: '16px',
-                        background: skill.color,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                        fontSize: isSmall ? '20px' : '24px',
-                        transition: 'transform 0.3s ease',
-                        cursor: 'pointer'
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                      onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                      >
-                        {skill.icon}
+                      <div key={index} style={{ position: 'relative' }}>
+                        <div 
+                          style={{
+                            width: isSmall ? '50px' : '60px',
+                            height: isSmall ? '50px' : '60px',
+                            borderRadius: '16px',
+                            background: skill.color,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                            fontSize: isSmall ? '20px' : '24px',
+                            transition: 'transform 0.3s ease',
+                            cursor: 'pointer',
+                            transform: (hoveredSkill === index || touchedSkill === index) ? 'scale(1.1)' : 'scale(1)'
+                          }}
+                          onMouseEnter={() => handleSkillInteraction(index)}
+                          onMouseLeave={handleSkillLeave}
+                          onClick={() => handleSkillInteraction(index, true)}
+                          onTouchStart={() => handleSkillInteraction(index, true)}
+                        >
+                          {skill.icon}
+                        </div>
+                        
+                        {/* Label tooltip for mobile/tablet */}
+                        {(hoveredSkill === index || touchedSkill === index) && (
+                          <div style={{
+                            position: 'absolute',
+                            top: '100%',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            marginTop: '8px',
+                            zIndex: 20,
+                            animation: 'fadeIn 0.2s ease-in'
+                          }}>
+                            <div style={{
+                              background: '#FFFFFF',
+                              padding: '8px 12px',
+                              borderRadius: '8px',
+                              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                              border: '1px solid #E5E7EB',
+                              whiteSpace: 'nowrap',
+                              fontSize: isSmall ? '10px' : '12px',
+                              fontWeight: 500,
+                              color: '#374151'
+                            }}>
+                              {skill.label}
+                            </div>
+                            {/* Arrow pointing up */}
+                            <div style={{
+                              position: 'absolute',
+                              top: '-4px',
+                              left: '50%',
+                              transform: 'translateX(-50%)',
+                              width: 0,
+                              height: 0,
+                              borderLeft: '4px solid transparent',
+                              borderRight: '4px solid transparent',
+                              borderBottom: '4px solid #FFFFFF'
+                            }}></div>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -345,7 +405,7 @@ const About = () => {
                   }}>
                     A passionate <span style={{ fontWeight: 600, color: '#7C3AED' }}>Full Stack Developer</span>, 
                     <span style={{ fontWeight: 600, color: '#3B82F6' }}> Game Developer</span>, and 
-                    <span style={{ fontWeight: 600, color: '#10B981' }}> IT Network Specialist</span> who thrives on turning 
+                    <span style={{ fontWeight: 600, color: '#10B981' }}> IT Support & Systems</span> who thrives on turning 
                     complex problems into elegant solutions.
                   </p>
                   
@@ -458,12 +518,12 @@ const About = () => {
       <div style={{
         maxWidth: '800px',
         margin: '0 auto',
-        padding: `32px ${isSmall ? '12px' : '16px'}`
+        padding: `${isSmall ? '32px' : '60px'} ${isSmall ? '12px' : '16px'}`
       }}>
         <hr style={{
           border: 'none',
-          height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.3), transparent)'
+          height: '10px',
+          background: 'none'
         }} />
       </div>
 
@@ -478,6 +538,17 @@ const About = () => {
           40%, 43% { transform: translate3d(0, -8px, 0); }
           70% { transform: translate3d(0, -4px, 0); }
           90% { transform: translate3d(0, -2px, 0); }
+        }
+
+        @keyframes fadeIn {
+          from { 
+            opacity: 0; 
+            transform: translateX(-50%) translateY(-5px); 
+          }
+          to { 
+            opacity: 1; 
+            transform: translateX(-50%) translateY(0); 
+          }
         }
 
         @media (max-width: 480px) {

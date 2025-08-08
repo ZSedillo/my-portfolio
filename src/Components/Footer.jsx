@@ -4,9 +4,8 @@ const Footer = () => {
   return (
     <footer style={{
       borderTop: '1px solid #e2e8f0',
-      backgroundColor: 'rgba(248, 250, 252, 0.8)',
+      backgroundColor: '#334155',
       backdropFilter: 'blur(10px)',
-      marginTop: '100px',
       fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
     }}>
       <div style={{
@@ -21,7 +20,7 @@ const Footer = () => {
       }}>
         <p style={{
           margin: 0,
-          color: '#64748b',
+          color: 'rgba(248, 250, 252, 0.8)',
           fontSize: '14px',
           fontWeight: 500
         }}>
@@ -32,7 +31,7 @@ const Footer = () => {
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
-          color: '#94a3b8',
+          color: 'rgba(248, 250, 252, 0.8)',
           fontSize: '13px',
           fontWeight: 500
         }}>

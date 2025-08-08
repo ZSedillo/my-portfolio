@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ProfilePicture from '../assets/images/sideface.png';
+import ProfilePicture from '../assets/images/sideface.jpg';
 
 // Custom hook for media query
 const useMediaQuery = (query) => {

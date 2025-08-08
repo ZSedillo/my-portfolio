@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Resume from '../assets/resume/Sedillo_CV.pdf';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -428,6 +429,11 @@ const About = () => {
                 </div>
 
                 {/* Download CV Button */}
+                <a
+                  href={Resume}
+                  download="Sedillo_CV"
+                  style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}
+                >             
                 <button style={{
                   marginTop: '32px',
                   background: 'linear-gradient(135deg, #334155, #455973)',
@@ -461,6 +467,7 @@ const About = () => {
                   <span style={{ fontSize: isSmall ? '14px' : '18px' }}>⬇️</span>
                   <span>Download CV</span>
                 </button>
+                </a>   
               </div>
 
               {/* Stats */}

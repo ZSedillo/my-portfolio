@@ -4,7 +4,7 @@ const Style1Divider = () => {
             margin: '0 auto',
             width: '100%',
             height: '1px',
-            background: 'linear-gradient(90deg, transparent 0%, #e2e8f0 50%, transparent 100%)',
+            background: 'linear-gradient(90deg, transparent 0%, #334155 50%, transparent 100%)',
             position: 'relative'
         }}>
             <div style={{
@@ -14,14 +14,31 @@ const Style1Divider = () => {
                 transform: 'translate(-50%, -50%)',
                 width: '40px',
                 height: '40px',
-                backgroundColor: '#ffffff',
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                backdropFilter: 'blur(10px)',
                 borderRadius: '50%',
-                border: '1px solid #e2e8f0',
+                border: '1px solid rgba(51, 65, 85, 0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '16px'
-            }}>
+                fontSize: '16px',
+                color: '#334155',
+                fontWeight: '600',
+                boxShadow: '0 10px 25px rgba(51, 65, 85, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+                transition: 'all 0.3s ease',
+                // cursor: 'pointer'
+            }}
+            // onMouseEnter={(e) => {
+            //     e.target.style.transform = 'translate(-50%, -50%) scale(1.1)';
+            //     e.target.style.boxShadow = '0 25px 50px -12px rgba(51, 65, 85, 0.25), 0 0 0 1px rgba(51, 65, 85, 0.1)';
+            //     e.target.style.color = '#455973';
+            // }}
+            // onMouseLeave={(e) => {
+            //     e.target.style.transform = 'translate(-50%, -50%) scale(1)';
+            //     e.target.style.boxShadow = '0 10px 25px rgba(51, 65, 85, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1)';
+            //     e.target.style.color = '#334155';
+            // }}
+        >
                     ✦
             </div>
         </div>

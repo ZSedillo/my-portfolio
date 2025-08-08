@@ -90,7 +90,6 @@ const Contacts = () => {
   // Enhanced responsive breakpoints
   const isSmallScreen = useMediaQuery('(max-width: 768px)');
   const isMobile = useMediaQuery('(max-width: 480px)');
-  const isMediumScreen = useMediaQuery('(max-width: 1024px)');
   const isProblemSize = useMediaQuery('(max-width: 1000px)');
 
   useEffect(() => {

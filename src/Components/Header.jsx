@@ -13,6 +13,7 @@ const Header = () => {
         { name: 'Skills', href: '#Skills' },
         { name: 'Projects', href: '#Projects' },
         { name: 'Experience', href: '#Experience' },
+        { name: 'Education', href: '#Education' },
         { name: 'Contact', href: '#Contacts' }
     ];
 
@@ -46,6 +47,7 @@ const Header = () => {
                         'Experience': 'Experience',
                         'Skills': 'Skills',
                         'Projects': 'Projects',
+                        'Education': 'Education',
                         'Contacts': 'Contact'
                     };
                     
@@ -58,7 +60,7 @@ const Header = () => {
         }, observerOptions);
 
         // Observe all sections
-        const sectionIds = ['StartingPage', 'About', 'Experience', 'Skills', 'Projects', 'Contacts'];
+        const sectionIds = ['StartingPage', 'About', 'Experience', 'Skills', 'Projects', 'Education', 'Contacts'];
         const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
         
         sections.forEach(section => {

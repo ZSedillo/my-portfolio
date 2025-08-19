@@ -28,7 +28,7 @@ function Experience() {
     const experienceData = [
         {
             period: 'Present',
-            company: 'Directorate for Personnel and Records Management, Philippine National Police (Camp Crame)',
+            company: 'Directorate for Personnel and Records Management',
             position: 'IT Support & Systems Intern',
             description: 'Assisted with hardware troubleshooting, networking setup, and IT support in a government office environment.',
             achievements: [

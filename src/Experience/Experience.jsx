@@ -27,6 +27,24 @@ function Experience() {
 
     const experienceData = [
         {
+            period: 'Present',
+            company: 'Directorate for Personnel and Records Management, Philippine National Police (Camp Crame)',
+            position: 'IT Support & Systems Intern',
+            description: 'Assisted with hardware troubleshooting, networking setup, and IT support in a government office environment.',
+            achievements: [
+                'Provided hardware support by diagnosing and troubleshooting computers',
+                'Assisted in networking tasks such as setting up Ethernet connections',
+                'Supported staff with IT needs, improving workplace efficiency',
+                'Gained hands-on exposure to IT systems within a professional environment'
+            ],
+            technologies: ['Hardware Support', 'Networking Basics', 'Troubleshooting', 'IT Systems'],
+            status: 'Present',
+            icon: '🖥️',
+            cardGradient: 'rgba(255, 255, 255, 0.9)',
+            statusColor: 'linear-gradient(135deg, #334155, #455973)',
+            companyColor: '#334155'
+        },
+        {
             period: '2024',
             company: 'Fildev',
             position: 'Full Stack Developer Intern',
@@ -46,6 +64,7 @@ function Experience() {
             companyColor: '#334155'
         }
     ];
+
 
     const containerStyle = {
         minHeight: '100vh',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Resume from '../assets/resume/Sedillo_CV.pdf';
+import Resume from '../assets/resume/Sedillo_Resume.pdf';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -431,7 +431,7 @@ const About = () => {
                 {/* Download CV Button */}
                 <a
                   href={Resume}
-                  download="Sedillo_CV"
+                  download="Sedillo_Resume"
                   style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}
                 >             
                 <button style={{
@@ -465,7 +465,7 @@ const About = () => {
                 }}
                 >
                   <span style={{ fontSize: isSmall ? '14px' : '18px' }}>⬇️</span>
-                  <span>Download CV</span>
+                  <span>Download Resume</span>
                 </button>
                 </a>   
               </div>

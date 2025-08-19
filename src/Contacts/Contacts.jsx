@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import Mail from '../assets/images/mail.png';
+import Phone from '../assets/images/iphone.png';
+import LinkedIn from '../assets/images/linkedin.png';
+import GitHub from '../assets/images/github.png';
 
 const FloatingInput = ({ label, type, name, value, onChange, onBlur }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -212,13 +216,13 @@ const Contacts = () => {
     }
   };
 
-  // Icon placeholders with slate theme
+  // Updated IconPlaceholder to use imported images
   const IconPlaceholder = ({ type }) => {
-    const icons = {
-      mail: '✉️',
-      phone: '📱',
-      linkedin: '💼',
-      github: '⚡'
+    const iconMap = {
+      mail: Mail,
+      phone: Phone,
+      linkedin: LinkedIn,
+      github: GitHub
     };
     
     return (
@@ -230,12 +234,21 @@ const Contacts = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: '20px',
         margin: '0 auto 16px auto',
         boxShadow: '0 8px 25px rgba(51, 65, 85, 0.3)',
-        transition: 'all 0.3s ease'
+        transition: 'all 0.3s ease',
+        padding: '8px'
       }}>
-        <span style={{ color: 'white' }}>{icons[type]}</span>
+        <img 
+          src={iconMap[type]} 
+          alt={type} 
+          style={{
+            width: '28px',
+            height: '28px',
+            objectFit: 'contain',
+            filter: 'brightness(0) invert(1)' // Makes icons white
+          }}
+        />
       </div>
     );
   };

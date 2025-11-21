@@ -25,33 +25,49 @@ function Projects() {
         return () => clearTimeout(timer);
     }, []);
 
-    const projectsData = [
+const projectsData = [
         {
             status: '2025',
             title: 'TeamWeb - School Management Website',
             description: 'A comprehensive full-stack web application designed to streamline school operations with modern technology and cloud storage.',
             points: [
-                'Currently developing a full-stack web app for pre-registration and appointment booking',
-                'Implemented API integration for smooth data handling using Express.js',
-                'Using React, Node.js, Express.js, and MongoDB with user authentication',
-                'Utilized AWS S3 for secure and scalable image storage and management',
-                'Designed for use by students, faculty, and parents within a school setting'
+                'Designed and structured the system architecture, ensuring functionality and maintainability',
+                'Implemented backend development for student pre-registration and administrative management',
+                'Implemented the use of APIs to facilitate seamless communication between client and server',
+                'Enforced access control, ensuring only admins could manage administrative functions',
+                'Using React, Node.js, Express.js, and MongoDB with user authentication'
             ],
             tech: ['React', 'Node.js', 'Express.js', 'MongoDB', 'AWS S3', 'Authentication'],
-            statusColor: 'linear-gradient(135deg, #334155, #455973)',
+            statusColor: 'linear-gradient(135deg, #455973, #6681a4)',
             cardGradient: 'rgba(255, 255, 255, 0.9)',
             icon: '🏫',
-            accentColor: '#334155'
+            accentColor: '#455973'
+        },
+        {
+            status: '2025',
+            title: 'Worshippers of The Deep - Thesis',
+            description: 'A roguelike game environment built for comparative AI research, evaluating Reinforcement Learning against Genetic Algorithms.',
+            points: [
+                'Developed a roguelike environment in Godot (GDScript) to serve as a testbed for comparative AI research',
+                'Integrated Python-trained models via ONNX to evaluate Reinforcement Learning agents against Genetic Algorithms',
+                'Engineered a modular architecture allowing real-time switching between static and adaptive AI environments',
+                'Implemented data collection systems for analyzing AI performance and behavior patterns'
+            ],
+            tech: ['Godot', 'GDScript', 'Python', 'ONNX', 'Machine Learning', 'AI Research'],
+            statusColor: 'linear-gradient(135deg, #455973, #6681a4)',
+            cardGradient: 'rgba(255, 255, 255, 0.9)',
+            icon: '🎮',
+            accentColor: '#455973'
         },
         {
             status: '2024',
             title: 'Active Learning Portal',
             description: 'An innovative web-based learning platform focused on interactive education and student engagement.',
             points: [
-                'Developed a web-based learning platform with interactive modules',
-                'Focused on enhancing student engagement and self-paced learning',
-                'Incorporated learning materials, basic enrollment tracking, and meeting scheduling',
-                'Built using HTML for the front-end and Firebase for backend/database'
+                'Implemented server-side logic on a GlassFish Server to handle form submissions and authentication',
+                'Designed SQL queries to ensure proper data retrieval and storage for system reliability',
+                'Integrated authentication features to ensure secure access for students and instructors',
+                'Incorporated learning materials, basic enrollment tracking, and meeting scheduling'
             ],
             tech: ['HTML', 'SQL', 'MySQL', 'Glassfish'],
             statusColor: 'linear-gradient(135deg, #455973, #6681a4)',

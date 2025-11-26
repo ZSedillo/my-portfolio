@@ -401,8 +401,11 @@ const About = () => {
                     lineHeight: '1.6'
                   }}>
                     A passionate <span style={{ fontWeight: 600, color: '#334155' }}>Full Stack Developer</span>, 
-                    <span style={{ fontWeight: 600, color: '#3f5169' }}> Game Developer</span>, and 
-                    <span style={{ fontWeight: 600, color: '#6681a4' }}> IT Support & Systems</span> who thrives on turning 
+                    <span style={{ fontWeight: 600, color: '#3f5169' }}> and Game Developer </span>
+                    {/* , and 
+                    <span style={{ fontWeight: 600, color: '#6681a4' }}> IT Support & Systems</span>  */}
+                    
+                    who thrives on turning 
                     complex problems into elegant solutions.
                   </p>
                   

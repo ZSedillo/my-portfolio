@@ -27,7 +27,7 @@ function Experience() {
 
     const experienceData = [
         {
-            period: 'Present',
+            period: '2025',
             company: 'Directorate for Personnel and Records Management',
             position: 'IT Support & Systems Intern',
             description: 'Assisted with hardware troubleshooting, networking setup, and IT support in a government office environment.',

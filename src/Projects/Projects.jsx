@@ -46,14 +46,13 @@ const projectsData = [
         {
             status: '2025',
             title: 'Worshippers of The Deep - Thesis',
-            description: 'A roguelike game environment built for comparative AI research, evaluating Reinforcement Learning against Genetic Algorithms.',
+            description: 'A roguelike game featuring custom combat systems and an adaptive PPO-based Reinforcement Learning enemy.',
             points: [
-                'Developed a roguelike environment in Godot (GDScript) to serve as a testbed for comparative AI research',
-                'Integrated Python-trained models via ONNX to evaluate Reinforcement Learning agents against Genetic Algorithms',
-                'Engineered a modular architecture allowing real-time switching between static and adaptive AI environments',
-                'Implemented data collection systems for analyzing AI performance and behavior patterns'
+                'Built core gameplay systems in Godot (GDScript), including potion, card, and combat mechanics',
+                'Trained a PPO-based Reinforcement Learning enemy in Python that adapts to player behavior',
+                'Implemented the trained AI into the game to evaluate its performance in real gameplay scenarios'
             ],
-            tech: ['Godot', 'GDScript', 'Python', 'ONNX', 'Machine Learning', 'AI Research'],
+            tech: ['Godot', 'GDScript', 'Python', 'Reinforcement Learning', 'PPO', 'AI Development'],
             statusColor: 'linear-gradient(135deg, #455973, #6681a4)',
             cardGradient: 'rgba(255, 255, 255, 0.9)',
             icon: '🎮',

@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Mail from '../assets/images/mail.png';
-import Phone from '../assets/images/iphone.png';
-import LinkedIn from '../assets/images/linkedin.png';
-import GitHub from '../assets/images/github.png';
 
 const FloatingInput = ({ label, type, name, value, onChange, onBlur }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <div style={{ position: "relative", marginBottom: "1.5rem" }}>
+    <div style={{ position: "relative", marginBottom: "1.25rem" }}>
       <input
         type={type}
         name={name}
@@ -17,23 +13,24 @@ const FloatingInput = ({ label, type, name, value, onChange, onBlur }) => {
         required
         style={{
           width: "100%",
-          padding: "1.25rem 0.75rem 0.5rem",
-          border: "2px solid #e2e8f0",
+          padding: "1.1rem 0.75rem 0.5rem",
+          border: "1px solid rgba(255, 255, 255, 0.08)",
           borderRadius: "12px",
-          fontSize: "1rem",
+          fontSize: "0.95rem",
           outline: "none",
           transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-          backgroundColor: "#ffffff",
-          fontFamily: 'Poppins, sans-serif',
+          backgroundColor: "rgba(255, 255, 255, 0.03)",
+          color: "#f1f5f9",
+          fontFamily: "'Inter', sans-serif",
         }}
         onFocus={(e) => {
           setIsFocused(true);
-          e.target.style.borderColor = "#334155";
-          e.target.style.boxShadow = "0 0 0 3px rgba(51, 65, 85, 0.1)";
+          e.target.style.borderColor = "#3b82f6";
+          e.target.style.boxShadow = "0 0 0 3px rgba(59, 130, 246, 0.1)";
         }}
         onBlur={(e) => {
           setIsFocused(false);
-          e.target.style.borderColor = "#e2e8f0";
+          e.target.style.borderColor = "rgba(255, 255, 255, 0.08)";
           e.target.style.boxShadow = "none";
           if (onBlur) onBlur(e);
         }}
@@ -44,14 +41,14 @@ const FloatingInput = ({ label, type, name, value, onChange, onBlur }) => {
           left: "12px",
           top: isFocused || value ? "-8px" : "50%",
           transform: isFocused || value ? "none" : "translateY(-50%)",
-          fontSize: isFocused || value ? "0.75rem" : "1rem",
-          color: isFocused || value ? "#334155" : "#64748b",
+          fontSize: isFocused || value ? "0.7rem" : "0.95rem",
+          color: isFocused ? "#3b82f6" : "#64748b",
           pointerEvents: "none",
           transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-          backgroundColor: "#ffffff",
-          padding: "0 8px",
+          backgroundColor: isFocused || value ? "#0d0d14" : "transparent",
+          padding: "0 6px",
           fontWeight: 500,
-          fontFamily: 'Poppins, sans-serif',
+          fontFamily: "'Inter', sans-serif",
         }}
       >
         {label}
@@ -60,29 +57,20 @@ const FloatingInput = ({ label, type, name, value, onChange, onBlur }) => {
   );
 };
 
-// Custom hook for media query
 const useMediaQuery = (query) => {
   const [matches, setMatches] = useState(false);
-
   useEffect(() => {
-    const mediaQueryList = window.matchMedia(query);
-    const handleChange = () => setMatches(mediaQueryList.matches);
-    
-    setMatches(mediaQueryList.matches);
-    mediaQueryList.addEventListener('change', handleChange);
-    return () => mediaQueryList.removeEventListener('change', handleChange);
+    const mql = window.matchMedia(query);
+    const handler = () => setMatches(mql.matches);
+    setMatches(mql.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
   }, [query]);
-
   return matches;
 };
 
 const Contacts = () => {
-  const [formData, setFormData] = useState({
-    subject: "",
-    email: "",
-    message: "",
-  });
-
+  const [formData, setFormData] = useState({ subject: "", email: "", message: "" });
   const [isMessageFocused, setIsMessageFocused] = useState(false);
   const [isSubmitHovered, setIsSubmitHovered] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -90,80 +78,38 @@ const Contacts = () => {
   const [emailError, setEmailError] = useState('');
   const [emailTouched, setEmailTouched] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  
-  // Enhanced responsive breakpoints
-  const isSmallScreen = useMediaQuery('(max-width: 768px)');
-  const isMobile = useMediaQuery('(max-width: 480px)');
-  const isProblemSize = useMediaQuery('(max-width: 1000px)');
+
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isSmall = useMediaQuery('(max-width: 480px)');
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 100);
-    return () => clearTimeout(timer);
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.1 }
+    );
+    const el = document.getElementById('Contacts');
+    if (el) observer.observe(el);
+    return () => { if (el) observer.unobserve(el); };
   }, []);
 
-  // Email validation function
   const validateEmail = (email) => {
-    // More comprehensive email regex that ensures proper email format
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    
-    // Common email providers for additional validation
-    const commonProviders = [
-      'gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 
-      'icloud.com', 'aol.com', 'protonmail.com', 'yandex.com',
-      'live.com', 'msn.com', 'mail.com', 'zoho.com'
-    ];
-    
-    if (!email) {
-      return { isValid: false, message: 'Email is required' };
-    }
-    
-    if (!emailRegex.test(email)) {
-      return { 
-        isValid: false, 
-        message: 'Please enter a valid email address (e.g., name@gmail.com)' 
-      };
-    }
-    
-    // Check if it's just plain text without @ symbol
-    if (!email.includes('@')) {
-      return { 
-        isValid: false, 
-        message: 'Email must contain @ symbol (e.g., name@gmail.com)' 
-      };
-    }
-    
-    // Extract domain
-    const domain = email.split('@')[1];
-    if (!domain || !domain.includes('.')) {
-      return { 
-        isValid: false, 
-        message: 'Please use a valid email provider (e.g., @gmail.com, @yahoo.com)' 
-      };
-    }
-    
+    if (!email) return { isValid: false, message: 'Email is required' };
+    if (!emailRegex.test(email)) return { isValid: false, message: 'Please enter a valid email address' };
     return { isValid: true, message: '' };
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    
-    // Real-time email validation - but only set error when field is touched and left
-    if (name === 'email') {
-      if (emailTouched && value.length > 0) {
-        const validation = validateEmail(value);
-        setEmailError(validation.isValid ? '' : validation.message);
-      } else if (value.length === 0) {
-        // If field is empty, clear any existing error
-        setEmailError('');
-      }
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (name === 'email' && emailTouched && value.length > 0) {
+      const validation = validateEmail(value);
+      setEmailError(validation.isValid ? '' : validation.message);
+    } else if (name === 'email' && value.length === 0) {
+      setEmailError('');
     }
   };
 
-  // Handle email field blur (when user leaves the field)
   const handleEmailBlur = () => {
     setEmailTouched(true);
     if (formData.email.length > 0) {
@@ -172,13 +118,11 @@ const Contacts = () => {
     }
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('');
 
-    // Validate email before submission
     const emailValidation = validateEmail(formData.email);
     if (!emailValidation.isValid) {
       setEmailError(emailValidation.message);
@@ -194,17 +138,15 @@ const Contacts = () => {
       formDataToSend.append('message', formData.message);
 
       const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formDataToSend
+        method: 'POST', body: formDataToSend
       });
-
       const result = await response.json();
 
       if (result.success) {
         setSubmitStatus('success');
         setFormData({ subject: '', email: '', message: '' });
         setEmailError('');
-        setEmailTouched(false); // Reset email touched state
+        setEmailTouched(false);
       } else {
         setSubmitStatus('error');
       }
@@ -216,436 +158,252 @@ const Contacts = () => {
     }
   };
 
-  // Updated IconPlaceholder to use imported images
-  const IconPlaceholder = ({ type }) => {
-    const iconMap = {
-      mail: Mail,
-      phone: Phone,
-      linkedin: LinkedIn,
-      github: GitHub
-    };
-    
-    return (
-      <div style={{
-        width: '50px',
-        height: '50px',
-        borderRadius: '12px',
-        background: 'linear-gradient(135deg, #334155, #455973)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: '0 auto 16px auto',
-        boxShadow: '0 8px 25px rgba(51, 65, 85, 0.3)',
-        transition: 'all 0.3s ease',
-        padding: '8px'
-      }}>
-        <img 
-          src={iconMap[type]} 
-          alt={type} 
-          style={{
-            width: '28px',
-            height: '28px',
-            objectFit: 'contain',
-            filter: 'brightness(0) invert(1)' // Makes icons white
-          }}
-        />
-      </div>
-    );
-  };
-
   const contactOptions = [
-    { type: "mail", title: "Email Address", info: "sedillozandro720@gmail.com" },
-    { type: "phone", title: "Phone Number", info: "(63+) 09770311641" },
     {
-      type: "linkedin",
-      title: "LinkedIn",
-      info: "linkedin.com/in/zandro-sedillo",
-      link: "https://www.linkedin.com/in/zandro-miguel-sedillo-1bbb52279/",
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+        </svg>
+      ),
+      title: "Email",
+      info: "sedillozandro720@gmail.com"
     },
-    { type: "github", title: "GitHub", info: "github.com/ZSedillo", link: "https://github.com/ZSedillo" },
+    {
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+      ),
+      title: "Phone",
+      info: "(63+) 09770311641"
+    },
+    {
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#3b82f6">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      ),
+      title: "LinkedIn",
+      info: "zandro-sedillo",
+      link: "https://www.linkedin.com/in/zandro-miguel-sedillo-1bbb52279/"
+    },
+    {
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#6366f1">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+        </svg>
+      ),
+      title: "GitHub",
+      info: "ZSedillo",
+      link: "https://github.com/ZSedillo"
+    }
   ];
 
   return (
-    <div style={{ 
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 50%, #CBD5E1 100%)',
-      padding: isSmallScreen ? "3rem 1rem" : "5rem 2rem",
-      position: 'relative',
-      overflow: 'hidden',
-      fontFamily: 'Poppins, sans-serif'
-    }} id="Contacts">
-      
-      {/* Background decorative elements */}
+    <section id="Contacts" style={{
+      padding: isMobile ? '80px 20px' : '120px 32px',
+      background: '#0a0a0f',
+      position: 'relative', overflow: 'hidden'
+    }}>
+      {/* Background glow */}
       <div style={{
-        position: 'absolute',
-        top: '10%',
-        right: '5%',
-        width: isSmallScreen ? '150px' : '250px',
-        height: isSmallScreen ? '150px' : '250px',
-        background: 'linear-gradient(135deg, rgba(51, 65, 85, 0.1) 0%, rgba(69, 89, 115, 0.1) 100%)',
-        borderRadius: '50%',
-        filter: 'blur(60px)',
-        zIndex: 0,
-        animation: 'pulse 4s infinite'
-      }} />
-      
-      <div style={{
-        position: 'absolute',
-        bottom: '10%',
-        left: '5%',
-        width: isSmallScreen ? '120px' : '200px',
-        height: isSmallScreen ? '120px' : '200px',
-        background: 'linear-gradient(135deg, rgba(102, 129, 164, 0.1) 0%, rgba(51, 65, 85, 0.1) 100%)',
-        borderRadius: '50%',
-        filter: 'blur(40px)',
-        zIndex: 0,
-        animation: 'pulse 4s infinite 1s'
+        position: 'absolute', bottom: '20%', left: '50%',
+        transform: 'translateX(-50%)',
+        width: '500px', height: '300px',
+        background: 'radial-gradient(ellipse, rgba(59, 130, 246, 0.04) 0%, transparent 70%)',
+        filter: 'blur(80px)', zIndex: 0
       }} />
 
-      {/* Additional floating elements */}
       <div style={{
-        position: 'absolute',
-        top: '20%',
-        left: '8%',
-        width: '80px',
-        height: '80px',
-        background: 'linear-gradient(135deg, #334155, #6681a4)',
-        borderRadius: '50%',
-        opacity: '0.1',
-        animation: 'pulse 3s infinite'
-      }}></div>
-      
-      <div style={{
-        position: 'absolute',
-        bottom: '20%',
-        right: '12%',
-        width: '60px',
-        height: '60px',
-        background: 'linear-gradient(135deg, #6681a4, #334155)',
-        borderRadius: '50%',
-        opacity: '0.15',
-        animation: 'pulse 3s infinite 2s'
-      }}></div>
-
-      {/* Container */}
-      <div style={{ 
-        maxWidth: "1400px", 
-        margin: "0 auto", 
-        position: 'relative',
-        zIndex: 1
+        maxWidth: '1100px', margin: '0 auto',
+        position: 'relative', zIndex: 1
       }}>
-
-        {/* Heading */}
-        <div style={{ 
-          textAlign: "center", 
-          marginBottom: isSmallScreen ? "3rem" : "4rem",
+        {/* Header */}
+        <div style={{
+          textAlign: 'center', marginBottom: '64px',
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+          transition: 'all 0.8s ease-out'
         }}>
           <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '12px',
-            background: 'rgba(255, 255, 255, 0.9)',
-            backdropFilter: 'blur(10px)',
-            padding: isMobile ? '6px 12px' : '8px 20px',
-            borderRadius: '25px',
-            marginBottom: '30px',
-            border: '1px solid rgba(51, 65, 85, 0.2)',
-            transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-            opacity: isVisible ? 1 : 0,
-            transition: 'all 1s ease-out 0.1s'
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            backgroundColor: 'rgba(59, 130, 246, 0.08)',
+            padding: '6px 14px', borderRadius: '50px',
+            fontSize: '13px', fontWeight: 500, color: '#3b82f6',
+            marginBottom: '20px',
+            border: '1px solid rgba(59, 130, 246, 0.15)',
+            fontFamily: "'Inter', sans-serif"
           }}>
-            <div style={{
-              width: '8px',
-              height: '8px',
-              borderRadius: '50%',
-              background: '#10B981',
-              animation: 'pulse 2s infinite'
-            }}></div>
             <span style={{
-              fontSize: isMobile ? '12px' : '14px',
-              color: '#334155',
-              fontWeight: '600',
-              fontFamily: 'Poppins, sans-serif'
-            }}>Let's Connect</span>
+              width: '6px', height: '6px', borderRadius: '50%',
+              backgroundColor: '#22c55e', animation: 'pulse 2s infinite'
+            }} />
+            Let's Connect
           </div>
 
-          <h2 style={{ 
-            fontSize: isMobile ? "36px" : isSmallScreen ? "48px" : "72px",
-            fontWeight: 'bold',
-            marginBottom: "20px",
-            background: 'linear-gradient(135deg, #334155, #455973, #6681a4)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            fontFamily: 'Poppins, sans-serif',
-            transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.9)',
-            opacity: isVisible ? 1 : 0,
-            transition: 'all 1s ease-out'
+          <h2 style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontSize: isSmall ? '32px' : isMobile ? '40px' : '52px',
+            fontWeight: 700, color: '#f1f5f9',
+            letterSpacing: '-0.02em', marginBottom: '12px'
           }}>
             Contact
           </h2>
-          
-          <p style={{ 
-            fontSize: isSmallScreen ? "18px" : "20px",
-            color: "#455973",
-            maxWidth: "600px",
-            margin: "0 auto 16px",
-            fontWeight: 600,
-            fontFamily: 'Poppins, sans-serif',
-            transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-            opacity: isVisible ? 1 : 0,
-            transition: 'all 1s ease-out 0.2s'
+
+          <p style={{
+            color: '#64748b', fontSize: '16px',
+            fontFamily: "'Inter', sans-serif",
+            maxWidth: '500px', margin: '0 auto 16px'
           }}>
-            Got a Vision? Let's Bring it to Life!
-          </p>
-          
-          <p style={{ 
-            fontSize: isMobile ? "16px" : "18px",
-            color: "#6681a4",
-            maxWidth: "700px",
-            margin: "0 auto 24px",
-            lineHeight: 1.6,
-            fontFamily: 'Poppins, sans-serif',
-            transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-            opacity: isVisible ? 1 : 0,
-            transition: 'all 1s ease-out 0.3s'
-          }}>
-            Get in touch in the way that suits you best, and we'll explore your project in depth.
+            Got a vision? Let's bring it to life!
           </p>
 
-          {/* Underline */}
           <div style={{
-            width: '120px',
-            height: '4px',
-            background: 'linear-gradient(135deg, #334155, #6681a4)',
-            margin: '0 auto',
-            borderRadius: '2px',
-            transform: isVisible ? 'scaleX(1)' : 'scaleX(0)',
-            transition: 'transform 1s ease-out 0.4s'
-          }}></div>
+            width: '60px', height: '3px',
+            background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+            margin: '0 auto', borderRadius: '2px'
+          }} />
         </div>
 
-        {/* Responsive Layout */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isSmallScreen || isProblemSize ? "1fr" : "1fr 1fr",
-            gap: isSmallScreen ? "2.5rem" : "4rem",
-            alignItems: "start",
-          }}
-        >
+        {/* Content Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+          gap: '40px', alignItems: 'start'
+        }}>
           {/* Contact Cards */}
           <div style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 0.8s ease-out 0.5s'
+            transition: 'all 0.8s ease-out 0.2s'
           }}>
-            <h3
-              style={{
-                fontSize: isSmallScreen ? "1.25rem" : "1.5rem",
-                fontWeight: 700,
-                marginBottom: "1.5rem",
-                color: "#334155",
-                fontFamily: "Poppins, sans-serif",
-                textAlign: "center",
-              }}
-            >
+            <h3 style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontSize: '20px', fontWeight: 700,
+              color: '#f1f5f9', marginBottom: '24px'
+            }}>
               Get in Touch
             </h3>
-            
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: isSmallScreen ? "1fr" : 
-                                   isProblemSize ? "1fr 1fr" :
-                                   "repeat(2, 1fr)",
-                gap: "1.5rem",
-              }}
-            >
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+              gap: '14px'
+            }}>
               {contactOptions.map((contact, index) => (
-                <div 
+                <div
                   key={index}
                   style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                    backdropFilter: 'blur(10px)',
-                    borderRadius: "16px",
-                    boxShadow: "0 10px 25px rgba(51, 65, 85, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1)",
-                    border: '1px solid rgba(51, 65, 85, 0.1)',
-                    textAlign: "center",
-                    padding: isSmallScreen ? "1.5rem" : isProblemSize ? "1.25rem" : "2rem",
-                    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                    cursor: "pointer",
-                    position: 'relative',
-                    overflow: 'hidden',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minHeight: isProblemSize ? '120px' : '140px'
+                    background: 'rgba(255, 255, 255, 0.02)',
+                    border: '1px solid rgba(255, 255, 255, 0.06)',
+                    borderRadius: '16px',
+                    padding: '20px 16px',
+                    textAlign: 'center',
+                    transition: 'all 0.3s ease',
+                    cursor: contact.link ? 'pointer' : 'default'
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-8px) scale(1.02)";
-                    e.currentTarget.style.boxShadow = "0 25px 50px -12px rgba(51, 65, 85, 0.25), 0 0 0 1px rgba(51, 65, 85, 0.1)";
-                    e.currentTarget.style.borderColor = "rgba(51, 65, 85, 0.2)";
+                  onClick={() => contact.link && window.open(contact.link, '_blank')}
+                  onMouseOver={e => {
+                    e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.2)';
+                    e.currentTarget.style.background = 'rgba(59, 130, 246, 0.04)';
+                    e.currentTarget.style.transform = 'translateY(-3px)';
                   }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0) scale(1)";
-                    e.currentTarget.style.boxShadow = "0 10px 25px rgba(51, 65, 85, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1)";
-                    e.currentTarget.style.borderColor = "rgba(51, 65, 85, 0.1)";
+                  onMouseOut={e => {
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
+                    e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
-                  <IconPlaceholder type={contact.type} />
-                  <h4 style={{ 
-                    fontSize: isProblemSize ? "0.9rem" : "1rem",
-                    fontWeight: 600,
-                    marginBottom: "8px",
-                    color: "#334155",
-                    fontFamily: 'Poppins, sans-serif',
-                    lineHeight: 1.2
+                  <div style={{
+                    width: '44px', height: '44px', borderRadius: '12px',
+                    background: 'rgba(59, 130, 246, 0.08)',
+                    border: '1px solid rgba(59, 130, 246, 0.15)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    margin: '0 auto 12px'
+                  }}>
+                    {contact.icon}
+                  </div>
+                  <h4 style={{
+                    fontSize: '14px', fontWeight: 600,
+                    color: '#f1f5f9', marginBottom: '4px',
+                    fontFamily: "'Inter', sans-serif"
                   }}>
                     {contact.title}
                   </h4>
-                  {contact.link ? (
-                    <a 
-                      href={contact.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      style={{ 
-                        color: "#455973",
-                        textDecoration: "none",
-                        fontWeight: 500,
-                        fontSize: isProblemSize ? '0.75rem' : '0.85rem',
-                        fontFamily: 'Poppins, sans-serif',
-                        transition: 'color 0.2s ease',
-                        textAlign: 'center',
-                        lineHeight: 1.3,
-                        display: 'block',
-                        wordBreak: 'break-all',
-                        hyphens: 'auto'
-                      }}
-                      onMouseOver={e => e.target.style.color = "#334155"}
-                      onMouseOut={e => e.target.style.color = "#455973"}
-                    >
-                      {contact.info}
-                    </a>
-                  ) : (
-                    <p style={{ 
-                      color: "#6681a4",
-                      fontSize: isProblemSize ? '0.75rem' : '0.85rem',
-                      fontFamily: 'Poppins, sans-serif',
-                      fontWeight: 500,
-                      margin: 0,
-                      lineHeight: 1.3,
-                      textAlign: 'center',
-                      wordBreak: contact.type === 'mail' ? 'break-all' : 'normal',
-                      hyphens: 'auto'
-                    }}>
-                      {contact.info}
-                    </p>
-                  )}
+                  <p style={{
+                    fontSize: '12px', color: '#64748b',
+                    fontFamily: "'Inter', sans-serif",
+                    margin: 0, wordBreak: 'break-all'
+                  }}>
+                    {contact.info}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Contact Form */}
-          <div
-            style={{
-              backgroundColor: "rgba(255, 255, 255, 0.9)",
-              backdropFilter: 'blur(10px)',
-              borderRadius: "24px",
-              boxShadow: "0 25px 50px -12px rgba(51, 65, 85, 0.25), 0 0 0 1px rgba(51, 65, 85, 0.1)",
-              border: '1px solid rgba(51, 65, 85, 0.1)',
-              padding: isSmallScreen ? "2rem" : "3rem",
-              width: "100%",
-              maxWidth: isProblemSize ? "none" : "600px",
-              margin: "0 auto",
-              position: 'relative',
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-              transition: 'all 0.8s ease-out 0.6s'
-            }}
-          >
-            <h3 style={{ 
-              textAlign: "center",
-              fontSize: isSmallScreen ? "1.5rem" : "1.75rem",
-              marginBottom: "2rem",
-              color: "#334155",
-              fontWeight: 700,
-              fontFamily: 'Poppins, sans-serif',
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.02)',
+            border: '1px solid rgba(255, 255, 255, 0.06)',
+            borderRadius: '20px',
+            padding: isSmall ? '28px 20px' : '36px 28px',
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'all 0.8s ease-out 0.3s'
+          }}>
+            <h3 style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontSize: '20px', fontWeight: 700,
+              color: '#f1f5f9', marginBottom: '24px',
+              textAlign: 'center'
             }}>
-              Send me a Message
+              Send a Message
             </h3>
-            
-            {/* Status Messages */}
+
             {submitStatus === 'success' && (
               <div style={{
-                backgroundColor: '#d1fae5',
-                color: '#065f46',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                marginBottom: '1.5rem',
-                border: '1px solid #a7f3d0',
-                textAlign: 'center',
-                fontFamily: 'Poppins, sans-serif',
+                background: 'rgba(34, 197, 94, 0.1)',
+                border: '1px solid rgba(34, 197, 94, 0.2)',
+                color: '#22c55e',
+                padding: '12px 16px', borderRadius: '10px',
+                marginBottom: '1.25rem', textAlign: 'center',
+                fontSize: '14px', fontFamily: "'Inter', sans-serif"
               }}>
-                ✅ Message sent successfully! I'll get back to you soon.
+                ✅ Message sent successfully!
               </div>
             )}
-            
+
             {submitStatus === 'error' && (
               <div style={{
-                backgroundColor: '#fee2e2',
-                color: '#991b1b',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                marginBottom: '1.5rem',
-                border: '1px solid #fecaca',
-                textAlign: 'center',
-                fontFamily: 'Poppins, sans-serif',
+                background: 'rgba(239, 68, 68, 0.1)',
+                border: '1px solid rgba(239, 68, 68, 0.2)',
+                color: '#ef4444',
+                padding: '12px 16px', borderRadius: '10px',
+                marginBottom: '1.25rem', textAlign: 'center',
+                fontSize: '14px', fontFamily: "'Inter', sans-serif"
               }}>
                 ❌ Something went wrong. Please try again.
               </div>
             )}
 
             <div>
-              {/* Floating Labels */}
-              <FloatingInput 
-                label="Subject" 
-                type="text" 
-                name="subject" 
-                value={formData.subject} 
-                onChange={handleInputChange} 
-              />
-              <FloatingInput 
-                label="Your Email" 
-                type="email" 
-                name="email" 
-                value={formData.email} 
-                onChange={handleInputChange}
-                onBlur={handleEmailBlur}
-              />
-              
-              {/* Email Error Message */}
+              <FloatingInput label="Subject" type="text" name="subject" value={formData.subject} onChange={handleInputChange} />
+              <FloatingInput label="Your Email" type="email" name="email" value={formData.email} onChange={handleInputChange} onBlur={handleEmailBlur} />
+
               {emailError && (
                 <div style={{
-                  color: '#dc2626',
-                  fontSize: '0.875rem',
-                  marginTop: '-1rem',
-                  marginBottom: '1rem',
-                  paddingLeft: '12px',
-                  fontFamily: 'Poppins, sans-serif',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
+                  color: '#ef4444', fontSize: '0.8rem',
+                  marginTop: '-0.75rem', marginBottom: '0.75rem',
+                  paddingLeft: '12px', fontFamily: "'Inter', sans-serif",
+                  display: 'flex', alignItems: 'center', gap: '6px'
                 }}>
-                  <span>⚠️</span>
-                  {emailError}
+                  <span>⚠️</span>{emailError}
                 </div>
               )}
 
               {/* Textarea */}
-              <div style={{ position: "relative", marginBottom: "2rem" }}>
+              <div style={{ position: "relative", marginBottom: "1.5rem" }}>
                 <textarea
                   name="message"
                   required
@@ -655,60 +413,57 @@ const Contacts = () => {
                   onBlur={() => setIsMessageFocused(false)}
                   style={{
                     width: "100%",
-                    padding: "1.25rem 0.75rem 0.5rem",
-                    border: "2px solid #e2e8f0",
+                    padding: "1.1rem 0.75rem 0.5rem",
+                    border: `1px solid ${isMessageFocused ? '#3b82f6' : 'rgba(255, 255, 255, 0.08)'}`,
                     borderRadius: "12px",
-                    fontSize: "1rem",
+                    fontSize: "0.95rem",
                     minHeight: "120px",
                     outline: "none",
-                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                    backgroundColor: "#ffffff",
-                    borderColor: isMessageFocused ? "#334155" : "#e2e8f0",
-                    boxShadow: isMessageFocused ? "0 0 0 3px rgba(51, 65, 85, 0.1)" : "none",
-                    fontFamily: 'Poppins, sans-serif',
-                    resize: 'vertical'
+                    transition: "all 0.3s",
+                    backgroundColor: "rgba(255, 255, 255, 0.03)",
+                    color: "#f1f5f9",
+                    fontFamily: "'Inter', sans-serif",
+                    resize: 'vertical',
+                    boxShadow: isMessageFocused ? '0 0 0 3px rgba(59, 130, 246, 0.1)' : 'none'
                   }}
-                ></textarea>
-                <label
-                  style={{
-                    position: "absolute",
-                    left: "12px",
-                    top: isMessageFocused || formData.message ? "-8px" : "16px",
-                    fontSize: isMessageFocused || formData.message ? "0.75rem" : "1rem",
-                    color: isMessageFocused || formData.message ? "#334155" : "#64748b",
-                    pointerEvents: "none",
-                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                    backgroundColor: "#ffffff",
-                    padding: "0 8px",
-                    fontWeight: 500,
-                    fontFamily: 'Poppins, sans-serif',
-                  }}
-                >
+                />
+                <label style={{
+                  position: "absolute", left: "12px",
+                  top: isMessageFocused || formData.message ? "-8px" : "16px",
+                  fontSize: isMessageFocused || formData.message ? "0.7rem" : "0.95rem",
+                  color: isMessageFocused ? "#3b82f6" : "#64748b",
+                  pointerEvents: "none",
+                  transition: "all 0.3s",
+                  backgroundColor: isMessageFocused || formData.message ? "#0d0d14" : "transparent",
+                  padding: "0 6px", fontWeight: 500,
+                  fontFamily: "'Inter', sans-serif",
+                }}>
                   Your Message
                 </label>
               </div>
 
-              {/* Submit Button */}
               <button
                 type="button"
                 onClick={handleSubmit}
                 disabled={isSubmitting || !formData.subject || !formData.email || !formData.message || emailError}
                 style={{
-                  width: "100%",
-                  padding: "1rem",
-                  background: isSubmitting || (!formData.subject || !formData.email || !formData.message || emailError) ? 
-                            '#9ca3af' : 
-                            isSubmitHovered ? 'linear-gradient(135deg, #1e293b 0%, #475569 100%)' : 'linear-gradient(135deg, #334155, #455973)',
-                  color: "#ffffff",
-                  border: "none",
-                  borderRadius: "12px",
-                  fontSize: "1rem",
+                  width: "100%", padding: "14px",
+                  background: (isSubmitting || !formData.subject || !formData.email || !formData.message || emailError)
+                    ? 'rgba(255, 255, 255, 0.1)'
+                    : isSubmitHovered
+                      ? 'linear-gradient(135deg, #2563eb, #4f46e5)'
+                      : 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                  color: "#ffffff", border: "none",
+                  borderRadius: "12px", fontSize: "0.95rem",
                   fontWeight: 600,
-                  cursor: isSubmitting || (!formData.subject || !formData.email || !formData.message || emailError) ? 'not-allowed' : 'pointer',
-                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                  boxShadow: isSubmitHovered && !isSubmitting && !emailError ? '0 20px 25px -5px rgba(51, 65, 85, 0.4)' : '0 10px 15px -3px rgba(51, 65, 85, 0.3)',
-                  transform: isSubmitHovered && !isSubmitting && !emailError ? 'translateY(-2px)' : 'translateY(0)',
-                  fontFamily: 'Poppins, sans-serif',
+                  cursor: (isSubmitting || !formData.subject || !formData.email || !formData.message || emailError)
+                    ? 'not-allowed' : 'pointer',
+                  transition: "all 0.3s",
+                  boxShadow: isSubmitHovered && !isSubmitting
+                    ? '0 12px 30px rgba(59, 130, 246, 0.35)'
+                    : '0 6px 20px rgba(59, 130, 246, 0.2)',
+                  transform: isSubmitHovered && !isSubmitting ? 'translateY(-2px)' : 'translateY(0)',
+                  fontFamily: "'Inter', sans-serif",
                   letterSpacing: '0.3px'
                 }}
                 onMouseEnter={() => setIsSubmitHovered(true)}
@@ -716,69 +471,11 @@ const Contacts = () => {
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
-              
-              {/* Email Format Helper */}
-              {emailError && formData.email.length > 0 && emailError !== 'Email is required' && (
-                <div style={{
-                  marginTop: '1rem',
-                  padding: '12px 16px',
-                  backgroundColor: '#fef2f2',
-                  border: '1px solid #fecaca',
-                  borderRadius: '8px',
-                  fontSize: '0.875rem',
-                  color: '#991b1b',
-                  fontFamily: 'Poppins, sans-serif',
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                    <span>💡</span>
-                    <strong style={{ color: '#7f1d1d' }}>Email Format Required:</strong>
-                  </div>
-                  <div style={{ paddingLeft: '20px', color: '#7f1d1d' }}>
-                    Please use a valid email format like:<br/>
-                    • yourname@gmail.com<br/>
-                    • yourname@yahoo.com<br/>
-                    • example@outlook.com
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
       </div>
-
-      <style>
-        {`
-        @keyframes pulse {
-          0%, 100% { 
-            opacity: 0.1; 
-            transform: scale(1); 
-          }
-          50% { 
-            opacity: 0.2; 
-            transform: scale(1.05); 
-          }
-        }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes bounce {
-          0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
-          40%, 43% { transform: translate3d(0, -8px, 0); }
-          70% { transform: translate3d(0, -4px, 0); }
-          90% { transform: translate3d(0, -2px, 0); }
-        }
-        `}
-      </style>
-    </div>
+    </section>
   );
 };
 

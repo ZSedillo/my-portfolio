@@ -1,52 +1,158 @@
-body{
-    background-color:#F6F0ED;
+/* ===== Design System ===== */
+:root {
+  /* Colors */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #111118;
+  --bg-card: rgba(17, 17, 24, 0.8);
+  --bg-card-hover: rgba(25, 25, 35, 0.9);
+  --bg-glass: rgba(255, 255, 255, 0.03);
+  --bg-glass-hover: rgba(255, 255, 255, 0.06);
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --accent-primary: #3b82f6;
+  --accent-secondary: #6366f1;
+  --accent-gradient: linear-gradient(135deg, #3b82f6, #6366f1);
+  --accent-glow: rgba(59, 130, 246, 0.15);
+
+  --border-color: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+
+  /* Typography */
+  --font-heading: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing */
+  --section-padding: 100px 0;
+  --container-max: 1200px;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.section-load-up{
-    transform:translateY(100px);
-    opacity:0;
-    transition: 1.5s ease;
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.section-load-up--visible{
-    transform: translate(0px);
-    opacity:1;
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-.section-load-down{
-    display: none;
-    transform:translateY(-100px);
-    opacity:0;
-    transition: 1s ease;
+/* ===== Scroll Animations ===== */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.section-load-down--visible{
-    transform: translateY(0px);
-    opacity:1;
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.section-load-left{
-    position:relative;
-    transform:translateX(-100px);
-    opacity:0;
-    transition: 1s ease;
+.fade-in-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.section-load-left--visible{
-    transform: translateX(0px);
-    opacity:1;
+.fade-in-left.visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
-/* This is causing a extended 100px problem on right for which affects responsiveness */
-.section-load-right{
-    position:static;
-    transform:translateX(100px);
-    opacity:0;
-    transition: 1s ease;
+.fade-in-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.section-load-right--visible{
-    transform: translateX(0px);
-    opacity:1;
+.fade-in-right.visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
+.scale-in {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scale-in.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ===== Keyframes ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
+}
+
+/* ===== Selection ===== */
+::selection {
+  background: rgba(59, 130, 246, 0.3);
+  color: #ffffff;
+}

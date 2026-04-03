@@ -1,567 +1,238 @@
 import React, { useState, useEffect } from 'react';
 import Resume from '../assets/resume/Sedillo_Resume.pdf';
 
+const useMediaQuery = (query) => {
+    const [matches, setMatches] = useState(window.matchMedia(query).matches);
+    useEffect(() => {
+        const mql = window.matchMedia(query);
+        const handler = () => setMatches(mql.matches);
+        mql.addEventListener('change', handler);
+        return () => mql.removeEventListener('change', handler);
+    }, [query]);
+    return matches;
+};
+
 const About = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [activeSkill, setActiveSkill] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
-  const [hoveredSkill, setHoveredSkill] = useState(null);
-  const [touchedSkill, setTouchedSkill] = useState(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const isMobile = useMediaQuery('(max-width: 768px)');
+    const isSmall = useMediaQuery('(max-width: 480px)');
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+            { threshold: 0.15 }
+        );
+        const el = document.getElementById('About');
+        if (el) observer.observe(el);
+        return () => { if (el) observer.unobserve(el); };
+    }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveSkill(prev => (prev + 1) % 6);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
+    const stats = [
+        { number: '3+', label: 'Projects Built' },
+        { number: '3', label: 'Internships' },
+        { number: '∞', label: 'Dedication' }
+    ];
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const skills = [
-    { icon: "💻", label: "Full Stack Development", color: "linear-gradient(135deg, #334155, #455973)" },
-    { icon: "⚡", label: "Performance Optimization", color: "linear-gradient(135deg, #455973, #6681a4)" },
-    { icon: "🎯", label: "Problem Solving", color: "linear-gradient(135deg, #3f5169, #6681a4)" },
-    { icon: "❤️", label: "User Experience", color: "linear-gradient(135deg, #334155, #3f5169)" },
-    { icon: "☕", label: "Continuous Learning", color: "linear-gradient(135deg, #455973, #334155)" },
-    { icon: "🎮", label: "Game Development", color: "linear-gradient(135deg, #6681a4, #3f5169)" }
-  ];
-
-  const stats = [
-    { number: "6+", label: "Years Experience" },
-    { number: "10+", label: "Projects Completed" },
-    { number: "24/7", label: "Dedication" }
-  ];
-
-  const isMobile = windowWidth < 864;
-  const isTablet = windowWidth >= 864 && windowWidth < 1024;
-  const isSmall = windowWidth < 480;
-
-  const handleSkillInteraction = (index, isTouch = false) => {
-    if (isTouch) {
-      setTouchedSkill(touchedSkill === index ? null : index);
-    } else {
-      setHoveredSkill(index);
-    }
-  };
-
-  const handleSkillLeave = () => {
-    setHoveredSkill(null);
-  };
-
-  return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 50%, #CBD5E1 100%)',
-      fontFamily: 'Poppins, sans-serif',
-    }} id="About">
-      {/* Hero Section */}
-      <section style={{
-        position: 'relative',
-        paddingTop: '80px',
-        paddingBottom: '64px',
-        padding: `80px ${isSmall ? '12px' : '16px'} 64px`,
-        overflow: 'hidden'
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative' }}>
-          {/* Floating elements - adjusted for mobile */}
-          <div style={{
-            position: 'absolute',
-            top: isSmall ? '20px' : '40px',
-            left: isSmall ? '10px' : '40px',
-            width: isSmall ? '60px' : '80px',
-            height: isSmall ? '60px' : '80px',
-            background: 'linear-gradient(135deg, #455973, #6681a4)',
-            borderRadius: '50%',
-            opacity: 0.2,
-            animation: 'pulse 2s infinite'
-          }}></div>
-          
-          <div style={{
-            position: 'absolute',
-            top: isSmall ? '80px' : '128px',
-            right: isSmall ? '10px' : '80px',
-            width: isSmall ? '48px' : '64px',
-            height: isSmall ? '48px' : '64px',
-            background: 'linear-gradient(135deg, #334155, #3f5169)',
-            borderRadius: '50%',
-            opacity: 0.2,
-            animation: 'bounce 2s infinite'
-          }}></div>
-
-          <div style={{
-            textAlign: 'center',
-            transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.9)',
-            opacity: isVisible ? 1 : 0,
-            transition: 'all 1s ease-out',
-            position: 'relative',
-            zIndex: 1
-          }}>
+    return (
+        <section id="About" style={{
+            padding: isMobile ? '80px 20px' : '120px 32px',
+            background: 'linear-gradient(180deg, #0d0d14 0%, #0a0a0f 100%)',
+            position: 'relative', overflow: 'hidden'
+        }}>
+            {/* Subtle accent glow */}
             <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              padding: isSmall ? '6px 12px' : '8px 16px',
-              background: 'rgba(255, 255, 255, 0.9)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '25px',
-              border: '1px solid rgba(51, 65, 85, 0.2)',
-              marginBottom: '32px'
-            }}>
-              <div style={{
-                width: '8px',
-                height: '8px',
-                background: '#10B981',
-                borderRadius: '50%',
-                marginRight: '12px',
-                animation: 'pulse 2s infinite'
-              }}></div>
-              <span style={{ 
-                color: '#334155', 
-                fontWeight: 600, 
-                fontSize: isSmall ? '12px' : '14px' 
-              }}>
-                Available for new opportunities
-              </span>
-            </div>
-            
-            <h1 style={{
-              color: '#334155',
-              fontSize: isSmall ? '36px' : isMobile ? '48px' : isTablet ? '56px' : '72px',
-              fontWeight: 'bold',
-              marginBottom: '24px',
-              lineHeight: '1.2'
-            }}>
-              About Me
-            </h1>
-            
-            <p style={{
-              fontSize: isSmall ? '16px' : isMobile ? '18px' : '24px',
-              color: '#455973',
-              maxWidth: '600px',
-              margin: '0 auto',
-              lineHeight: '1.6',
-              padding: isSmall ? '0 8px' : '0'
-            }}>
-              Passionate developer crafting digital experiences that matter
-            </p>
-          </div>
-        </div>
-      </section>
+                position: 'absolute', top: '50%', right: '-10%',
+                width: '400px', height: '400px',
+                background: 'radial-gradient(circle, rgba(99, 102, 241, 0.06) 0%, transparent 70%)',
+                borderRadius: '50%', filter: 'blur(80px)', zIndex: 0
+            }} />
 
-      {/* Main Content */}
-      <section style={{ padding: `64px ${isSmall ? '12px' : '16px'}` }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-            gap: isTablet ? '48px' : '64px',
-            alignItems: 'center'
-          }}>
-            {/* Profile Image with Skills */}
             <div style={{
-              position: 'relative',
-              order: isMobile ? 2 : 1,
-              padding: isMobile ? '0 8px' : '0'
+                maxWidth: '1000px', margin: '0 auto',
+                position: 'relative', zIndex: 1
             }}>
-              <div style={{
-                position: 'relative',
-                width: isSmall ? '240px' : isMobile ? '280px' : isTablet ? '320px' : '384px',
-                height: isSmall ? '240px' : isMobile ? '280px' : isTablet ? '320px' : '384px',
-                margin: '0 auto'
-              }}>
-                {/* Main image container */}
+                {/* Section Header */}
                 <div style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '24px',
-                  background: 'linear-gradient(135deg, #455973, #6681a4)',
-                  padding: '4px',
-                  transform: 'rotate(3deg)',
-                  transition: 'transform 0.5s ease',
-                  cursor: 'pointer'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'rotate(0deg)'}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'rotate(3deg)'}
-                >
-                  <div style={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: '20px',
-                    background: 'linear-gradient(135deg, #F1F5F9, #FFFFFF)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
+                    textAlign: 'center', marginBottom: '64px',
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+                    transition: 'all 0.8s ease-out'
+                }}>
                     <div style={{
-                      width: '80%',
-                      height: '80%',
-                      borderRadius: '16px',
-                      background: 'linear-gradient(135deg, #E2E8F0, #F1F5F9)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: isSmall ? '60px' : isMobile ? '80px' : isTablet ? '100px' : '120px'
+                        display: 'inline-flex', alignItems: 'center', gap: '8px',
+                        backgroundColor: 'rgba(59, 130, 246, 0.08)',
+                        padding: '6px 14px', borderRadius: '50px',
+                        fontSize: '13px', fontWeight: 500, color: '#3b82f6',
+                        marginBottom: '20px',
+                        border: '1px solid rgba(59, 130, 246, 0.15)',
+                        fontFamily: "'Inter', sans-serif"
                     }}>
-                      💻
+                        <span style={{
+                            width: '6px', height: '6px', borderRadius: '50%',
+                            backgroundColor: '#22c55e', animation: 'pulse 2s infinite'
+                        }} />
+                        Get to know me
                     </div>
-                  </div>
+
+                    <h2 style={{
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontSize: isSmall ? '32px' : isMobile ? '40px' : '52px',
+                        fontWeight: 700, color: '#f1f5f9',
+                        letterSpacing: '-0.02em', marginBottom: '8px'
+                    }}>
+                        About Me
+                    </h2>
+
+                    <div style={{
+                        width: '60px', height: '3px',
+                        background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                        margin: '16px auto 0', borderRadius: '2px'
+                    }} />
                 </div>
 
-                {/* Skills Grid for Mobile and Tablet */}
-                {(isMobile || isTablet) && (
-                  <div style={{
+                {/* Content Card */}
+                <div style={{
+                    background: 'rgba(255, 255, 255, 0.02)',
+                    border: '1px solid rgba(255, 255, 255, 0.06)',
+                    borderRadius: '20px',
+                    padding: isSmall ? '28px 20px' : isMobile ? '36px 28px' : '48px 40px',
+                    backdropFilter: 'blur(10px)',
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+                    transition: 'all 0.8s ease-out 0.2s'
+                }}>
+                    <h3 style={{
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontSize: isSmall ? '22px' : '28px',
+                        fontWeight: 700, color: '#f1f5f9',
+                        marginBottom: '24px'
+                    }}>
+                        Hi, I'm Zandro! 👋
+                    </h3>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                        <p style={{
+                            fontSize: isSmall ? '15px' : '17px',
+                            color: '#cbd5e1', lineHeight: 1.7,
+                            fontFamily: "'Inter', sans-serif"
+                        }}>
+                            A passionate <span style={{ color: '#3b82f6', fontWeight: 600 }}>Full Stack Developer</span> and{' '}
+                            <span style={{ color: '#6366f1', fontWeight: 600 }}>Game Developer</span> who thrives on
+                            turning complex problems into elegant solutions.
+                        </p>
+
+                        <p style={{
+                            fontSize: isSmall ? '14px' : '15px',
+                            color: '#94a3b8', lineHeight: 1.7,
+                            fontFamily: "'Inter', sans-serif"
+                        }}>
+                            My expertise spans across front-end and back-end development, networking infrastructure,
+                            and system administration, with a special focus on program debugging, optimization, and
+                            performance enhancement. I'm constantly exploring new technologies to stay at the forefront
+                            of the industry.
+                        </p>
+
+                        <p style={{
+                            fontSize: isSmall ? '14px' : '15px',
+                            color: '#94a3b8', lineHeight: 1.7,
+                            fontFamily: "'Inter', sans-serif"
+                        }}>
+                            With strong analytical skills and meticulous attention to detail, I'm committed to
+                            delivering high-quality solutions that not only meet requirements but exceed expectations.
+                        </p>
+                    </div>
+
+                    {/* Resume Button */}
+                    <a
+                        href={Resume}
+                        download="Sedillo_Resume"
+                        style={{ textDecoration: 'none', display: 'inline-block', marginTop: '32px' }}
+                    >
+                        <button style={{
+                            background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                            border: 'none', borderRadius: '12px',
+                            color: '#ffffff',
+                            padding: isSmall ? '12px 24px' : '14px 28px',
+                            display: 'flex', alignItems: 'center', gap: '10px',
+                            fontWeight: 600, fontSize: isSmall ? '14px' : '15px',
+                            cursor: 'pointer', fontFamily: "'Inter', sans-serif",
+                            boxShadow: '0 8px 25px rgba(59, 130, 246, 0.3)',
+                            transition: 'all 0.3s ease',
+                            letterSpacing: '0.3px'
+                        }}
+                        onMouseOver={e => {
+                            e.currentTarget.style.transform = 'translateY(-2px)';
+                            e.currentTarget.style.boxShadow = '0 12px 35px rgba(59, 130, 246, 0.4)';
+                        }}
+                        onMouseOut={e => {
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = '0 8px 25px rgba(59, 130, 246, 0.3)';
+                        }}
+                        >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7,10 12,15 17,10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download Resume
+                        </button>
+                    </a>
+                </div>
+
+                {/* Stats */}
+                <div style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: isSmall ? '8px' : '12px',
+                    gap: isSmall ? '12px' : '20px',
                     marginTop: '32px',
-                    maxWidth: isSmall ? '200px' : '240px',
-                    margin: '32px auto 0',
-                    position: 'relative'
-                  }}>
-                    {skills.map((skill, index) => (
-                      <div key={index} style={{ position: 'relative' }}>
-                        <div 
-                          style={{
-                            width: isSmall ? '50px' : '60px',
-                            height: isSmall ? '50px' : '60px',
-                            borderRadius: '16px',
-                            background: skill.color,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: '0 4px 12px rgba(51, 65, 85, 0.15)',
-                            fontSize: isSmall ? '20px' : '24px',
-                            transition: 'transform 0.3s ease',
-                            cursor: 'pointer',
-                            transform: (hoveredSkill === index || touchedSkill === index) ? 'scale(1.1)' : 'scale(1)'
-                          }}
-                          onMouseEnter={() => handleSkillInteraction(index)}
-                          onMouseLeave={handleSkillLeave}
-                          onClick={() => handleSkillInteraction(index, true)}
-                          onTouchStart={() => handleSkillInteraction(index, true)}
-                        >
-                          {skill.icon}
-                        </div>
-                        
-                        {/* Label tooltip for mobile/tablet */}
-                        {(hoveredSkill === index || touchedSkill === index) && (
-                          <div style={{
-                            position: 'absolute',
-                            top: '100%',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            marginTop: '8px',
-                            zIndex: 20,
-                            animation: 'fadeIn 0.2s ease-in'
-                          }}>
-                            <div style={{
-                              background: '#FFFFFF',
-                              padding: '8px 12px',
-                              borderRadius: '8px',
-                              boxShadow: '0 4px 12px rgba(51, 65, 85, 0.15)',
-                              border: '1px solid #E2E8F0',
-                              whiteSpace: 'nowrap',
-                              fontSize: isSmall ? '10px' : '12px',
-                              fontWeight: 500,
-                              color: '#334155'
-                            }}>
-                              {skill.label}
-                            </div>
-                            {/* Arrow pointing up */}
-                            <div style={{
-                              position: 'absolute',
-                              top: '-4px',
-                              left: '50%',
-                              transform: 'translateX(-50%)',
-                              width: 0,
-                              height: 0,
-                              borderLeft: '4px solid transparent',
-                              borderRight: '4px solid transparent',
-                              borderBottom: '4px solid #FFFFFF'
-                            }}></div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Floating Skills for Desktop - with better positioning */}
-                {!isMobile && !isTablet && (
-                  <div style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '500px',
-                    height: '500px',
-                    pointerEvents: 'none'
-                  }}>
-                    {skills.map((skill, index) => {
-                      const angle = (index * 60) - 90;
-                      const radius = 150;
-                      const x = Math.cos(angle * Math.PI / 180) * radius;
-                      const y = Math.sin(angle * Math.PI / 180) * radius;
-                      
-                      return (
-                        <div key={index} style={{
-                          position: 'absolute',
-                          left: `calc(50% + ${x}px - 32px)`,
-                          top: `calc(50% + ${y}px - 32px)`,
-                          width: '64px',
-                          height: '64px',
-                          borderRadius: '16px',
-                          transform: activeSkill === index ? 'scale(1.1)' : 'scale(0.9)',
-                          transition: 'all 0.5s ease',
-                          zIndex: activeSkill === index ? 10 : 0,
-                          pointerEvents: 'auto'
-                        }}>
-                          <div style={{
-                            width: '100%',
-                            height: '100%',
-                            background: skill.color,
-                            borderRadius: '16px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: '0 4px 12px rgba(51, 65, 85, 0.15)',
-                            fontSize: '32px'
-                          }}>
-                            {skill.icon}
-                          </div>
-                          {activeSkill === index && (
-                            <div style={{
-                              position: 'absolute',
-                              bottom: '-40px',
-                              left: '50%',
-                              transform: 'translateX(-50%)',
-                              whiteSpace: 'nowrap'
-                            }}>
-                              <div style={{
-                                background: '#FFFFFF',
-                                padding: '4px 12px',
-                                borderRadius: '8px',
-                                boxShadow: '0 4px 12px rgba(51, 65, 85, 0.15)',
-                                border: '1px solid #E2E8F0'
-                              }}>
-                                <span style={{ fontSize: '14px', fontWeight: 500, color: '#334155' }}>
-                                  {skill.label}
-                                </span>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Content */}
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '32px',
-              order: isMobile ? 1 : 2,
-              padding: isSmall ? '0 8px' : '0'
-            }}>
-              <div style={{
-                background: 'rgba(255, 255, 255, 0.9)',
-                backdropFilter: 'blur(10px)',
-                borderRadius: '24px',
-                padding: isSmall ? '20px' : isMobile ? '24px' : '32px',
-                border: '1px solid rgba(51, 65, 85, 0.1)',
-                boxShadow: '0 10px 25px rgba(51, 65, 85, 0.1)'
-              }}>
-                <h2 style={{
-                  fontSize: isSmall ? '20px' : isMobile ? '24px' : '30px',
-                  fontWeight: 'bold',
-                  color: '#334155',
-                  marginBottom: '24px'
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+                    transition: 'all 0.8s ease-out 0.4s'
                 }}>
-                  Hi, I'm Zandro! 👋
-                </h2>
-                
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  <p style={{
-                    fontSize: isSmall ? '14px' : isMobile ? '16px' : '18px',
-                    color: '#455973',
-                    lineHeight: '1.6'
-                  }}>
-                    A passionate <span style={{ fontWeight: 600, color: '#334155' }}>Full Stack Developer</span>, 
-                    <span style={{ fontWeight: 600, color: '#3f5169' }}> and Game Developer </span>
-                    {/* , and 
-                    <span style={{ fontWeight: 600, color: '#6681a4' }}> IT Support & Systems</span>  */}
-                    
-                    who thrives on turning 
-                    complex problems into elegant solutions.
-                  </p>
-                  
-                  <p style={{
-                    fontSize: isSmall ? '12px' : isMobile ? '14px' : '16px',
-                    color: '#455973',
-                    lineHeight: '1.6'
-                  }}>
-                    My expertise spans across front-end and back-end development, networking infrastructure, 
-                    and system administration, with a special focus on program debugging, optimization, and 
-                    performance enhancement. I'm constantly exploring new technologies and methodologies to 
-                    stay at the forefront of the industry.
-                  </p>
-                  
-                  <p style={{
-                    fontSize: isSmall ? '12px' : isMobile ? '14px' : '16px',
-                    color: '#455973',
-                    lineHeight: '1.6'
-                  }}>
-                    With strong analytical skills and meticulous attention to detail, I'm committed to 
-                    delivering high-quality solutions that not only meet requirements but exceed expectations. 
-                    Every project is an opportunity to learn, grow, and create something amazing.
-                  </p>
+                    {stats.map((stat, index) => (
+                        <div key={index} style={{
+                            background: 'rgba(255, 255, 255, 0.02)',
+                            border: '1px solid rgba(255, 255, 255, 0.06)',
+                            borderRadius: '16px',
+                            padding: isSmall ? '20px 12px' : '28px 20px',
+                            textAlign: 'center',
+                            transition: 'all 0.3s ease',
+                            cursor: 'default'
+                        }}
+                        onMouseOver={e => {
+                            e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.2)';
+                            e.currentTarget.style.background = 'rgba(59, 130, 246, 0.04)';
+                        }}
+                        onMouseOut={e => {
+                            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
+                        }}
+                        >
+                            <div style={{
+                                fontFamily: "'Space Grotesk', sans-serif",
+                                fontSize: isSmall ? '24px' : '36px',
+                                fontWeight: 700,
+                                background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                                backgroundClip: 'text',
+                                marginBottom: '4px'
+                            }}>
+                                {stat.number}
+                            </div>
+                            <div style={{
+                                fontSize: isSmall ? '11px' : '14px',
+                                color: '#64748b', fontWeight: 500,
+                                fontFamily: "'Inter', sans-serif"
+                            }}>
+                                {stat.label}
+                            </div>
+                        </div>
+                    ))}
                 </div>
-
-                {/* Download CV Button */}
-                <a
-                  href={Resume}
-                  download="Sedillo_Resume"
-                  style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}
-                >             
-                <button style={{
-                  marginTop: '32px',
-                  background: 'linear-gradient(135deg, #334155, #455973)',
-                  border: 'none',
-                  borderRadius: '16px',
-                  color: '#FFFFFF',
-                  padding: isSmall ? '10px 20px' : isMobile ? '12px 24px' : '16px 32px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '12px',
-                  fontWeight: 600,
-                  fontSize: isSmall ? '12px' : isMobile ? '14px' : '16px',
-                  cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(51, 65, 85, 0.2)',
-                  transition: 'all 0.3s ease',
-                  transform: 'translateY(0)',
-                  width:'100%',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #3f5169, #6681a4)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(51, 65, 85, 0.25)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #334155, #455973)';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(51, 65, 85, 0.2)';
-                }}
-                >
-                  <span style={{ fontSize: isSmall ? '14px' : '18px' }}>⬇️</span>
-                  <span>Download Resume</span>
-                </button>
-                </a>   
-              </div>
-
-              {/* Stats */}
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: isSmall ? '8px' : isMobile ? '12px' : '16px'
-              }}>
-                {stats.map((stat, index) => (
-                  <div key={index} style={{
-                    background: 'rgba(255, 255, 255, 0.8)',
-                    backdropFilter: 'blur(10px)',
-                    borderRadius: '16px',
-                    padding: isSmall ? '12px 8px' : isMobile ? '16px' : '24px',
-                    textAlign: 'center',
-                    border: '1px solid rgba(51, 65, 85, 0.1)',
-                    transition: 'background 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)'}
-                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)'}
-                  >
-                    <div style={{
-                      color: '#334155',
-                      fontSize: isSmall ? '16px' : isMobile ? '20px' : '32px',
-                      fontWeight: 'bold',
-                      marginBottom: '4px'
-                    }}>
-                      {stat.number}
-                    </div>
-                    <div style={{
-                      fontSize: isSmall ? '10px' : isMobile ? '12px' : '16px',
-                      color: '#455973',
-                      fontWeight: 500,
-                      lineHeight: '1.2'
-                    }}>
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Divider */}
-      <div style={{
-        maxWidth: '800px',
-        margin: '0 auto',
-        padding: `${isSmall ? '32px' : '60px'} ${isSmall ? '12px' : '16px'}`
-      }}>
-        <hr style={{
-          border: 'none',
-          height: '10px',
-          background: 'none'
-        }} />
-      </div>
-
-      <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 0.2; }
-          50% { opacity: 0.4; }
-        }
-        
-        @keyframes bounce {
-          0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
-          40%, 43% { transform: translate3d(0, -8px, 0); }
-          70% { transform: translate3d(0, -4px, 0); }
-          90% { transform: translate3d(0, -2px, 0); }
-        }
-
-        @keyframes fadeIn {
-          from { 
-            opacity: 0; 
-            transform: translateX(-50%) translateY(-5px); 
-          }
-          to { 
-            opacity: 1; 
-            transform: translateX(-50%) translateY(0); 
-          }
-        }
-
-        @media (max-width: 480px) {
-          * {
-            box-sizing: border-box;
-          }
-        }
-      `}</style>
-    </div>
-  );
+        </section>
+    );
 };
 
 export default About;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const Header = () => {
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const [isScrollingUp, setIsScrollingUp] = useState(true);
     const [lastScrollTop, setLastScrollTop] = useState(0);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -20,61 +21,51 @@ const Header = () => {
     useEffect(() => {
         const checkScreenSize = () => setIsMobile(window.innerWidth <= 768);
         window.addEventListener('resize', checkScreenSize);
-        
+
         const handleScroll = () => {
             const scrollTop = window.scrollY;
+            setIsScrolled(scrollTop > 50);
             setIsScrollingUp(scrollTop < lastScrollTop || isNavbarOpen);
             setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
         };
-        
+
         window.addEventListener('scroll', handleScroll);
-        
-        // Intersection Observer for active section detection
+
         const observerOptions = {
             root: null,
-            rootMargin: '-20% 0px -70% 0px', // Trigger when section is 20% from top
+            rootMargin: '-20% 0px -70% 0px',
             threshold: 0
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    const sectionId = entry.target.id;
-                    // Map section IDs to navigation names
                     const sectionMap = {
-                        'Home': 'Home',
-                        'About': 'About',
-                        'Experience': 'Experience',
-                        'Skills': 'Skills',
-                        'Projects': 'Projects',
-                        'Education': 'Education',
-                        'Contacts': 'Contact'
+                        'Home': 'Home', 'About': 'About', 'Skills': 'Skills',
+                        'Projects': 'Projects', 'Experience': 'Experience',
+                        'Education': 'Education', 'Contacts': 'Contact'
                     };
-                    
-                    const sectionName = sectionMap[sectionId];
-                    if (sectionName && sectionName !== activeSection) {
-                        setActiveSection(sectionName);
-                    }
+                    const sectionName = sectionMap[entry.target.id];
+                    if (sectionName) setActiveSection(sectionName);
                 }
             });
         }, observerOptions);
 
-        // Observe all sections
-        const sectionIds = ['Home', 'About', 'Experience', 'Skills', 'Projects', 'Education', 'Contacts'];
-        const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
-        
-        sections.forEach(section => {
-            if (section) observer.observe(section);
+        const sectionIds = ['Home', 'About', 'Skills', 'Projects', 'Experience', 'Education', 'Contacts'];
+        sectionIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
         });
 
         return () => {
             window.removeEventListener('resize', checkScreenSize);
             window.removeEventListener('scroll', handleScroll);
-            sections.forEach(section => {
-                if (section) observer.unobserve(section);
+            sectionIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) observer.unobserve(el);
             });
         };
-    }, [lastScrollTop, isNavbarOpen, activeSection]);
+    }, [lastScrollTop, isNavbarOpen]);
 
     const toggleNavbar = () => setIsNavbarOpen(prev => !prev);
     const closeNavbar = () => setIsNavbarOpen(false);
@@ -87,91 +78,88 @@ const Header = () => {
     return (
         <>
             {/* Mobile overlay */}
-            <div 
-                style={{
-                    display: isNavbarOpen ? 'block' : 'none',
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: 'rgba(0,0,0,0.5)',
-                    zIndex: 1050
-                }}
-                onClick={closeNavbar}
-            />
+            {isNavbarOpen && (
+                <div
+                    style={{
+                        position: 'fixed', top: 0, left: 0,
+                        width: '100%', height: '100%',
+                        backgroundColor: 'rgba(0,0,0,0.6)',
+                        backdropFilter: 'blur(4px)',
+                        zIndex: 1050
+                    }}
+                    onClick={closeNavbar}
+                />
+            )}
 
             <nav style={{
                 position: 'fixed',
                 top: isScrollingUp ? '0' : '-80px',
-                left: '0',
-                width: '100%',
-                backgroundColor: '#ffffff',
-                boxShadow: '0 2px 20px rgba(0,0,0,0.08)',
+                left: '0', width: '100%',
+                backgroundColor: isScrolled ? 'rgba(10, 10, 15, 0.85)' : 'transparent',
+                backdropFilter: isScrolled ? 'blur(20px) saturate(180%)' : 'none',
                 zIndex: 1000,
-                transition: 'top 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                borderBottom: '1px solid rgba(0,0,0,0.05)'
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                borderBottom: isScrolled ? '1px solid rgba(255,255,255,0.06)' : '1px solid transparent'
             }}>
                 <div style={{
-                    maxWidth: '1200px',
-                    margin: '0 auto',
-                    padding: '12px 24px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
+                    maxWidth: '1200px', margin: '0 auto',
+                    padding: isMobile ? '14px 20px' : '16px 32px',
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center'
                 }}>
                     {/* Logo */}
-                    <div style={{ 
-                        color: '#334155',
-                        fontWeight: 700, 
-                        fontSize: '1.75rem',
-                        backgroundClip: 'text',
-                        letterSpacing: '-0.5px'
-                    }}>
-                        Zandro
-                    </div>
+                    <a href="#Home" style={{ textDecoration: 'none' }} onClick={() => handleNavClick('Home')}>
+                        <div style={{
+                            fontFamily: "'Space Grotesk', sans-serif",
+                            fontWeight: 700, fontSize: '1.5rem',
+                            background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                            letterSpacing: '-0.5px'
+                        }}>
+                            ZS
+                        </div>
+                    </a>
 
                     {/* Desktop Navigation */}
                     {!isMobile ? (
-                        <div style={{ 
+                        <div style={{
                             display: 'flex',
-                            backgroundColor: '#f8fafc',
+                            backgroundColor: 'rgba(255, 255, 255, 0.04)',
                             borderRadius: '50px',
-                            padding: '8px',
-                            gap: '4px',
-                            border: '1px solid #e2e8f0'
+                            padding: '4px',
+                            gap: '2px',
+                            border: '1px solid rgba(255, 255, 255, 0.06)'
                         }}>
                             {navLinks.map(link => (
-                                <a 
+                                <a
                                     key={link.name}
                                     href={link.href}
                                     onClick={() => handleNavClick(link.name)}
                                     style={{
                                         textDecoration: 'none',
-                                        color: activeSection === link.name ? '#ffffff' : '#64748b',
-                                        padding: '12px 20px',
+                                        color: activeSection === link.name ? '#ffffff' : '#94a3b8',
+                                        padding: '10px 18px',
                                         borderRadius: '25px',
                                         fontWeight: 500,
-                                        fontSize: '14px',
+                                        fontSize: '13px',
                                         letterSpacing: '0.3px',
                                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                        backgroundColor: activeSection === link.name ? '#334155' : 'transparent',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '8px',
-                                        position: 'relative',
-                                        overflow: 'hidden'
+                                        background: activeSection === link.name
+                                            ? 'linear-gradient(135deg, #3b82f6, #6366f1)'
+                                            : 'transparent',
+                                        fontFamily: "'Inter', sans-serif"
                                     }}
                                     onMouseOver={e => {
                                         if (activeSection !== link.name) {
-                                            e.target.style.backgroundColor = '#e2e8f0';
-                                            e.target.style.color = '#334155';
+                                            e.currentTarget.style.color = '#f1f5f9';
+                                            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.06)';
                                         }
                                     }}
                                     onMouseOut={e => {
                                         if (activeSection !== link.name) {
-                                            e.target.style.backgroundColor = 'transparent';
-                                            e.target.style.color = '#64748b';
+                                            e.currentTarget.style.color = '#94a3b8';
+                                            e.currentTarget.style.backgroundColor = 'transparent';
                                         }
                                     }}
                                 >
@@ -180,29 +168,19 @@ const Header = () => {
                             ))}
                         </div>
                     ) : (
-                        /* Mobile menu button */
-                        <button 
+                        <button
                             style={{
-                                background: 'linear-gradient(135deg, #455973ff 0%, #334155 100%)',
-                                border: 'none',
-                                borderRadius: '10px',
-                                width: '44px',
-                                height: '44px',
-                                cursor: 'pointer',
-                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                                border: 'none', borderRadius: '12px',
+                                width: '42px', height: '42px', cursor: 'pointer',
+                                transition: 'all 0.3s ease',
                                 transform: isNavbarOpen ? 'rotate(90deg)' : 'rotate(0deg)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                boxShadow: '0 4px 20px rgba(59, 130, 246, 0.3)'
                             }}
                             onClick={toggleNavbar}
                         >
-                            <span style={{ 
-                                color: 'white', 
-                                fontSize: '20px',
-                                fontWeight: 'bold'
-                            }}>
+                            <span style={{ color: 'white', fontSize: '18px', fontWeight: 'bold' }}>
                                 {isNavbarOpen ? '✕' : '☰'}
                             </span>
                         </button>
@@ -213,102 +191,90 @@ const Header = () => {
             {/* Mobile sidebar */}
             {isMobile && (
                 <div style={{
-                    position: 'fixed',
-                    top: 0,
+                    position: 'fixed', top: 0,
                     right: isNavbarOpen ? '0' : '-320px',
-                    width: '320px',
-                    height: '100vh',
-                    backgroundColor: '#ffffff',
+                    width: '300px', height: '100vh',
+                    backgroundColor: '#111118',
                     zIndex: 1100,
                     transition: 'right 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                    boxShadow: '-10px 0 50px rgba(0,0,0,0.15)',
-                    padding: '0',
-                    display: 'flex',
-                    flexDirection: 'column'
+                    boxShadow: '-10px 0 60px rgba(0,0,0,0.5)',
+                    display: 'flex', flexDirection: 'column',
+                    borderLeft: '1px solid rgba(255,255,255,0.06)'
                 }}>
-                    {/* Mobile header */}
                     <div style={{
-                        padding: '24px',
-                        borderBottom: '1px solid #e2e8f0',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
+                        padding: '20px 24px',
+                        borderBottom: '1px solid rgba(255,255,255,0.06)',
+                        display: 'flex', justifyContent: 'space-between', alignItems: 'center'
                     }}>
-                        <div style={{ 
-                            fontWeight: 700, 
-                            fontSize: '1.5rem',
+                        <div style={{
+                            fontFamily: "'Space Grotesk', sans-serif",
+                            fontWeight: 700, fontSize: '1.25rem',
+                            background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
-                            backgroundClip: 'text'
+                            backgroundClip: 'text',
                         }}>
-                            Zandro
+                            ZS
                         </div>
-                        <button 
+                        <button
                             style={{
-                                background: 'none',
-                                border: 'none',
-                                fontSize: '24px',
-                                cursor: 'pointer',
-                                color: '#64748b',
-                                width: '40px',
-                                height: '40px',
+                                background: 'none', border: 'none',
+                                fontSize: '22px', cursor: 'pointer',
+                                color: '#64748b', width: '40px', height: '40px',
                                 borderRadius: '10px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 transition: 'all 0.2s ease'
                             }}
                             onClick={closeNavbar}
                             onMouseOver={e => {
-                                e.target.style.backgroundColor = '#f1f5f9';
-                                e.target.style.color = '#334155';
+                                e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.06)';
+                                e.currentTarget.style.color = '#f1f5f9';
                             }}
                             onMouseOut={e => {
-                                e.target.style.backgroundColor = 'transparent';
-                                e.target.style.color = '#64748b';
+                                e.currentTarget.style.backgroundColor = 'transparent';
+                                e.currentTarget.style.color = '#64748b';
                             }}
                         >
                             ✕
                         </button>
                     </div>
 
-                    {/* Mobile navigation links */}
-                    <div style={{
-                        padding: '24px 0',
-                        flex: 1
-                    }}>
+                    <div style={{ padding: '16px 0', flex: 1 }}>
                         {navLinks.map((link, index) => (
-                            <a 
+                            <a
                                 key={link.name}
                                 href={link.href}
                                 onClick={() => handleNavClick(link.name)}
                                 style={{
                                     textDecoration: 'none',
-                                    color: activeSection === link.name ? '#455973ff' : '#334155',
-                                    padding: '16px 24px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    fontWeight: activeSection === link.name ? 600 : 500,
-                                    fontSize: '16px',
-                                    borderLeft: activeSection === link.name ? '3px solid #334155' : '3px solid transparent',
-                                    backgroundColor: activeSection === link.name ? '#f8fafc' : 'transparent',
+                                    color: activeSection === link.name ? '#3b82f6' : '#94a3b8',
+                                    padding: '14px 24px',
+                                    display: 'flex', alignItems: 'center',
+                                    fontWeight: activeSection === link.name ? 600 : 400,
+                                    fontSize: '15px',
+                                    borderLeft: activeSection === link.name
+                                        ? '3px solid #3b82f6'
+                                        : '3px solid transparent',
+                                    backgroundColor: activeSection === link.name
+                                        ? 'rgba(59, 130, 246, 0.08)'
+                                        : 'transparent',
                                     transition: 'all 0.2s ease',
-                                    borderBottom: index < navLinks.length - 1 ? '1px solid #f1f5f9' : 'none'
+                                    fontFamily: "'Inter', sans-serif"
                                 }}
                                 onMouseOver={e => {
                                     if (activeSection !== link.name) {
-                                        e.target.style.backgroundColor = '#f8fafc';
-                                        e.target.style.borderLeft = '3px solid #e2e8f0';
+                                        e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.04)';
+                                        e.currentTarget.style.color = '#f1f5f9';
                                     }
                                 }}
                                 onMouseOut={e => {
                                     if (activeSection !== link.name) {
-                                        e.target.style.backgroundColor = 'transparent';
-                                        e.target.style.borderLeft = '3px solid transparent';
+                                        e.currentTarget.style.backgroundColor = 'transparent';
+                                        e.currentTarget.style.color = '#94a3b8';
                                     }
                                 }}
-                                >
-                                <span>{link.name}</span>
+                            >
+                                {link.name}
                             </a>
                         ))}
                     </div>

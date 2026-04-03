@@ -155,7 +155,8 @@ const Skills = () => {
                                     cursor: 'default',
                                     opacity: isVisible ? 1 : 0,
                                     animation: isVisible ? `fadeInUp 0.6s ease-out ${index * 0.15}s forwards` : 'none',
-                                    position: 'relative', overflow: 'hidden'
+                                    position: 'relative', overflow: 'hidden',
+                                    textAlign: 'center'
                                 }}
                                 onMouseEnter={() => setHoveredIndex(index)}
                                 onMouseLeave={() => setHoveredIndex(null)}
@@ -177,7 +178,7 @@ const Skills = () => {
                                     background: `${skill.accentColor}15`,
                                     border: `1px solid ${skill.accentColor}25`,
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    marginBottom: '24px',
+                                    marginBottom: '24px', margin: '0 auto 24px auto',
                                     transition: 'all 0.3s ease',
                                     transform: isHovered ? 'scale(1.05)' : 'scale(1)',
                                     position: 'relative', zIndex: 1
@@ -215,7 +216,7 @@ const Skills = () => {
                                     }}>
                                         Languages & Frameworks
                                     </p>
-                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center' }}>
                                         {skill.skills.map((s, i) => (
                                             <span key={i} style={{
                                                 padding: '6px 12px',
@@ -252,7 +253,7 @@ const Skills = () => {
                                     }}>
                                         Tools & Platforms
                                     </p>
-                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center' }}>
                                         {skill.tools.map((tool, i) => (
                                             <span key={i} style={{
                                                 padding: '6px 12px',

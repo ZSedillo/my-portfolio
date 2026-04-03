@@ -30,11 +30,18 @@ function Education() {
     const educationData = {
         period: 'Aug 2022 – Present',
         institution: 'University of Santo Tomas',
-        degree: 'Bachelor of Science in Computer Science',
-        specialization: 'Specialization: Game Development',
+        degree: 'Computer Science Student',
+        description: 'Currently pursuing Computer Science with focus on full-stack development and database management systems.',
+        achievements: [
+            'Learned fundamentals of web development with HTML and CSS',
+            'Gained proficiency in Java programming and object-oriented concepts',
+            'Explored server-side development with PHP and XAMPP environment',
+            'Mastered database management using MySQL and Derby databases',
+            'Developed comprehensive website projects integrating multiple technologies',
+            'Built projects with dual database connectivity and SQL operations'
+        ],
         graduation: 'Expected Graduation: June 29, 2026',
-        coursework: ['Game Programming (Unity/C#)', 'Artificial Intelligence', 'Data Structures'],
-        technologies: ['C#', 'Java', 'Python', 'JavaScript', 'HTML', 'SQL']
+        technologies: ['HTML', 'CSS', 'Java', 'PHP', 'MySQL', 'Derby', 'SQL', 'XAMPP']
     };
 
     return (
@@ -156,15 +163,6 @@ function Education() {
                             }}>
                                 {educationData.degree}
                             </p>
-                            <p style={{
-                                fontSize: '14px',
-                                color: '#6366f1', fontWeight: 500,
-                                margin: '2px 0 0 0',
-                                fontFamily: "'Inter', sans-serif",
-                                fontStyle: 'italic'
-                            }}>
-                                {educationData.specialization}
-                            </p>
                         </div>
 
                         {/* Status dot */}
@@ -195,32 +193,34 @@ function Education() {
                         </span>
                     </div>
 
-                    {/* Relevant Coursework */}
-                    <div style={{ marginBottom: '24px' }}>
-                        <p style={{
-                            fontSize: '12px', fontWeight: 600,
-                            color: '#94a3b8', textTransform: 'uppercase',
-                            letterSpacing: '1px', marginBottom: '12px',
-                            fontFamily: "'Inter', sans-serif"
-                        }}>
-                            Relevant Coursework
-                        </p>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                            {educationData.coursework.map((course, i) => (
-                                <span key={i} style={{
-                                    padding: '8px 16px',
-                                    background: 'rgba(99, 102, 241, 0.08)',
-                                    color: '#a5b4fc',
-                                    borderRadius: '10px', fontSize: '13px',
-                                    fontWeight: 500,
-                                    border: '1px solid rgba(99, 102, 241, 0.15)',
-                                    fontFamily: "'Inter', sans-serif"
-                                }}>
-                                    {course}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
+                    {/* Description */}
+                    <p style={{
+                        color: '#94a3b8', fontSize: '15px',
+                        lineHeight: '1.7', marginBottom: '24px',
+                        fontFamily: "'Inter', sans-serif", fontStyle: 'italic'
+                    }}>
+                        {educationData.description}
+                    </p>
+
+                    {/* Achievements */}
+                    <ul style={{
+                        listStyle: 'none', padding: 0, margin: '0 0 24px 0',
+                        display: 'flex', flexDirection: 'column', gap: '12px'
+                    }}>
+                        {educationData.achievements.map((achievement, i) => (
+                            <li key={i} style={{
+                                color: '#cbd5e1', fontSize: '14px',
+                                display: 'flex', alignItems: 'flex-start', gap: '12px',
+                                fontFamily: "'Inter', sans-serif", lineHeight: '1.6'
+                            }}>
+                                <span style={{
+                                    color: '#3b82f6', fontSize: '16px',
+                                    marginTop: '2px'
+                                }}>•</span>
+                                <span>{achievement}</span>
+                            </li>
+                        ))}
+                    </ul>
 
                     {/* Technologies Learned */}
                     <div>

@@ -29,9 +29,9 @@ function Projects() {
 
     const projectsData = [
         {
-            period: 'Jan 2025 – Present',
+            period: 'Jan 2025 – Apr 2026',
             role: 'System Analyst & Full Stack Developer',
-            title: 'TeamWeb',
+            title: 'TeamianWeb',
             description: 'A comprehensive school management website built to handle 300+ students and 20+ teachers with robust backend systems.',
             points: [
                 'Architected and structured comprehensive system frameworks, prioritizing scalability to reliably support a user base of 300+ students and 20+ teachers',

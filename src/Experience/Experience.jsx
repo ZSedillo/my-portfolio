@@ -29,7 +29,7 @@ function Experience() {
 
     const experienceData = [
         {
-            period: 'Jan 2026 – Present',
+            period: 'Jan – May 2026',
             company: 'Amdocs',
             position: 'Software Engineer Intern',
             description: 'Working on backend operations, system monitoring, and automation using Unix scripting tools.',

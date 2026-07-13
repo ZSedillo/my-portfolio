@@ -28,10 +28,10 @@ function Education() {
     }, []);
 
     const educationData = {
-        period: 'Aug 2022 – Present',
+        period: 'Aug 2022 – Jun 2026',
         institution: 'University of Santo Tomas',
-        degree: 'Computer Science Student',
-        description: 'Currently pursuing Computer Science with focus on full-stack development and database management systems.',
+        degree: 'Bachelor of Science in Computer Science',
+        description: 'Graduated with a degree in Computer Science, focusing on full-stack development and database management systems.',
         achievements: [
             'Learned fundamentals of web development with HTML and CSS',
             'Gained proficiency in Java programming and object-oriented concepts',
@@ -40,7 +40,7 @@ function Education() {
             'Developed comprehensive website projects integrating multiple technologies',
             'Built projects with dual database connectivity and SQL operations'
         ],
-        graduation: 'Expected Graduation: June 29, 2026',
+        graduation: 'Graduated: June 29, 2026',
         technologies: ['HTML', 'CSS', 'Java', 'PHP', 'MySQL', 'Derby', 'SQL', 'XAMPP']
     };
 

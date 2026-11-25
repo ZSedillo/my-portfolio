@@ -1,285 +1,174 @@
-import React, { useState, useEffect } from 'react';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 
-const useMediaQuery = (query) => {
-    const [matches, setMatches] = useState(window.matchMedia(query).matches);
-    useEffect(() => {
-        const mql = window.matchMedia(query);
-        const handler = () => setMatches(mql.matches);
-        mql.addEventListener('change', handler);
-        return () => mql.removeEventListener('change', handler);
-    }, [query]);
-    return matches;
-};
+const experienceData = [
+  {
+    period: 'Jun 2026 – Present',
+    company: 'Amdocs',
+    position: 'Software Engineer Associate',
+    current: true,
+    achievements: [
+      'Query relational databases using SQL to inspect records, trace data discrepancies, and fix broken order states.',
+      'Send and test REST API requests (GET, POST, PUT) in Insomnia to retrieve, validate, and update backend data.',
+      'Inspect and verify complex JSON payloads across upstream and downstream services to ensure data accuracy, using Unix tunneling for secure server access.',
+    ],
+    technologies: ['SQL', 'REST APIs', 'Insomnia', 'JSON', 'Unix Tunneling'],
+  },
+  {
+    period: 'Jan 2026 – May 2026',
+    company: 'Amdocs',
+    position: 'Software Engineer Intern',
+    achievements: [
+      'Used GitHub Copilot to help write and clean up Unix shell scripts for daily operational tasks.',
+      'Wrote Unix shell scripts via MobaXTerm to check HBase server health, storage usage, and system load.',
+      'Built simple automation scripts for backend diagnostics and ticket checks, cutting down manual troubleshooting time.',
+    ],
+    technologies: ['Unix/Linux', 'Shell Scripting', 'MobaXTerm', 'HBase', 'GitHub Copilot'],
+  },
+  {
+    period: 'Jul 2025 – Nov 2025',
+    company: 'PNP Directorate for Personnel and Records Management',
+    position: 'IT Support & Systems Intern',
+    achievements: [
+      'Troubleshot and fixed hardware and software problems across 50+ office desktops and laptops.',
+      'Set up and maintained local network connections, including Ethernet cabling, for stable office internet access.',
+      'Provided hands-on technical support to government staff, helping resolve daily computer and network issues quickly.',
+    ],
+    technologies: ['Hardware Support', 'Networking', 'Ethernet Cabling', 'Troubleshooting'],
+  },
+  {
+    period: 'Jun 2024 – Aug 2024',
+    company: 'Fildev',
+    position: 'Full Stack Developer Intern',
+    achievements: [
+      'Built and connected RESTful APIs using Express and React to pass data cleanly between frontend pages and backend services.',
+      'Deployed web applications on Linux servers using SSH and PuTTY, keeping remote access and uptime steady.',
+      'Improved page load speeds by cleaning up MongoDB queries and updating responsive UI layouts.',
+    ],
+    technologies: ['React.js', 'Express.js', 'MongoDB', 'RESTful APIs', 'Linux', 'SSH/PuTTY'],
+  },
+];
 
-function Experience() {
-    const isMobile = useMediaQuery('(max-width: 768px)');
-    const isSmall = useMediaQuery('(max-width: 480px)');
-    const [hoveredExp, setHoveredExp] = useState(null);
-    const [isVisible, setIsVisible] = useState(false);
+const Experience = () => {
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
-            { threshold: 0.1 }
-        );
-        const el = document.getElementById('Experience');
-        if (el) observer.observe(el);
-        return () => { if (el) observer.unobserve(el); };
-    }, []);
+  return (
+    <section id="Experience" className="section-wrap alt">
+      <div className="section-inner">
+        <div className="section-header">
+          <span className="section-kicker">03 / Experience</span>
+          <h2 className="section-title">Work History</h2>
+          <p className="section-subtitle">
+            Backend engineering, systems automation, IT infrastructure, and full-stack internships.
+          </p>
+        </div>
 
-    const experienceData = [
-        {
-            period: 'Jan – May 2026',
-            company: 'Amdocs',
-            position: 'Software Engineer Intern',
-            description: 'Working on backend operations, system monitoring, and automation using Unix scripting tools.',
-            achievements: [
-                'Wrote and executed Unix shell scripts using MobaXTerm to monitor HBase system health, storage capacity, and stress levels',
-                'Supported backend operations by automating routine diagnostic tasks, reducing the need for repetitive manual checks',
-                'Assisted in backend ticket automation by applying scripting solutions to streamline issue identification and workflows'
-            ],
-            technologies: ['Unix/Linux', 'MobaXTerm', 'HBase', 'Shell Scripting', 'SQL'],
-            icon: '⚡',
-            accentColor: '#22c55e'
-        },
-        {
-            period: 'Jul – Nov 2025',
-            company: 'Directorate for Personnel and Records Management',
-            position: 'IT Support & Systems Intern',
-            description: 'Provided hardware and network support in a fast-paced government office environment.',
-            achievements: [
-                'Diagnosed and resolved complex hardware and software issues across 50+ desktops and laptops, ensuring uninterrupted daily operations',
-                'Configured and maintained network infrastructure, including Ethernet setups, to guarantee stable and secure internet access for all users',
-                'Delivered comprehensive IT support to staff members, optimizing technical workflows within a fast-paced government office environment'
-            ],
-            technologies: ['Hardware Support', 'Networking', 'Troubleshooting', 'IT Systems'],
-            icon: '🖥️',
-            accentColor: '#3b82f6'
-        },
-        {
-            period: 'Jun – Aug 2024',
-            company: 'Fildev',
-            position: 'Full Stack Developer Intern',
-            description: 'Contributed to full-stack development with focus on RESTful APIs, server deployment, and database optimization.',
-            achievements: [
-                'Engineered and integrated RESTful APIs to facilitate seamless and secure data exchange between frontend interfaces and backend architectures',
-                'Managed the deployment of applications on Linux servers utilizing SSH and Putty, ensuring high availability and stable remote access',
-                'Optimized system performance by refining MongoDB database queries and implementing responsive UI/UX enhancements'
-            ],
-            technologies: ['React', 'Node.js', 'MongoDB', 'Express.js', 'Git', 'SSH', 'APIs', 'Jira'],
-            icon: '💼',
-            accentColor: '#6366f1'
-        }
-    ];
-
-    return (
-        <section id="Experience" style={{
-            padding: isMobile ? '80px 20px' : '120px 32px',
-            background: '#0a0a0f',
-            position: 'relative', overflow: 'hidden'
-        }}>
-            <div style={{
-                position: 'absolute', top: '40%', left: '-5%',
-                width: '400px', height: '400px',
-                background: 'radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%)',
-                borderRadius: '50%', filter: 'blur(80px)', zIndex: 0
-            }} />
-
-            <div style={{
-                maxWidth: '900px', margin: '0 auto',
-                position: 'relative', zIndex: 1
-            }}>
-                {/* Header */}
-                <div style={{
-                    textAlign: 'center', marginBottom: '64px',
-                    opacity: isVisible ? 1 : 0,
-                    transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-                    transition: 'all 0.8s ease-out'
-                }}>
-                    <div style={{
-                        display: 'inline-flex', alignItems: 'center', gap: '8px',
-                        backgroundColor: 'rgba(59, 130, 246, 0.08)',
-                        padding: '6px 14px', borderRadius: '50px',
-                        fontSize: '13px', fontWeight: 500, color: '#3b82f6',
-                        marginBottom: '20px',
-                        border: '1px solid rgba(59, 130, 246, 0.15)',
-                        fontFamily: "'Inter', sans-serif"
-                    }}>
-                        <span style={{
-                            width: '6px', height: '6px', borderRadius: '50%',
-                            backgroundColor: '#22c55e', animation: 'pulse 2s infinite'
-                        }} />
-                        Professional Journey
-                    </div>
-
-                    <h2 style={{
-                        fontFamily: "'Space Grotesk', sans-serif",
-                        fontSize: isSmall ? '32px' : isMobile ? '40px' : '52px',
-                        fontWeight: 700, color: '#f1f5f9',
-                        letterSpacing: '-0.02em', marginBottom: '8px'
-                    }}>
-                        Experience
-                    </h2>
-
-                    <p style={{
-                        color: '#64748b', fontSize: '16px',
-                        fontFamily: "'Inter', sans-serif", marginBottom: '16px'
-                    }}>
-                        My professional development journey
-                    </p>
-
-                    <div style={{
-                        width: '60px', height: '3px',
-                        background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
-                        margin: '0 auto', borderRadius: '2px'
-                    }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {experienceData.map((exp) => (
+            <div
+              key={`${exp.company}-${exp.position}`}
+              className="card"
+              style={{
+                padding: isMobile ? '20px' : '26px',
+                borderLeft: exp.current ? '3px solid var(--accent)' : undefined,
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  gap: '10px',
+                  marginBottom: '14px',
+                }}
+              >
+                <div>
+                  <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)' }}>
+                    {exp.position}
+                  </h3>
+                  <p style={{ fontSize: '14px', fontWeight: 500, color: 'var(--accent)', marginTop: '2px' }}>
+                    {exp.company}
+                  </p>
                 </div>
 
-                {/* Timeline */}
-                <div style={{ position: 'relative' }}>
-                    {/* Vertical line */}
-                    {!isMobile && (
-                        <div style={{
-                            position: 'absolute',
-                            left: '20px', top: '0', bottom: '0',
-                            width: '2px',
-                            background: 'linear-gradient(180deg, #22c55e, #3b82f6, #6366f1, transparent)',
-                            opacity: 0.3, zIndex: 0
-                        }} />
-                    )}
-
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                        {experienceData.map((exp, index) => {
-                            const isHovered = hoveredExp === index;
-                            return (
-                                <div key={index} style={{
-                                    display: 'flex', gap: isMobile ? '0' : '40px',
-                                    position: 'relative'
-                                }}>
-                                    {/* Timeline dot */}
-                                    {!isMobile && (
-                                        <div style={{
-                                            width: '42px', flexShrink: 0,
-                                            display: 'flex', justifyContent: 'center',
-                                            paddingTop: '24px', position: 'relative', zIndex: 1
-                                        }}>
-                                            <div style={{
-                                                width: '14px', height: '14px',
-                                                borderRadius: '50%',
-                                                background: exp.accentColor,
-                                                boxShadow: `0 0 12px ${exp.accentColor}60`,
-                                                border: '3px solid #0a0a0f'
-                                            }} />
-                                        </div>
-                                    )}
-
-                                    {/* Card */}
-                                    <div
-                                        style={{
-                                            flex: 1,
-                                            background: isHovered
-                                                ? 'rgba(255, 255, 255, 0.04)'
-                                                : 'rgba(255, 255, 255, 0.02)',
-                                            border: `1px solid ${isHovered ? `${exp.accentColor}30` : 'rgba(255, 255, 255, 0.06)'}`,
-                                            borderRadius: '20px',
-                                            padding: isSmall ? '24px 20px' : '32px 28px',
-                                            transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                                            transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
-                                            cursor: 'default',
-                                            opacity: isVisible ? 1 : 0,
-                                            animation: isVisible ? `fadeInUp 0.6s ease-out ${index * 0.2}s forwards` : 'none'
-                                        }}
-                                        onMouseEnter={() => setHoveredExp(index)}
-                                        onMouseLeave={() => setHoveredExp(null)}
-                                    >
-                                        {/* Period + Title */}
-                                        <div style={{
-                                            display: 'flex', alignItems: 'flex-start',
-                                            gap: '12px', marginBottom: '16px', flexWrap: 'wrap'
-                                        }}>
-                                            <div style={{
-                                                background: `${exp.accentColor}15`,
-                                                border: `1px solid ${exp.accentColor}25`,
-                                                color: exp.accentColor,
-                                                padding: '6px 14px', borderRadius: '8px',
-                                                fontSize: '13px', fontWeight: 600,
-                                                fontFamily: "'Inter', sans-serif",
-                                                display: 'flex', alignItems: 'center', gap: '6px',
-                                                whiteSpace: 'nowrap'
-                                            }}>
-                                                <span>{exp.icon}</span>
-                                                {exp.period}
-                                            </div>
-
-                                            <div style={{ flex: 1, minWidth: '200px' }}>
-                                                <h3 style={{
-                                                    fontFamily: "'Space Grotesk', sans-serif",
-                                                    fontSize: isSmall ? '17px' : '20px',
-                                                    fontWeight: 700, color: '#f1f5f9', margin: 0
-                                                }}>
-                                                    {exp.company}
-                                                </h3>
-                                                <p style={{
-                                                    fontSize: '14px', color: exp.accentColor,
-                                                    fontWeight: 600, margin: '4px 0 0 0',
-                                                    fontFamily: "'Inter', sans-serif"
-                                                }}>
-                                                    {exp.position}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <p style={{
-                                            color: '#94a3b8', fontSize: '14px',
-                                            lineHeight: 1.6, marginBottom: '20px',
-                                            fontFamily: "'Inter', sans-serif", fontStyle: 'italic'
-                                        }}>
-                                            {exp.description}
-                                        </p>
-
-                                        <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px 0' }}>
-                                            {exp.achievements.map((achievement, i) => (
-                                                <li key={i} style={{
-                                                    display: 'flex', alignItems: 'flex-start',
-                                                    marginBottom: '8px', fontSize: '13px',
-                                                    color: '#94a3b8', lineHeight: 1.6,
-                                                    fontFamily: "'Inter', sans-serif"
-                                                }}>
-                                                    <span style={{
-                                                        width: '5px', height: '5px', borderRadius: '50%',
-                                                        background: exp.accentColor,
-                                                        marginRight: '12px', marginTop: '8px', flexShrink: 0,
-                                                        boxShadow: `0 0 6px ${exp.accentColor}40`
-                                                    }} />
-                                                    {achievement}
-                                                </li>
-                                            ))}
-                                        </ul>
-
-                                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                                            {exp.technologies.map((tech, i) => (
-                                                <span key={i} style={{
-                                                    padding: '5px 12px',
-                                                    background: `${exp.accentColor}10`,
-                                                    color: exp.accentColor,
-                                                    borderRadius: '6px', fontSize: '11px',
-                                                    fontWeight: 600,
-                                                    border: `1px solid ${exp.accentColor}20`,
-                                                    fontFamily: "'Inter', sans-serif"
-                                                }}>
-                                                    {tech}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  {exp.current && (
+                    <span
+                      style={{
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: '11px',
+                        padding: '3px 8px',
+                        borderRadius: 'var(--radius-sm)',
+                        backgroundColor: 'var(--status-live-tint)',
+                        color: 'var(--status-live)',
+                        border: '1px solid rgba(63, 185, 80, 0.3)',
+                      }}
+                    >
+                      CURRENT
+                    </span>
+                  )}
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: '12px',
+                      color: 'var(--text-muted)',
+                    }}
+                  >
+                    {exp.period}
+                  </span>
                 </div>
+              </div>
+
+              <ul
+                style={{
+                  listStyle: 'none',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px',
+                  marginBottom: '16px',
+                }}
+              >
+                {exp.achievements.map((item, idx) => (
+                  <li
+                    key={idx}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '10px',
+                      fontSize: '14px',
+                      color: 'var(--text-secondary)',
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'var(--text-muted)',
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: '12px',
+                        marginTop: '3px',
+                        flexShrink: 0,
+                      }}
+                    >
+                      –
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                {exp.technologies.map((tech) => (
+                  <span key={tech} className="tag">
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
-        </section>
-    );
-}
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default Experience;

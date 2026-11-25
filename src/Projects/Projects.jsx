@@ -90,26 +90,51 @@ const Projects = () => {
   const visibleProjects =
     filter === 'All' ? projectsData : projectsData.filter((p) => p.category === filter);
 
-  return (
-    <section id="Projects" className="section-wrap">
-      <div className="section-inner">
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'flex-end',
-            justifyContent: 'space-between',
-            gap: '20px',
-            marginBottom: '36px',
-          }}
-        >
-          <div className="section-header" style={{ marginBottom: 0 }}>
-            <span className="section-kicker">02 / Projects</span>
-            <h2 className="section-title">Games &amp; Software</h2>
-            <p className="section-subtitle">
-              Solo indie releases, in-progress Unity builds, thesis work, and web applications.
-            </p>
-          </div>
+    const projectsData = [
+        {
+            period: 'Jan 2025 – Apr 2026',
+            role: 'System Analyst & Full Stack Developer',
+            title: 'TeamWeb',
+            description: 'A comprehensive school management website built to handle 300+ students and 20+ teachers with robust backend systems.',
+            points: [
+                'Architected and structured comprehensive system frameworks, prioritizing scalability to reliably support a user base of 300+ students and 20+ teachers',
+                'Developed robust backend systems supporting student pre-registration workflows and complex administrative management features',
+                'Integrated API endpoints to establish seamless and efficient communication protocols between client applications and servers'
+            ],
+            tech: ['React', 'Node.js', 'Express.js', 'MongoDB', 'AWS S3'],
+            icon: '🏫',
+            accentColor: '#3b82f6',
+            github: 'https://github.com/ZSedillo'
+        },
+        {
+            period: 'Jul – Nov 2025',
+            role: 'Game Developer & Researcher',
+            title: 'Worshippers of The Deep (Thesis)',
+            description: 'A roguelike game featuring adaptive AI enemy using PPO-based Reinforcement Learning, achieving 100% user win rate during research testing.',
+            points: [
+                'Programmed core gameplay systems utilizing Godot and GDScript, successfully implementing dynamic potion, card, and combat mechanics',
+                'Designed and trained a PPO-based Reinforcement Learning enemy agent using Python that dynamically adapts to player behavior, achieving a 100% user win rate during research testing'
+            ],
+            tech: ['Godot', 'GDScript', 'Python', 'RL / PPO', 'AI Development'],
+            icon: '🎮',
+            accentColor: '#6366f1'
+        },
+        {
+            period: '2024',
+            role: 'Developer',
+            title: 'Active Learning Portal',
+            description: 'An innovative web-based learning platform focused on interactive education and student engagement.',
+            points: [
+                'Implemented server-side logic on a GlassFish Server to handle form submissions and authentication',
+                'Designed SQL queries to ensure proper data retrieval and storage for system reliability',
+                'Integrated authentication features to ensure secure access for students and instructors',
+                'Incorporated learning materials, basic enrollment tracking, and meeting scheduling'
+            ],
+            tech: ['HTML', 'SQL', 'MySQL', 'GlassFish'],
+            icon: '📚',
+            accentColor: '#8b5cf6'
+        }
+    ];
 
           <div
             style={{

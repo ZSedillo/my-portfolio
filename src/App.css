@@ -12,10 +12,10 @@
   --text-secondary: #a1a8b3;
   --text-muted: #6c7380;
 
-  --accent: #e05a47;
-  --accent-hover: #ec6b59;
-  --accent-tint: rgba(224, 90, 71, 0.1);
-  --accent-border: rgba(224, 90, 71, 0.35);
+  --accent: #cc6053;
+  --accent-hover: #d97063;
+  --accent-tint: rgba(204, 96, 83, 0.1);
+  --accent-border: rgba(204, 96, 83, 0.25);
 
   --status-live: #3fb950;
   --status-live-tint: rgba(63, 185, 80, 0.12);
@@ -241,7 +241,7 @@ a {
 }
 
 ::selection {
-  background: rgba(224, 90, 71, 0.3);
+  background: rgba(204, 96, 83, 0.3);
   color: #ffffff;
 }
 

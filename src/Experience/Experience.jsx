@@ -69,7 +69,6 @@ const Experience = () => {
               className="card"
               style={{
                 padding: isMobile ? '20px' : '26px',
-                borderLeft: exp.current ? '3px solid var(--accent)' : undefined,
               }}
             >
               <div

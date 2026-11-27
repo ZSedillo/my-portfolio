@@ -95,16 +95,6 @@ const Header = () => {
                 position: 'relative',
               }}
             >
-              <span
-                style={{
-                  position: 'absolute',
-                  top: '3px',
-                  left: '3px',
-                  width: '4px',
-                  height: '4px',
-                  backgroundColor: 'var(--accent)',
-                }}
-              />
               ZS
             </span>
             <span
@@ -136,7 +126,7 @@ const Header = () => {
                       fontWeight: 500,
                       color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
                       backgroundColor: isActive ? 'var(--bg-elevated)' : 'transparent',
-                      borderBottom: isActive ? '2px solid var(--accent)' : '2px solid transparent',
+                      borderBottom: '2px solid transparent',
                       transition: 'color 0.15s ease, background-color 0.15s ease',
                     }}
                   >
@@ -250,7 +240,7 @@ const Header = () => {
                       fontWeight: 500,
                       color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
                       backgroundColor: isActive ? 'var(--bg-surface)' : 'transparent',
-                      borderLeft: isActive ? '2px solid var(--accent)' : '2px solid transparent',
+                      borderLeft: '2px solid transparent',
                     }}
                   >
                     {link.name}

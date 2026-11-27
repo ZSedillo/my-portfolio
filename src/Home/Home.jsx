@@ -1,5 +1,4 @@
 import ProfilePicture from '../assets/images/frontface.jpg';
-import Resume from '../assets/resume/Sedillo_Resume.pdf';
 import ZanduroLogo from '../assets/images/zanduro.png';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 
@@ -159,9 +158,6 @@ const Home = () => {
             <a href="#Projects" className="btn-primary">
               View Projects
             </a>
-            <a href={Resume} download="Sedillo_Resume" className="btn-secondary">
-              Download Resume
-            </a>
             <a href="#Contacts" className="btn-secondary">
               Contact
             </a>
@@ -193,24 +189,7 @@ const Home = () => {
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
               </svg>
             </a>
-            <a
-              href="https://zanduro.itch.io"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="itch.io"
-              className="icon-link"
-              title="itch.io (zanduro)"
-              style={{ width: 'auto', padding: '0 12px', gap: '6px', fontFamily: 'var(--font-mono)', fontSize: '12px' }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="6" width="20" height="12" rx="2" />
-                <path d="M6 12h4" />
-                <path d="M8 10v4" />
-                <circle cx="15.5" cy="11" r="1" fill="currentColor" stroke="none" />
-                <circle cx="17.5" cy="13" r="1" fill="currentColor" stroke="none" />
-              </svg>
-              itch.io
-            </a>
+
             <a
               href="mailto:sedillozandro720@gmail.com"
               aria-label="Email"
@@ -304,17 +283,7 @@ const Home = () => {
                   zanduro
                 </span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
-                <span style={{ color: 'var(--text-muted)' }}>ITCH.IO</span>
-                <a
-                  href="https://zanduro.itch.io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: 'var(--accent)', textDecoration: 'none', textAlign: 'right' }}
-                >
-                  zanduro.itch.io ↗
-                </a>
-              </div>
+
             </div>
           </div>
         </div>
